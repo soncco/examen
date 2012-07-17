@@ -1,0 +1,218 @@
+/*
+	960 Grid System ~ Text CSS.
+	Learn more ~ http://960.gs/
+
+	Licensed under GPL and MIT.
+*/
+
+/* `Basic HTML
+----------------------------------------------------------------------------------------------------*/
+
+body {
+	font: 15px/1.5 Arial, Helvetica, sans-serif;
+	color: #5d5d5d;
+	background: #FFF url(../images/bgmain.png) repeat-x;
+}
+
+a {
+	color: #f52758;
+	text-decoration: none;
+}
+
+a:hover {
+	text-decoration: underline;
+}
+
+
+a:focus {
+	outline: 1px dotted;
+}
+
+acronym {
+	cursor: help;
+	border-bottom: 1px dotted;
+}
+
+hr {
+	border: 0 #ccc solid;
+	border-top-width: 1px;
+	clear: both;
+	height: 0;
+}
+
+/* `Tables
+----------------------------------------------------------------------------------------------------*/
+table {
+	
+}
+
+th, td {
+	border: 1px solid #D4E0EE;
+	border-collapse: collapse;
+}
+
+caption {
+	font-size: 15px;
+	font-weight: bold;
+	margin: 5px;
+	color: #1b819a;
+}
+
+td, th {
+	padding: 2px 6px;
+}
+
+thead th {
+	text-align: center;
+	background: #E6EDF5;
+	color: #4F76A3;
+	font-size: 100% !important;
+}
+
+tbody th {
+	font-weight: bold;
+	text-align: left;
+}
+
+tbody tr.even { background: #FCFDFE; }
+
+tbody tr.odd { background: #F7F9FC; }
+
+tbody tr:hover { background: #ecf8df;}
+
+tfoot {
+	font-size: 110%;
+}
+
+tfoot th.no-border {
+	border-left: 1px solid #FFF;
+	border-bottom: 1px solid #FFF;
+}
+
+/* `Forms
+----------------------------------------------------------------------------------------------------*/
+
+fieldset {
+	border: 1px solid #c4e9f2;
+	padding: 10px;
+}
+
+legend {
+	color: #1b819a;
+	font: normal 20px "Trebuchet MS", Arial, Helvetica, sans-serif;
+}
+
+label {
+	font-size: 15px;
+}
+
+input[type=text],
+input[type=password],
+span.click input[type=text],
+select,
+span.click select {
+	border-width: 0;
+	border-bottom: 1px solid #b5b5b5;
+	font-size: 15px;
+}
+
+textarea {
+	border: 1px solid #b5b5b5;
+	font: normal 15px Arial, Helvetica, sans-serif;
+}
+
+input[type=text]:focus,
+input[type=password]:focus,
+span.click input[type=text]:focus
+textarea:focus {
+	border-color: #a9deeb;
+}
+
+button {
+	font-size: 20px;
+	border-style: solid;
+	border-width: 1px;
+	border-color: #ebdee1 #560f1f #560f1f #ebdee1;
+	background-color: #f40c43;
+	color: #fff;
+	padding: 2px 15px 3px 15px;
+	text-align: center;
+}
+
+button.small {
+	font-size: 15px;
+}
+
+/* `Headings
+----------------------------------------------------------------------------------------------------*/
+
+h1 {
+	font-size: 24px;
+	color: #99cc00;
+}
+
+h2 {
+	font-size: 22px;
+}
+
+h3 {
+	font-size: 20px;
+}
+
+h4 {
+	font-size: 18px;
+}
+
+h5 {
+	font-size: 16px;
+}
+
+h6 {
+	font-size: 14px;
+}
+
+/* `Spacing
+----------------------------------------------------------------------------------------------------*/
+
+ol {
+	list-style: decimal;
+}
+
+ul {
+	list-style: disc;
+}
+
+li {
+	margin-left: 30px;
+}
+
+p,
+dl,
+hr,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+ol,
+ul,
+pre,
+table,
+address,
+fieldset {
+	margin-bottom: 10px;
+}
+
+
+.align-center {
+	text-align: center;
+}
+
+.align-right {
+	text-align: right;
+}
+
+.float-left {
+	float: left;
+}
