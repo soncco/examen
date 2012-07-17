@@ -1,7 +1,6 @@
 <?php
 /**
-LINEA DE PRUEBA por fredy
-segunda LINEA DE PRUEBA por fredy
+ * Por favor no pongas líneas de prueba aca.
  * Definición de constantes usadas en el sitio
  */
 define("BASE_PATH", dirname(__FILE__) . "/");
