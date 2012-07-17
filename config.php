@@ -14,7 +14,7 @@ define("STYLES_URL", BASE_URL . "css/");
 define("SCRIPTS_URL", BASE_URL . "scripts/");
 
 define("CHARSET", "UTF-8");
-define("NUM_ITEMS", 10); // Número de items mostrados en la p�ginaci�n
+define("NUM_ITEMS", 10); // Número de items mostrados en la paginación
 
 error_reporting(E_ALL);
 
