@@ -5,16 +5,41 @@
 require_once('home.php');
 
 if ( !empty($_SESSION['loginuser']) ) {
-	safe_redirect(BASE_URL);
+  switch ($_SESSION['loginuser']['rol']) :
+    case 'docente':
+      safe_redirect('preguntas.php');
+    break;
+    case 'alumno':
+      safe_redirect('mis-cursos.php');
+    break;
+    default:
+      safe_redirect('usuarios.php');
+  endswitch;
 }
 
 $postback = isset($_POST['username']);
-$location = !empty($_REQUEST['r']) ? clean_html($_REQUEST['r']) : BASE_URL;
+$location = !empty($_REQUEST['r']) ? clean_html($_REQUEST['r']) : '';
+$rol = !empty($_REQUEST['rol']) ? clean_html($_REQUEST['rol']) : 'admin';
 
 // Verificación de login
-if($postback){			
-	$user = get_item_by_field("codUsuario", $_POST['username'], $bcdb->usuario);	
-	if ( $user ) :
+if($postback){
+  switch ($rol) :
+    case 'docente':
+      $user = get_item_by_field("codDocente", $_POST['username'], $bcdb->docente);	
+      $user['rol'] = 'docente';
+      $location = 'preguntas.php';
+    break;
+    case 'alumno':
+      $user = get_item_by_field("codAlumno", $_POST['username'], $bcdb->alumno);	
+      $user['rol'] = 'alumno';
+      $location = 'mis-cursos.php';
+    break;
+    default:
+      $user = get_item_by_field("usuario", $_POST['username'], $bcdb->admin);
+      $user['rol'] = 'admin';
+      $location = 'usuarios.php';
+  endswitch;
+	if ( isset($user['password']) ) :
 		if( $user['password'] == md5($_POST['pwd']) ) :
 			session_regenerate_id();
 			$_SESSION['loginuser'] = $user;
@@ -79,6 +104,7 @@ if($postback){
         <p>
           <button type="submit" name="submit" id="submit">Entrar</button>
           <input type="hidden" name="r" id="r" value="<?php print $location ?>" />
+          <input type="hidden" name="rol" id="rol" value="<?php print $rol ?>" />
         </p>
       </fieldset>
     </form>

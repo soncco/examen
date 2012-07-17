@@ -240,3 +240,30 @@ html ul.i-tabs li.active-tab, html ul.i-tabs li.active-tab a:hover  {
 #sidebar h3 {
   color: #096981;
 }
+
+#welcome {
+  width: 420px;
+  margin: auto; 
+}
+
+.welcome-icon {
+  width: 180px;
+  float: left;
+  margin-right: 20px;
+}
+
+.welcome-icon a {
+  border: 1px dashed #cdcaca;
+  display: block;
+  text-align: center;
+}
+
+.welcome-icon a:hover {
+  border: 1px solid #99cc00;
+}
+
+.welcome-icon span {
+  clear: both;
+  font-weight: bold;
+  font-size: 18px;
+}

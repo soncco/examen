@@ -13,7 +13,10 @@ $bcdb->curso          = $table_prefix . 'curso';
 $bcdb->pregunta       = $table_prefix . 'pregunta';
 $bcdb->alternativa    = $table_prefix . 'alternativa';
 $bcdb->opciones       = $table_prefix . 'opciones';
-$bcdb->usuario        = $table_prefix . 'usuario';
+$bcdb->docente        = $table_prefix . 'docente';
+$bcdb->admin          = $table_prefix . 'administrador';
+$bcdb->alumno         = $table_prefix . 'alumno';
+$bcdb->docente        = $table_prefix . 'docente';
 
 # Funciones independientes
 include_once(INCLUDE_PATH . 'formatting-functions.php');
