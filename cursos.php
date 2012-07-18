@@ -1,7 +1,7 @@
 <?php
 
 require_once('home.php');
-//require_once('redirect.php');
+require_once('redirect.php');
 
 // Clave principal
 $bcdb->current_field = 'codCurso';

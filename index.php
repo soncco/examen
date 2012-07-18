@@ -28,13 +28,7 @@
 <div class="container_16">
   <div id="header">
     <h1 id="logo"> <a href="/"><span>Sistema de exámenes</span></a> </h1>
-    <div id="menutop">
-      <ul>
-        <li><a href="login.php?rol=docente">Docentes</a></li>
-        <li><a href="login.php?rol=alumno">Alumnos</a></li>
-        <li><a href="login.php?rol=admin">Administrador</a></li>
-      </ul>
-    </div>
+    <?php include "menutop.php" ?>
   </div>
   <div class="clear"></div>
   <div id="icon" class="grid_3">

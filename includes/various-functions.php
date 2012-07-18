@@ -18,6 +18,21 @@ function get_pregunta($codPregunta) {
   return $pregunta;
 }
 
+function get_cursos_docente($codDocente) {
+  global $bcdb;
+  
+  $q = sprintf("SELECT * 
+    FROM %s CA
+    INNER JOIN %s C
+    ON CA.codCurso = C.codCurso
+    WHERE CA.codDocente = '%s'",
+      $bcdb->cargaacademica,
+      $bcdb->curso,
+      $codDocente);
+  
+  $cursos = $bcdb->get_results($q);
+}
+
 /**
 * Guarda un usuario
 *

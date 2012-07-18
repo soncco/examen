@@ -8,15 +8,16 @@ include_once(INCLUDE_PATH . 'ez_sql.php');
 
 # Tablas
 $table_prefix = "t";
-$bcdb->tema           = $table_prefix . 'tema';
-$bcdb->curso          = $table_prefix . 'curso';
-$bcdb->pregunta       = $table_prefix . 'pregunta';
-$bcdb->alternativa    = $table_prefix . 'alternativa';
-$bcdb->opciones       = $table_prefix . 'opciones';
-$bcdb->docente        = $table_prefix . 'docente';
-$bcdb->admin          = $table_prefix . 'administrador';
-$bcdb->alumno         = $table_prefix . 'alumno';
-$bcdb->docente        = $table_prefix . 'docente';
+$bcdb->tema           = $table_prefix . 'Tema';
+$bcdb->curso          = $table_prefix . 'Curso';
+$bcdb->pregunta       = $table_prefix . 'Pregunta';
+$bcdb->alternativa    = $table_prefix . 'Alternativa';
+$bcdb->opciones       = $table_prefix . 'Opciones';
+$bcdb->docente        = $table_prefix . 'Docente';
+$bcdb->admin          = $table_prefix . 'Administrador';
+$bcdb->alumno         = $table_prefix . 'Alumno';
+$bcdb->docente        = $table_prefix . 'Docente';
+$bcdb->cargaacademica = $table_prefix . 'CargaAcademica';
 
 # Funciones independientes
 include_once(INCLUDE_PATH . 'formatting-functions.php');

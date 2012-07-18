@@ -1,7 +1,7 @@
 <?php
 
 require_once('home.php');
-require_once('redirect.php');
+//require_once('redirect.php');
 
 $id = ! empty($_REQUEST['id']) ? (int)$_REQUEST['id'] : 0;
 
@@ -58,7 +58,7 @@ if($id) {
   $pregunta = get_pregunta($id);
 }
 
-$temas = get_items($bcdb->tema, 'codTema');
+$cursos = get_cursos_docente($_SESSION['loginuser']['codDocente']);
 //$cursos = get_items($bcdb->curso, 'codCurso');
 
 ?>
@@ -129,20 +129,20 @@ $temas = get_items($bcdb->tema, 'codTema');
       <fieldset class="collapsible">
         <legend>Información de la pregunta</legend>
         <p>
-          <label for="codTema">Tema <span class="required">*</span>:</label>
-          <select name="codTema" id="codTema">
-            <option value="" selected="selected">Seleccione un tema</option>
-            <?php foreach ($temas as $k => $tema) : ?>
-            <option value="<?php print $tema['codTema']; ?>"
-              <?php
-              if (count($pregunta) > 0) {
-                if($tema['codTema'] == $pregunta['codTema']) 
-                  print 'selected="selected"';
-              }
-              ?>>
-                  <?php print $tema['nombre']; ?>
+          <label for="codCurso">Curso <span class="required">*</span>:</label>
+          <select name="codCurso" id="codTema">
+            <option value="" selected="selected">Seleccione un curso</option>
+            <?php foreach ($cursos as $k => $curso) : ?>
+            <option value="<?php print $curso['codCurso']; ?>"
+                  <?php print $curso['nombre']; ?>
             </option>
             <?php endforeach; ?>
+          </select>
+        </p>
+        <p>
+          <label for="codTema">Tema <span class="required">*</span>:</label>
+          <select name="codTema" id="codTema">
+            <option value="" selected="selected">Seleccione un curso</option>
           </select>
         </p>
         <p>

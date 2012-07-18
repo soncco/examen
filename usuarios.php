@@ -1,20 +1,28 @@
 <?php
 /**
  * Gestión de usuarios que usan el sistema
+ * Sean Administradores, docentes o alumnos
  */
- 
- 
 	require_once('home.php');
-	require_once('redirect.php');
-	
+	require_once('redirect.php');	
 	
 	$id = ! empty($_REQUEST['id']) ? (int)$_REQUEST['id'] : 0;
+  $rol = !empty($_REQUEST['rol']) ? clean_html($_REQUEST['rol']) : 'admin';
   
-  $bcdb->field_id = 'codUsuario';
+  switch ($rol) :
+    case 'alumno' :
+      $bcdb->field_id = 'codUsuario';
+    break;
+    case 'docente' :
+      $bcdb->field_id = 'codDocente';
+    break;
+    default :
+      $bcdb->field_id = 'codAdmin';
+  endswitch;
+  
 	
 	if ( $_SERVER['REQUEST_METHOD'] == 'POST' ) {
 		if ( validate_required(array(
-		'Código' => $_POST['codUsuario'],
 		'Nombres' => $_POST['nombres'], 
 		'Apellido Paterno' => $_POST['apellidoP'],
 		'Apellido Materno' => $_POST['apellidoM'],
@@ -35,12 +43,11 @@
 			
 			if(!$error) :
 				$user_values = array(
-					'codUsuario' => $_POST['codUsuario'],
+					$bcdb->field_id => $_POST[$bcdb->field_id],
 					'nombres' => $_POST['nombres'],
 					'apellidoP' => $_POST['apellidoP'],
 					'apellidoM' => $_POST['apellidoM'],
 					'email' => $_POST['email'],
-					'rol' => $_POST['rol']
 				);
 				
 				if($id&&(!empty($_POST['pwd']))) {
@@ -103,7 +110,7 @@
 <body>
 <div class="container_16">
   <div id="header">
-    <h1 id="logo"> <a href="/"><span>Sistema de Caja</span></a> </h1>
+    <h1 id="logo"> <a href="/"><span>Sistema de Exámenes</span></a> </h1>
     <?php include "menutop.php"; ?>
     <?php if(isset($_SESSION['loginuser'])) : ?>
     <div id="logout">Sesión: <?php print $_SESSION['loginuser']['nombres']; ?> <a href="logout.php">Salir</a></div>
@@ -122,8 +129,16 @@
       <fieldset class="collapsible">
         <legend>Datos del usuario</legend>
         <p>
+          <?php switch ($rol) : ?>
+          <?php case 'docente' : ?>
+          <?php case 'alumno' : ?>
           <label for="codUsuario">Código:</label>
           <input type="text" name="codUsuario" id="codUsuario" maxlength="6" size="10" value="<?php print ($user) ? $user['codUsuario'] : ""; ?>" />
+          <?php break; ?>
+          <?php default : ?>
+          <label for="usuario">Usuario:</label>
+          <input type="text" name="usuario" id="usuario" maxlength="6" size="10" value="<?php print ($user) ? $user['codUsuario'] : ""; ?>" />
+          <?php endswitch; ?>
         </p>
         <p>
           <label for="nombres">Nombres:</label>
