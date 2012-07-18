@@ -71,11 +71,19 @@ $cursos = get_items($bcdb->curso, 'codCurso');
           <?php endforeach; ?>
         </select>
       </p>
+      
       <p>
-        <label for="codDocente">Docente <span class="required">*</span>:</label>
+        <label for="codCurso">Docente <span class="required">*</span>:</label>
+        <select name="codDocente" id="codDocente">
+          <?php foreach($docentes as $k => $docente) : ?>
+          <option value="<?php print $docente['codDocente']; ?>"><?php print $docente['nombres']; ?> <?php print $docente['apellidoP']; ?> <?php print $docente['apellidoM']; ?></option>
+          <?php endforeach; ?>
+        </select>
       </p>
+      
+     
       <p class="align-center">
-        <button type="submit" name="submit" id="submit">Guardar</button>
+        <button type="submit" name="submit" id="submit">Asignar</button>
       </p>
       </fieldset>
     </form>
