@@ -11,7 +11,6 @@
 	
 	$data = get_recibos_dia($fecha);
 	
-	
 	// Trae las rubros
 	$rubros = get_items($bcdb->rubros);
 

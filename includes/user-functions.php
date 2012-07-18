@@ -10,7 +10,7 @@
  */
 function get_options () {
 	global $bcdb;
-	$results = $bcdb->get_results("SELECT * FROM $bcdb->opciones");
+	$results = $bcdb->get_results("SELECT * FROM $bcdb->opcion");
 	$options = array();
 	foreach($results as $k => $v) {
 		$options[$v['nombre']] = $v['descripcion'];
@@ -27,7 +27,7 @@ function get_options () {
  */
 function get_option ($option) {
 	global $bcdb;
-	return $bcdb->get_var("SELECT descripcion FROM $bcdb->opciones WHERE nombre = '$option'");
+	return $bcdb->get_var("SELECT descripcion FROM $bcdb->opcion WHERE nombre = '$option'");
 }
 
 /**

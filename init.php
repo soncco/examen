@@ -8,6 +8,7 @@ include_once(INCLUDE_PATH . 'ez_sql.php');
 
 # Tablas
 $table_prefix = "t";
+$bcdb->opcion         = $table_prefix . 'Opcion';
 $bcdb->semestre       = $table_prefix . 'Semestre';
 $bcdb->tema           = $table_prefix . 'Tema';
 $bcdb->curso          = $table_prefix . 'Curso';
@@ -19,6 +20,7 @@ $bcdb->admin          = $table_prefix . 'Administrador';
 $bcdb->alumno         = $table_prefix . 'Alumno';
 $bcdb->docente        = $table_prefix . 'Docente';
 $bcdb->cargaacademica = $table_prefix . 'CargaAcademica';
+$bcdb->docentecurso   = $table_prefix . 'DocenteCurso';
 
 # Funciones independientes
 include_once(INCLUDE_PATH . 'formatting-functions.php');

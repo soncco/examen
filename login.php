@@ -13,7 +13,7 @@ if ( !empty($_SESSION['loginuser']) ) {
       safe_redirect('mis-cursos.php');
     break;
     default:
-      safe_redirect('usuarios.php');
+      safe_redirect('usuarios.php?rol=docente');
   endswitch;
 }
 
@@ -37,7 +37,7 @@ if($postback){
     default:
       $user = get_item_by_field("usuario", $_POST['username'], $bcdb->admin);
       $user['rol'] = 'admin';
-      $location = 'usuarios.php';
+      $location = 'usuarios.php?rol=docente';
   endswitch;
 	if ( isset($user['password']) ) :
 		if( $user['password'] == md5($_POST['pwd']) ) :

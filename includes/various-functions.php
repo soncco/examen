@@ -18,19 +18,37 @@ function get_pregunta($codPregunta) {
   return $pregunta;
 }
 
+/**
+ * Devuelve los cursos asignados a un docente
+ *
+ * @param char $codDocente El código del docente
+ * @return array
+ */
 function get_cursos_docente($codDocente) {
   global $bcdb;
   
   $q = sprintf("SELECT * 
-    FROM %s CA
-    INNER JOIN %s C
-    ON CA.codCurso = C.codCurso
-    WHERE CA.codDocente = '%s'",
-      $bcdb->cargaacademica,
-      $bcdb->curso,
-      $codDocente);
+          FROM %s CA
+          INNER JOIN %s DC
+          ON CA.codDocente = DC.codDocente
+          AND CA.codCurso = DC.codCurso
+          INNER JOIN %s C
+          ON DC.codCurso = C.codCurso
+          WHERE CA.codDocente = '%s'
+          AND CA.codSemestre = '%s'",
+          $bcdb->cargaacademica,
+          $bcdb->docentecurso,
+          $bcdb->curso,
+          $codDocente,
+          get_option('semestre_actual'));
   
   $cursos = $bcdb->get_results($q);
+  return $cursos;
+}
+
+function get_temas_curso($codCurso) {
+  global $bcdb;
+  
 }
 
 /**

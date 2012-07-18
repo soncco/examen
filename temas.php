@@ -38,7 +38,7 @@ if($postback) :
 endif;
 
 $temas = get_items($bcdb->tema);
-$cursos = get_items($bcdb->curso, 'codCurso');
+$cursos = get_cursos_docente($_SESSION['loginuser']['codDocente']);
 
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
@@ -87,6 +87,13 @@ $cursos = get_items($bcdb->curso, 'codCurso');
   </div>
   <div class="clear"></div>
   <div id="icon" class="grid_3">
+    <div id="sidebar">
+      <h3>Temas</h3>
+      <ul>
+        <li><a href="/temas.php">Crear temas</a></li>
+        <li><a href="/lista-temas.php">Lista de temas</a></li>
+      </ul>
+    </div>
     <p class="align-center"><img src="images/opciones.png" alt="Opciones" /></p>
   </div>
   <div id="content" class="grid_13">
@@ -96,7 +103,7 @@ $cursos = get_items($bcdb->curso, 'codCurso');
     <?php endif; ?>
     <form name="frmtema" id="frmtema" method="post" action="temas.php">
       <fieldset class="collapsible">
-      <legend>Información del tema</legend>
+      <legend>Crear tema</legend>
       <p>
         <label for="nombre">Nombre <span class="required">*</span>:</label>
         <input type="text" name="nombre" id="nombre" maxlength="60" size="45" />
@@ -115,35 +122,6 @@ $cursos = get_items($bcdb->curso, 'codCurso');
       </p>
       </fieldset>
     </form>
-    <fieldset class="<?php if(!isset($_GET['PageIndex'])): ?>collapsibleClosed<?php else: ?>collapsible<?php endif; ?>">
-      <legend>Temas existentes</legend>
-      <p class="war">Los temas se pueden editar, sin embargo tenga cuidado al hacerlo ya que se pueden confundir datos existentes.</p>
-      <table>
-        <thead>
-          <tr>
-          <th>Tema</th>
-          <th>Curso</th>
-          </tr>
-        </thead>
-        <tbody>
-          <?php if ($temas): ?>
-          <?php $alt = "even"; ?>
-          <?php foreach($temas as $k => $tema): ?>
-          <tr class="<?php print $alt ?>">
-            <th><span class="click" id="nombre-<?php print $tema['codTema']; ?>"><?php print $tema['nombre']; ?></span></td>
-            <td><span class="clicks" id="codCurso-<?php print $tema['codCurso']; ?>"><?php print get_var_from_field('nombre', 'codCurso', $tema['codCurso'], $bcdb->curso) ?></span></td>
-            <?php $alt = ($alt == "even") ? "odd" : "even"; ?>
-          </tr>
-          <?php endforeach; ?>
-          <?php else: ?>
-          <tr class="<?php print $alt; ?>">
-            <td colspan="2">No existen datos</th>
-          </tr>
-          <?php endif; ?>
-        </tbody>
-      </table>
-      <?php include "pager.php"; ?>
-    </fieldset>
   </div>
   <div class="clear"></div>
   <?php include "footer.php"; ?>
