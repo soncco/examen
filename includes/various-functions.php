@@ -41,7 +41,6 @@ function get_cursos_docente($codDocente) {
           $bcdb->curso,
           $codDocente,
           get_option('semestre_actual'));
-  
   $cursos = $bcdb->get_results($q);
   return $cursos;
 }
@@ -82,11 +81,11 @@ function get_examenes_curso($codCurso) {
 */
 function get_temas_curso($codCurso, $codDocente) {
   global $bcdb;
-  
+
   $q = sprintf("SELECT *
     FROM %s T
     WHERE T.codCurso = '%s'
-    T.codDocente = '%s'",
+    AND T.codDocente = '%s'",
     $bcdb->tema,
     $codCurso,
     $codDocente);
