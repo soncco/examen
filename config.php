@@ -15,7 +15,7 @@ define("SCRIPTS_URL", BASE_URL . "scripts/");
 define("CHARSET", "UTF-8");
 define("NUM_ITEMS", 10); // Número de items mostrados en la paginación
 
-error_reporting(E_ALL);
+error_reporting(E_ALL & ~E_DEPRECATED & ~E_STRICT);
 
 setlocale(LC_ALL, '');
 
@@ -26,16 +26,16 @@ $db_params = array(
   'db_host' => 'localhost',
   'db_name' => 'examen',
   'db_user' => 'root',
-  'db_pass' => 'root'
+  'db_pass' => ''
 );
 
 /**
   * Tipo de usuario
   */
 $autipos = array(
-		'S'=>"Administrador",
-		'D'=>"Docente",
-    'A'=>"Alumno"
+	'S'=>"Administrador",
+	'D'=>"Docente",
+	'A'=>"Alumno"
 	);
 
 /**
