@@ -15,6 +15,7 @@ $bcdb->curso          = $table_prefix . 'Curso';
 $bcdb->pregunta       = $table_prefix . 'Pregunta';
 $bcdb->examen         = $table_prefix . 'Examen';
 $bcdb->examenpregunta = $table_prefix . 'ExamenPregunta';
+$bcdb->examenprograma = $table_prefix . 'ExamenPrograma';
 $bcdb->alternativa    = $table_prefix . 'Alternativa';
 $bcdb->opciones       = $table_prefix . 'Opciones';
 $bcdb->docente        = $table_prefix . 'Docente';

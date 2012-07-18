@@ -17,28 +17,25 @@ if($postback) :
 	$examenprograma = array(
 		'codExamen' => $_POST['codExamen'],
 		'fecha' => strftime("%Y-%m-%d %H:%M:%S", strtotime($_POST['fecha']) + $time),
+		'rendido' => 'N',
 		'duracion' => $_POST['duracion']
 	);
 	
-	krumo($examenprograma);
-	
 	// Verificación
-	  if (empty($semestre['codExamen']) || empty($_POST['fecha']) || empty($_POST['hora'])  || empty($semestre['duracion'])) :
-	$error = true;
-	$msg = "Ingrese la información obligatoria.";
-	  else :
+	if (empty($examenprograma['codExamen']) || empty($_POST['fecha']) || empty($_POST['hora'])  || empty($examenprograma['duracion'])) :
+		$error = true;
+		$msg = "Ingrese la información obligatoria.";
+	else :
+		$examenprograma = array_map('strip_tags', $examenprograma);
+		// Guarda el semestre
+		$id = save_item($examenprograma['codExamen'], $examenprograma, $bcdb->examenprograma);
 	
-	    $examenprograma = array_map('strip_tags', $semestre);
-	  
-	    // Guarda el semestre
-	$id = save_item($_POST['codSemestre'], $curso, $bcdb->semestre);
-	
-	if($id) :
-	  $msg = "La información se guardó correctamente.";
-	else:
-	  $error = true;
-	  $msg = "Hubo un error al guardar la información, intente nuevamente.";
-	    endif;
+		if($id) :
+			$msg = "La información se guardó correctamente.";
+		else:
+			$error = true;
+			$msg = "Hubo un error al guardar la información, intente nuevamente.";
+		endif;
 	endif;
 endif;
 
