@@ -22,10 +22,10 @@ setlocale(LC_ALL, '');
  * Parámetros de la base de datos
  */
 $db_params = array(
-  'db_host' => 'localhost',
+  'db_host' => '96.126.121.49',
   'db_name' => 'examen',
-  'db_user' => 'root',
-  'db_pass' => 'root'
+  'db_user' => 'examen',
+  'db_pass' => 'magnificos123'
 );
 
 /**
