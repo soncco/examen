@@ -1,6 +1,6 @@
 <?php
 /**
- * Definición de constantes usadas en el sitio
+ * Definición de constantes usadas en el sitio, AAA
  */
 define("BASE_PATH", dirname(__FILE__) . "/");
 define("INCLUDE_PATH", BASE_PATH . "includes/");
