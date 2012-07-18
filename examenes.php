@@ -41,6 +41,7 @@ require_once('home.php');
         <li><a href="/examenes.php">Crear exámen</a></li>
         <li><a href="/pregunta-examen.php">Agregar pregunta a exámen</a></li>
         <li><a href="/ver-examenes.php">Lista de examenes</a></li>
+		<li><a href="/examen-programa.php">Programar Examen</a></li>
       </ul>
     </div>
     <p class="align-center"><img src="images/opciones.png" alt="Opciones" /></p>

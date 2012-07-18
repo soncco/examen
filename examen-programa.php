@@ -1,7 +1,44 @@
 <?php
 
 require_once('home.php');
-//require_once('redirect.php');
+require_once('redirect.php');
+
+// Clave principal
+$bcdb->current_field = 'codExamen';
+
+$postback = isset($_POST['submit']);
+$error = false;
+
+// Si es que el formulario se ha enviado
+if($postback) :
+  $tema = array(
+    'nombre' => $_POST['nombre'],
+    'codCurso' => $_POST['codCurso'],
+    'codDocente' => $_SESSION['loginuser']['codDocente'] 
+  );
+
+  // Verificación
+  if (empty($tema['nombre'])) :
+    $error = true;
+    $msg = "Ingrese la información obligatoria.";
+  else :
+
+    $tema = array_map('strip_tags', $tema);
+  
+    // Guarda el tema
+    $id = save_item(0, $tema, $bcdb->tema);
+
+    if($id) :
+      $msg = "La información se guardó correctamente.";
+    else:
+      $error = true;
+      $msg = "Hubo un error al guardar la información, intente nuevamente.";
+    endif;
+  endif;
+endif;
+
+$temas = get_items($bcdb->tema);
+$cursos = get_cursos_docente($_SESSION['loginuser']['codDocente']);
 
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
@@ -54,6 +91,15 @@ require_once('home.php');
     <form name="frmexamen" id="frmexamen" method="post" action="examenes.php">
       <fieldset class="collapsible">
         <legend>Programar Examen</legend>  
+	      <p>
+	        <label for="codCurso">Curso <span class="required">*</span>:</label>
+	        <select name="codCurso" id="codCurso">
+	          <option value="" selected="selected">Seleccione un curso</option>
+	          <?php foreach ($cursos as $k => $curso) : ?>
+	          <option value="<?php print $curso['codCurso']; ?>"><?php print $curso['nombre']; ?></option>
+	          <?php endforeach; ?>
+	        </select>
+	      </p>
       </fieldset>
       <fieldset class="collapsible">
         <legend>Examenes</legend>
