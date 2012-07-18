@@ -1,7 +1,6 @@
 <?php
 /**
- * Por favor no pongas líneas de prueba aca.
- * Por favor.
+ * Soy nelly.
  * Definición de constantes usadas en el sitio
  */
 define("BASE_PATH", dirname(__FILE__) . "/");
