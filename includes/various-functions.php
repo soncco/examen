@@ -119,6 +119,20 @@ function save_asignacion($datos) {
   
   return ($resultado1 && $resultado2);
 }
+function mostrarAsignaciones() {
+  global $bcdb;
+  $sql = sprintf("SELECT D.nombres, D.apellidoP, D.apellidoM, C.nombre
+        FROM %s CA
+        INNER JOIN %s D ON CA.codDocente = D.CodDocente
+        INNER JOIN %s C ON CA.codCurso = C.CodCurso",
+         $bcdb->cargaacademica,
+         $bcdb->docente,
+         $bcdb->curso
+          );
+  
+  $asignaciones = $bcdb->get_results($sql);
+  return $asignaciones;
+}
 
 /**
 * Guarda un usuario

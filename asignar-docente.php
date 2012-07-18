@@ -34,6 +34,7 @@ if($postback) :
     endif;
   endif;
 endif;
+$asignaciones = mostrarAsignaciones();
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -100,26 +101,22 @@ endif;
       </fieldset>
     </form>
     <fieldset class="<?php if(!isset($_GET['PageIndex'])): ?>collapsibleClosed<?php else: ?>collapsible<?php endif; ?>">
-      <legend>Cursos existentes</legend>
-      <p class="war">Las cursos se pueden editar, sin embargo tenga cuidado al hacerlo ya que se pueden confundir datos existentes.</p>
+      <legend>Asignaciones</legend>
       <table>
         <thead>
           <tr>
-          <th>Código</th>
-          <th>Nombre</th>
-          <th>Créditos</th>
-          <th>Activo</th>
+          <th>Curso </th>
+          <th>Docente</th>
           </tr>
         </thead>
         <tbody>
-          <?php if ($cursos): ?>
+          <?php if ($asignaciones): ?>
           <?php $alt = "even"; ?>
-          <?php foreach($cursos as $k => $curso): ?>
+          <?php foreach($asignaciones as $k => $asignacion): ?>
           <tr class="<?php print $alt ?>">
-            <th><span class="click" id="codCurso-<?php print $curso['codCurso']; ?>"><?php print $curso['codCurso']; ?></span></td>
-            <th><span class="click" id="nombre-<?php print $curso['codCurso']; ?>"><?php print $curso['nombre']; ?></span></td>
-            <th><span class="click" id="creditos-<?php print $curso['codCurso']; ?>"><?php print $curso['creditos']; ?></td>
-            <td><?php print $curso['activo']; ?></span></td>
+            <td><?php print $asignacion['nombres']; ?> <?php print $asignacion['apellidoP']; ?> <?php print $asignacion['apellidoM']; ?></td>
+            <td><?php print $asignacion['nombre']; ?></td>
+         
             <?php $alt = ($alt == "even") ? "odd" : "even"; ?>
           </tr>
           <?php endforeach; ?>
