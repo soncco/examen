@@ -12,7 +12,7 @@
   $curso = get_item($codCurso, $bcdb->curso);
   
   // Los temas.
-  $temas = get_temas_curso($codCurso);
+  $temas = get_temas_curso($codCurso, $_SESSION['loginuser']['codDocente']);
 ?>
 <table>
   <caption>Temas del Curso <?php print $curso['nombre']; ?></caption>
