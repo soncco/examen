@@ -85,21 +85,22 @@ function get_temas_curso($codCurso) {
  * @return boolean
  */
 function save_asignacion($datos) {
+  global $bcdb;
   $q = sprintf("INSERT INTO %s (codDocente, codCurso)
           VALUES ('%s', '%s')",
           $bcdb->docentecurso,
-          $datos['codDdocente'],
+          $datos['codDocente'],
           $datos['codCurso']);
   
   $resultado1 = $bcdb->query($q);
   
   $q = sprintf("INSERT INTO %s (codDocente, codCurso, codSemestre)
           VALUES ('%s', '%s', '%s')",
-          $bcdb->docentecurso,
-          $datos['codDdocente'],
+          $bcdb->cargaacademica,
+          $datos['codDocente'],
           $datos['codCurso'],
           $datos['codSemestre']);
-  
+
   $resultado2 = $bcdb->query($q);
   
   return ($resultado1 && $resultado2);

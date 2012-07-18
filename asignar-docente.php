@@ -6,7 +6,6 @@ require_once('redirect.php');
 
 $docentes = get_items($bcdb->docente, 'codDocente');
 $cursos = get_items($bcdb->curso, 'codCurso');
-$semestres = get_items($bcdb->semestre, 'codSemestre');
 
 $postback = isset($_POST['submit']);
 $error = false;
@@ -16,15 +15,14 @@ if($postback) :
   $datos = array(
   	'codDocente' => $_POST['codDocente'],
     'codCurso' => $_POST['codCurso'],
-	  'codSemestre' => $_POST['codSemestre'],
+	  'codSemestre' => get_option('semestre_actual'),
   );
 
   // Verificación
-  if (empty($datos['codDocente']) || empty($datos['codCurso'])|| empty($datos['codSemestre'])) :
+  if (empty($datos['codDocente']) || empty($datos['codCurso'])) :
     $error = true;
     $msg = "Ingrese la información obligatoria.";
   else :
-  
     // Guarda la asignacion
     $resultado = save_asignacion($datos);
     
@@ -32,7 +30,7 @@ if($postback) :
       $msg = "La información se guardó correctamente.";
     else:
       $error = true;
-      $msg = "Hubo un error al guardar la información, intente nuevamente.";
+      $msg = "El Curso ya esta Asignado";
     endif;
   endif;
 endif;
@@ -80,6 +78,7 @@ endif;
       <p>
         <label for="codCurso">Curso <span class="required">*</span>:</label>
         <select name="codCurso" id="codCurso">
+          <option value="">Seleccione</option>
           <?php foreach($cursos as $k => $curso) : ?>
           <option value="<?php print $curso['codCurso']; ?>"><?php print $curso['nombre']; ?></option>
           <?php endforeach; ?>
@@ -87,8 +86,9 @@ endif;
       </p>
       
       <p>
-        <label for="codCurso">Docente <span class="required">*</span>:</label>
+        <label for="codDocente">Docente <span class="required">*</span>:</label>
         <select name="codDocente" id="codDocente">
+          <option value="">Seleccione</option>
           <?php foreach($docentes as $k => $docente) : ?>
           <option value="<?php print $docente['codDocente']; ?>"><?php print $docente['nombres']; ?> <?php print $docente['apellidoP']; ?> <?php print $docente['apellidoM']; ?></option>
           <?php endforeach; ?>
