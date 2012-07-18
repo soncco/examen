@@ -3,14 +3,39 @@
 require_once('home.php');
 require_once('redirect.php');
 
+
 $docentes = get_items($bcdb->docente, 'codDocente');
 $cursos = get_items($bcdb->curso, 'codCurso');
+$semestres = get_items($bcdb->semestre, 'codSemestre');
 
 $postback = isset($_POST['submit']);
-if ($postback) {
-  
-}
+$error = false;
 
+// Si es que el formulario se ha enviado
+if($postback) :
+  $datos = array(
+  	'codDocente' => $_POST['codDocente'],
+    'codCurso' => $_POST['codCurso'],
+	  'codSemestre' => $_POST['codSemestre'],
+  );
+
+  // Verificación
+  if (empty($datos['codDocente']) || empty($datos['codCurso'])|| empty($datos['codSemestre'])) :
+    $error = true;
+    $msg = "Ingrese la información obligatoria.";
+  else :
+  
+    // Guarda la asignacion
+    $resultado = save_asignacion($datos);
+    
+    if($resultado) :
+      $msg = "La información se guardó correctamente.";
+    else:
+      $error = true;
+      $msg = "Hubo un error al guardar la información, intente nuevamente.";
+    endif;
+  endif;
+endif;
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
