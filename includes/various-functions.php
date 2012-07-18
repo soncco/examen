@@ -73,9 +73,23 @@ function get_examenes_curso($codCurso) {
   return $examenes;
 }
 
+/**
+* Trae temas de un curso
+*
+* @param char $codCurso El curso
+* @return array
+*/
 function get_temas_curso($codCurso) {
   global $bcdb;
   
+  $q = sprintf("SELECT *
+    FROM %s t
+    WHERE t.codCurso = '%s'
+    ORDER BY t.codTema",
+    $bcdb->tema,
+          $codCurso);
+  $temas = $bcdb->get_results($q);
+  return $temas;
 }
 
 /**
