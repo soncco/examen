@@ -69,7 +69,6 @@ function get_examenes_curso($codCurso) {
           $bcdb->pregunta,
           $bcdb->tema,
           $codCurso);
-  
   $examenes = $bcdb->get_results($q);
   return $examenes;
 }

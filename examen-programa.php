@@ -39,10 +39,11 @@ $cursos = get_cursos_docente($_SESSION['loginuser']['codDocente']);
           url: 'traer-examenes.php',
           data: 'codCurso=' + codCurso,
           success: function(response){
-            console.log(response);
             $('#codExamen').html(response);
           }
         });
+      } else {
+        $('#codCurso').html($('<option value="">Escoge un curso</option>'));
       }
     });
 	});
