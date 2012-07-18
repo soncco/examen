@@ -4,6 +4,7 @@
           'top' => array(
             'cursos.php' => 'Cursos',
             'usuarios.php?rol=docente' => 'Docentes',
+            'asignar-docente.php' => 'Asignar docente',
             'opciones.php' => 'Opciones'
           ),
           'side' => array(

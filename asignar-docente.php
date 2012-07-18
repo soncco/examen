@@ -3,42 +3,7 @@
 require_once('home.php');
 require_once('redirect.php');
 
-// Clave principal
-$bcdb->current_field = 'codCurso';
-
-$postback = isset($_POST['submit']);
-$error = false;
-
-// Si es que el formulario se ha enviado
-if($postback) :
-  $curso = array(
-  	'codCurso' => $_POST['codCurso'],
-    'nombre' => $_POST['nombre'],
-	'creditos' => $_POST['creditos'],
-	'activo' => $_POST['activo'],
-  );
-
-  // Verificación
-  if (empty($curso['codCurso']) || empty($curso['nombre'])) :
-    $error = true;
-    $msg = "Ingrese la información obligatoria.";
-  else :
-
-    $curso = array_map('strip_tags', $curso);
-  
-    // Guarda el curso
-    $id = save_item($_POST['codCurso'], $curso, $bcdb->curso); /*NO SE COMO REFERENCIAR EL CODIGO DE CURSO*/
-
-    if($id) :
-      $msg = "La información se guardó correctamente.";
-    else:
-      $error = true;
-      $msg = "Hubo un error al guardar la información, intente nuevamente.";
-    endif;
-  endif;
-endif;
-
-/*$temas = get_items($bcdb->tema);*/
+$docentes = get_items($bcdb->docente, 'codDocente');
 $cursos = get_items($bcdb->curso, 'codCurso');
 
 ?>
@@ -74,7 +39,7 @@ $cursos = get_items($bcdb->curso, 'codCurso');
 		$('#codCurso').focus();
 	});
 </script>
-<title>Cursos | Sistema de exámenes</title>
+<title>Asignar Docente a curso | Sistema de exámenes</title>
 </head>
 
 <body>
@@ -91,30 +56,23 @@ $cursos = get_items($bcdb->curso, 'codCurso');
     <p class="align-center"><img src="images/opciones.png" alt="Opciones" /></p>
   </div>
   <div id="content" class="grid_13">
-    <h1>Cursos</h1>
+    <h1>Asignar Docentes a Cursos</h1>
     <?php if (isset($msg)): ?>
     <p class="<?php echo ($error) ? "error" : "msg" ?>"><?php print $msg; ?></p>
     <?php endif; ?>
     <form name="frmcurso" id="frmcurso" method="post" action="cursos.php">
       <fieldset class="collapsible">
-      <legend>Información del Curso</legend>
+      <legend>Asignación</legend>
       <p>
-        <label for="codCurso">Código <span class="required">*</span>:</label>
-        <input type="text" name="codCurso" id="codCurso" maxlength="8" size="10" />
-      </p>
-      <p>
-        <label for="nombre">Nombre <span class="required">*</span>:</label>
-        <input type="text" name="nombre" id="nombre" maxlength="60" size="45" />
-      </p>
-      <p>
-        <label for="creditos">Créditos <span class="required">*</span>:</label>
-        <input type="text" name="creditos" id="creditos" maxlength="1" size="2" />
-      </p>
-        <label for="activo">Activo <span class="required">*</span>:</label>
-        <select name="activo" id="activo">
-          <option value="S" selected="selected">SI</option>
-		  <option value="N" >NO</option>
+        <label for="codCurso">Curso <span class="required">*</span>:</label>
+        <select name="codCurso" id="codCurso">
+          <?php foreach($cursos as $k => $curso) : ?>
+          <option value="<?php print $curso['codCurso']; ?>"><?php print $curso['nombre']; ?></option>
+          <?php endforeach; ?>
         </select>
+      </p>
+      <p>
+        <label for="codDocente">Docente <span class="required">*</span>:</label>
       </p>
       <p class="align-center">
         <button type="submit" name="submit" id="submit">Guardar</button>

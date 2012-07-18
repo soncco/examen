@@ -129,16 +129,13 @@
       <fieldset class="collapsible">
         <legend>Datos del usuario</legend>
         <p>
-          <?php switch ($rol) : ?>
-          <?php case 'docente' : ?>
-          <?php case 'alumno' : ?>
-          <label for="codUsuario">Código:</label>
+          <?php if ($rol == 'docente' || $rol == 'alumno') : ?>
+          <label for="">Código:</label>
           <input type="text" name="codUsuario" id="codUsuario" maxlength="6" size="10" value="<?php print ($user) ? $user['codUsuario'] : ""; ?>" />
-          <?php break; ?>
-          <?php default : ?>
+          <?php else: ?>
           <label for="usuario">Usuario:</label>
           <input type="text" name="usuario" id="usuario" maxlength="6" size="10" value="<?php print ($user) ? $user['codUsuario'] : ""; ?>" />
-          <?php endswitch; ?>
+          <?php endif; ?>
         </p>
         <p>
           <label for="nombres">Nombres:</label>
@@ -155,14 +152,6 @@
         <p>
           <label for="email">E-mail:</label>
           <input type="text" name="email" id="email" maxlength="255" size="60" value="<?php print ($user) ? $user['email'] : ""; ?>" />
-        </p>
-        <p>
-          <label for="rol">Tipo:</label>
-          <select name="rol" id="rol">
-            <?php foreach($autipos as $k => $v) : ?>
-            <option value="<?php print $k; ?>" <?php print (isset($user['rol'])&&$user['rol'] == $k) ? 'selected="selected"' : ""; ?>><?php print $v; ?></option>
-            <?php endforeach; ?>
-          </select>
         </p>
         <p>
           <label for="pwd">Contraseña:</label>
