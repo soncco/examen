@@ -98,6 +98,26 @@ krumo($cursos);
 		$('codTema').focus();
 	});
 </script>
+<script type="text/javascript">
+	$(document).ready(function() {
+    // Combos dependientes.
+		$('#codCurso').change(function () {
+      codCurso = $(this).val();
+      if (codCurso != '') {
+        $.ajax({
+          type: 'POST',
+          url: 'traer-temas.php',
+          data: 'codCurso=' + codCurso,
+          success: function(response){
+            $('#codTema').html(response);
+          }
+        });
+      } else {
+        $('#codTema').html($('<option value="">Escoge un curso</option>'));
+      }
+    });
+	});
+</script>
 <title>Preguntas | Sistema de exámenes</title>
 </head>
 
@@ -131,7 +151,7 @@ krumo($cursos);
         <legend>Información de la pregunta</legend>
         <p>
           <label for="codCurso">Curso <span class="required">*</span>:</label>
-          <select name="codCurso" id="codTema">
+          <select name="codCurso" id="codCurso">
             <option value="" selected="selected">Seleccione un curso</option>
             <?php foreach ($cursos as $k => $curso) : ?>
             <option value="<?php print $curso['codCurso']; ?>">
