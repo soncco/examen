@@ -73,9 +73,19 @@ function get_examenes_curso($codCurso) {
   return $examenes;
 }
 
-function get_temas_curso($codCurso) {
+function get_temas_curso($codCurso, $codDocente) {
   global $bcdb;
+  $q = sprintf("SELECT T.* 
+    FROM %s 
+    WHERE T.codCurso = '%s'
+    AND T.codDocente = '%s'",
+          $bcdb->tema,
+          $codCurso,
+          $codDocente);
   
+  $temas = $bcdb->get_results($q);
+  
+  return $temas;
 }
 
 /**
