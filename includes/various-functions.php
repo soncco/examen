@@ -45,6 +45,34 @@ function get_cursos_docente($codDocente) {
   $cursos = $bcdb->get_results($q);
   return $cursos;
 }
+/**
+ * Trae exámenes de un curso.
+ *
+ * @param char $codCurso El curso
+ * @return array
+ */
+function get_examenes_curso($codCurso) {
+  global $bcdb;
+  
+  $q = sprintf("SELECT e.codExamen, e.nombre 
+    FROM %s e
+    INNER JOIN %s ep
+    ON e.codExamen = ep.codExamen
+    INNER JOIN %s p
+    ON ep.codPregunta = p.codPregunta
+    INNER JOIN %s t
+    ON p.codTema = t.codTema
+    WHERE t.codCurso = '%s'
+    ORDER BY e.codExamen",
+    $bcdb->examen,
+          $bcdb->examenpregunta,
+          $bcdb->pregunta,
+          $bcdb->tema,
+          $codCurso);
+  
+  $examenes = $bcdb->get_results($q);
+  return $examenes;
+}
 
 function get_temas_curso($codCurso) {
   global $bcdb;

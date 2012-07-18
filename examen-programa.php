@@ -11,35 +11,10 @@ $error = false;
 
 // Si es que el formulario se ha enviado
 if($postback) :
-  $tema = array(
-    'nombre' => $_POST['nombre'],
-    'codCurso' => $_POST['codCurso'],
-    'codDocente' => $_SESSION['loginuser']['codDocente'] 
-  );
-
-  // Verificación
-  if (empty($tema['nombre'])) :
-    $error = true;
-    $msg = "Ingrese la información obligatoria.";
-  else :
-
-    $tema = array_map('strip_tags', $tema);
   
-    // Guarda el tema
-    $id = save_item(0, $tema, $bcdb->tema);
-
-    if($id) :
-      $msg = "La información se guardó correctamente.";
-    else:
-      $error = true;
-      $msg = "Hubo un error al guardar la información, intente nuevamente.";
-    endif;
-  endif;
 endif;
 
-$temas = get_items($bcdb->tema);
 $cursos = get_cursos_docente($_SESSION['loginuser']['codDocente']);
-
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -55,7 +30,21 @@ $cursos = get_cursos_docente($_SESSION['loginuser']['codDocente']);
 <script type="text/javascript" src="/scripts/jquery.jeditable.js"></script>
 <script type="text/javascript">
 	$(document).ready(function() {
-		//$('nombre').focus();
+    // Combos dependientes.
+		$('#codCurso').change(function () {
+      codCurso = $(this).val();
+      if (codCurso != '') {
+        $.ajax({
+          type: 'POST',
+          url: 'traer-examenes.php',
+          data: 'codCurso=' + codCurso,
+          success: function(response){
+            console.log(response);
+            $('#codExamen').html(response);
+          }
+        });
+      }
+    });
 	});
 </script>
 <title>Preguntas | Sistema de exámenes</title>
@@ -98,6 +87,12 @@ $cursos = get_cursos_docente($_SESSION['loginuser']['codDocente']);
 	          <?php foreach ($cursos as $k => $curso) : ?>
 	          <option value="<?php print $curso['codCurso']; ?>"><?php print $curso['nombre']; ?></option>
 	          <?php endforeach; ?>
+	        </select>
+	      </p>
+        <p>
+	        <label for="codExamen">Examenes <span class="required">*</span>:</label>
+	        <select name="codExamen" id="codExamen">
+	          <option value="" selected="selected">Seleccione un curso</option>
 	        </select>
 	      </p>
       </fieldset>
