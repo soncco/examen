@@ -12,12 +12,21 @@
   switch ($rol) :
     case 'alumno' :
       $bcdb->field_id = 'codUsuario';
+      $tabla = $bcdb->alumno;
+      $title = 'Alumnos';
+      $singular = 'Alumno';
     break;
     case 'docente' :
       $bcdb->field_id = 'codDocente';
+      $tabla = $bcdb->docente;
+      $title = 'Docentes';
+      $singular = 'Docente';
     break;
     default :
       $bcdb->field_id = 'codAdmin';
+      $tabla = $bcdb->admin;
+      $title = 'Administradores';
+      $singular = 'Administrador';
   endswitch;
   
 	
@@ -67,15 +76,10 @@
 			$msg = "Ya existe el usuario '$user_values[usuario]'.";
 	}
 	
-	$users = get_items($bcdb->usuario, 'codUsuario');
-	if($users) {
-		foreach($users as $k=>$user) {
-			$users[$k]['rol'] = $autipos[$users[$k]['rol']];
-		}
-	}
+	$users = get_items($tabla, $bcdb->field_id);
 	$user = array();
 	if($id) {
-		$user = get_item_by_field('codUsuario', $id, $bcdb->usuario);
+		$user = get_item_by_field($tabla, $id, $bcdb->field_id);
 	}
 
 ?>
@@ -121,17 +125,17 @@
     <p class="align-center"><img src="images/usuarios.png" alt="Usuarios" /></p>
   </div>
   <div id="content" class="grid_13">
-    <h1>Usuarios</h1>
+    <h1><?php print $title; ?></h1>
     <?php if (isset($msg)): ?>
     <p class="<?php echo ($error) ? "error" : "msg" ?>"><?php print $msg; ?></p>
     <?php endif; ?>
     <form name="frmusers" id="frmusers" method="post" action="usuarios.php">
       <fieldset class="collapsible">
-        <legend>Datos del usuario</legend>
+        <legend>Datos del <?php print $singular; ?></legend>
         <p>
           <?php if ($rol == 'docente' || $rol == 'alumno') : ?>
-          <label for="">Código:</label>
-          <input type="text" name="codUsuario" id="codUsuario" maxlength="6" size="10" value="<?php print ($user) ? $user['codUsuario'] : ""; ?>" />
+          <label for="<?php print $bcdb->field_id?>">Código:</label>
+          <input type="text" name="<?php print $bcdb->field_id?>" id="<?php print $bcdb->field_id?>" maxlength="6" size="10" value="<?php print ($user) ? $user[$bcdb->field_id] : ""; ?>" />
           <?php else: ?>
           <label for="usuario">Usuario:</label>
           <input type="text" name="usuario" id="usuario" maxlength="6" size="10" value="<?php print ($user) ? $user['codUsuario'] : ""; ?>" />
@@ -169,14 +173,13 @@
       </fieldset>
     </form>
     <fieldset class="collapsibleClosed">
-      <legend>Datos del usuario</legend>
+      <legend>Listado</legend>
       <table>
         <thead>
           <tr>
             <th>ID</th>
             <th>Nombres</th>
             <th>Apellidos</th>
-            <th>Rango</th>
             <th>Acciones</th>
           </tr>
         </thead>
@@ -190,7 +193,6 @@
             <th><?php print $usuario['nombres']; ?>
               </td>
             <td><?php print $usuario['apellidoP']; ?> <?php print $usuario['apellidoM']; ?></td>
-            <td><?php print $usuario['rol']; ?></td>
             <td><a href="usuarios.php?id=<?php print $usuario['codUsuario']; ?>">Editar</a></td>
             <?php $alt = ($alt == "even") ? "odd" : "even"; ?>
           </tr>

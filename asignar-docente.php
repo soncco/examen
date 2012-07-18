@@ -6,6 +6,11 @@ require_once('redirect.php');
 $docentes = get_items($bcdb->docente, 'codDocente');
 $cursos = get_items($bcdb->curso, 'codCurso');
 
+$postback = isset($_POST['submit']);
+if ($postback) {
+  
+}
+
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -21,22 +26,6 @@ $cursos = get_items($bcdb->curso, 'codCurso');
 <script type="text/javascript" src="/scripts/jquery.jeditable.js"></script>
 <script type="text/javascript">
 	$(document).ready(function() {
-		$(".click").editable("/datos-curso.php", {
-			indicator : "Guardando...",
-			tooltip   : "Click para editar..."
-		});
-    $(".clicks").editable("/datos-curso.php", { 
-      indicator : "Guardando...",
-      loadurl   : "/scripts/operadores.php",
-      type   : "select",
-      submit : "OK",
-      style  : "inherit",
-      submitdata : function() {
-        return {op : true};
-      }
-    });
-    
-		$('#codCurso').focus();
 	});
 </script>
 <title>Asignar Docente a curso | Sistema de exámenes</title>
@@ -60,7 +49,7 @@ $cursos = get_items($bcdb->curso, 'codCurso');
     <?php if (isset($msg)): ?>
     <p class="<?php echo ($error) ? "error" : "msg" ?>"><?php print $msg; ?></p>
     <?php endif; ?>
-    <form name="frmcurso" id="frmcurso" method="post" action="cursos.php">
+    <form name="frmasignar" id="frmasignar" method="post" action="asignar-docente.php">
       <fieldset class="collapsible">
       <legend>Asignación</legend>
       <p>
@@ -80,8 +69,6 @@ $cursos = get_items($bcdb->curso, 'codCurso');
           <?php endforeach; ?>
         </select>
       </p>
-      
-     
       <p class="align-center">
         <button type="submit" name="submit" id="submit">Asignar</button>
       </p>

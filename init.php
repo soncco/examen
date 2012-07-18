@@ -8,6 +8,7 @@ include_once(INCLUDE_PATH . 'ez_sql.php');
 
 # Tablas
 $table_prefix = "t";
+$bcdb->semestre       = $table_prefix . 'Semestre';
 $bcdb->tema           = $table_prefix . 'Tema';
 $bcdb->curso          = $table_prefix . 'Curso';
 $bcdb->pregunta       = $table_prefix . 'Pregunta';

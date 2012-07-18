@@ -4,30 +4,29 @@ require_once('home.php');
 require_once('redirect.php');
 
 // Clave principal
-$bcdb->current_field = 'codCurso';
+$bcdb->current_field = 'codSemestre';
 
 $postback = isset($_POST['submit']);
 $error = false;
 
 // Si es que el formulario se ha enviado
 if($postback) :
-  $curso = array(
-  	'codCurso' => $_POST['codCurso'],
-    'nombre' => $_POST['nombre'],
-	'creditos' => $_POST['creditos'],
-	'activo' => $_POST['activo'],
+  $semestre = array(
+  	'codSemestre' => $_POST['codSemestre'],
+    'fechaInicio' => strftime("%Y-%m-%d %H:%M:%S", strtotime($_POST['fechaInicio'])),
+    'fechaFin' => strftime("%Y-%m-%d %H:%M:%S", strtotime($_POST['fechaFin'])),
   );
 
   // Verificación
-  if (empty($curso['codCurso']) || empty($curso['nombre'])) :
+  if (empty($semestre['codSemestre']) || empty($semestre['fechaInicio'])  || empty($semestre['fechaFin'])) :
     $error = true;
     $msg = "Ingrese la información obligatoria.";
   else :
 
-    $curso = array_map('strip_tags', $curso);
+    $semestre = array_map('strip_tags', $semestre);
   
-    // Guarda el curso
-    $id = save_item($_POST['codCurso'], $curso, $bcdb->curso);
+    // Guarda el semestre
+    $id = save_item($_POST['codSemestre'], $curso, $bcdb->semestre);
 
     if($id) :
       $msg = "La información se guardó correctamente.";
@@ -38,8 +37,7 @@ if($postback) :
   endif;
 endif;
 
-/*$temas = get_items($bcdb->tema);*/
-$cursos = get_items($bcdb->curso, 'codCurso');
+$semestres = get_items($bcdb->semestre, 'codSemestre');
 
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
@@ -49,32 +47,21 @@ $cursos = get_items($bcdb->curso, 'codCurso');
 <link rel="stylesheet" type="text/css" media="screen" href="/css/reset.css" /> 
 <link rel="stylesheet" type="text/css" media="screen" href="/css/text.css" /> 
 <link rel="stylesheet" type="text/css" media="screen" href="/css/960.css" /> 
-<link rel="stylesheet" type="text/css" media="screen" href="/css/layout.css" /> 
+<link rel="stylesheet" type="text/css" media="screen" href="/css/layout.css" />
+<link rel="stylesheet" type="text/css" media="screen" href="/css/theme/ui.all.css" />
 <link href="/favicon.ico" type="image/ico" rel="shortcut icon" />
 <script type="text/javascript" src="/scripts/jquery-1.3.2.min.js"></script>
 <script type="text/javascript" src="/scripts/jquery.collapsible.js"></script>
 <script type="text/javascript" src="/scripts/jquery.jeditable.js"></script>
+<script type="text/javascript" src="/scripts/jquery.calendar.js"></script>
+<script type="text/javascript" src="/scripts/jquery.ui.all.min.js"></script>
 <script type="text/javascript">
 	$(document).ready(function() {
-		$(".click").editable("/datos-curso.php", {
-			indicator : "Guardando...",
-			tooltip   : "Click para editar..."
-		});
-    $(".clicks").editable("/datos-curso.php", { 
-      indicator : "Guardando...",
-      loadurl   : "/scripts/operadores.php",
-      type   : "select",
-      submit : "OK",
-      style  : "inherit",
-      submitdata : function() {
-        return {op : true};
-      }
-    });
-    
-		$('#codCurso').focus();
+   
+		$('#codSemestre').focus();
 	});
 </script>
-<title>Cursos | Sistema de exámenes</title>
+<title>Semestres | Sistema de exámenes</title>
 </head>
 
 <body>
@@ -91,30 +78,24 @@ $cursos = get_items($bcdb->curso, 'codCurso');
     <p class="align-center"><img src="images/opciones.png" alt="Opciones" /></p>
   </div>
   <div id="content" class="grid_13">
-    <h1>Cursos</h1>
+    <h1>Semestres</h1>
     <?php if (isset($msg)): ?>
     <p class="<?php echo ($error) ? "error" : "msg" ?>"><?php print $msg; ?></p>
     <?php endif; ?>
-    <form name="frmcurso" id="frmcurso" method="post" action="cursos.php">
+    <form name="frmsemestre" id="frmsemestre" method="post" action="semestres.php">
       <fieldset class="collapsible">
-      <legend>Información del Curso</legend>
+      <legend>Información del Semestre</legend>
       <p>
-        <label for="codCurso">Código <span class="required">*</span>:</label>
-        <input type="text" name="codCurso" id="codCurso" maxlength="8" size="10" />
+        <label for="codSemestre">Nombre del Semestre <span class="required">*</span>:</label>
+        <input type="text" name="codSemestre" id="codSemestre" maxlength="7" size="10" />
       </p>
       <p>
-        <label for="nombre">Nombre <span class="required">*</span>:</label>
-        <input type="text" name="nombre" id="nombre" maxlength="60" size="45" />
+        <label for="fechaInicio">Fecha Inicio <span class="required">*</span>:</label>
+        <input type="text" name="fechaInicio" class="date" id="fechaInicio" maxlength="20" size="20" />
       </p>
       <p>
-        <label for="creditos">Créditos <span class="required">*</span>:</label>
-        <input type="text" name="creditos" id="creditos" maxlength="1" size="2" />
-      </p>
-        <label for="activo">Activo <span class="required">*</span>:</label>
-        <select name="activo" id="activo">
-          <option value="S" selected="selected">SI</option>
-		  <option value="N" >NO</option>
-        </select>
+        <label for="fechaFin">Fecha Fin <span class="required">*</span>:</label>
+        <input type="text" name="fechaFin" class="date" id="fechaFin" maxlength="20" size="20" />
       </p>
       <p class="align-center">
         <button type="submit" name="submit" id="submit">Guardar</button>
@@ -122,32 +103,29 @@ $cursos = get_items($bcdb->curso, 'codCurso');
       </fieldset>
     </form>
     <fieldset class="<?php if(!isset($_GET['PageIndex'])): ?>collapsibleClosed<?php else: ?>collapsible<?php endif; ?>">
-      <legend>Cursos existentes</legend>
-      <p class="war">Las cursos se pueden editar, sin embargo tenga cuidado al hacerlo ya que se pueden confundir datos existentes.</p>
+      <legend>Semestres existentes</legend>
       <table>
         <thead>
           <tr>
-          <th>Código</th>
-          <th>Nombre</th>
-          <th>Créditos</th>
-          <th>Activo</th>
+          <th>Semestre</th>
+          <th>Fecha Inicio</th>
+          <th>Fecha Fin</th>
           </tr>
         </thead>
         <tbody>
-          <?php if ($cursos): ?>
+          <?php if ($semestres): ?>
           <?php $alt = "even"; ?>
-          <?php foreach($cursos as $k => $curso): ?>
+          <?php foreach($semestres as $k => $semestre): ?>
           <tr class="<?php print $alt ?>">
-            <th><span class="click" id="codCurso-<?php print $curso['codCurso']; ?>"><?php print $curso['codCurso']; ?></span></td>
-            <th><span class="click" id="nombre-<?php print $curso['codCurso']; ?>"><?php print $curso['nombre']; ?></span></td>
-            <th><span class="click" id="creditos-<?php print $curso['codCurso']; ?>"><?php print $curso['creditos']; ?></td>
-            <td><?php print $curso['activo']; ?></span></td>
+            <th><?php print $semestre['codSemestre']; ?></td>
+            <th><?php print $semestre['fechaInicio']; ?></td>
+            <th><?php print $semestre['fechaFin']; ?></td>
             <?php $alt = ($alt == "even") ? "odd" : "even"; ?>
           </tr>
           <?php endforeach; ?>
           <?php else: ?>
           <tr class="<?php print $alt; ?>">
-            <td colspan="2">No existen datos</th>
+            <td colspan="3">No existen datos</th>
           </tr>
           <?php endif; ?>
         </tbody>
