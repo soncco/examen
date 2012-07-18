@@ -11,7 +11,35 @@ $error = false;
 
 // Si es que el formulario se ha enviado
 if($postback) :
-  
+	$hora = explode(":", $_POST['hora']);
+	$time = ($hora[0] * 3600) + ($hora[1] * 60); 
+	
+	$examenprograma = array(
+		'codExamen' => $_POST['codExamen'],
+		'fecha' => strftime("%Y-%m-%d %H:%M:%S", strtotime($_POST['fecha']) + $time),
+		'duracion' => $_POST['duracion']
+	);
+	
+	krumo($examenprograma);
+	
+	// Verificación
+	  if (empty($semestre['codExamen']) || empty($_POST['fecha']) || empty($_POST['hora'])  || empty($semestre['duracion'])) :
+	$error = true;
+	$msg = "Ingrese la información obligatoria.";
+	  else :
+	
+	    $examenprograma = array_map('strip_tags', $semestre);
+	  
+	    // Guarda el semestre
+	$id = save_item($_POST['codSemestre'], $curso, $bcdb->semestre);
+	
+	if($id) :
+	  $msg = "La información se guardó correctamente.";
+	else:
+	  $error = true;
+	  $msg = "Hubo un error al guardar la información, intente nuevamente.";
+	    endif;
+	endif;
 endif;
 
 $cursos = get_cursos_docente($_SESSION['loginuser']['codDocente']);
@@ -20,14 +48,17 @@ $cursos = get_cursos_docente($_SESSION['loginuser']['codDocente']);
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<link rel="stylesheet" type="text/css" media="screen" href="/css/reset.css" />
-<link rel="stylesheet" type="text/css" media="screen" href="/css/text.css" />
-<link rel="stylesheet" type="text/css" media="screen" href="/css/960.css" />
+<link rel="stylesheet" type="text/css" media="screen" href="/css/reset.css" /> 
+<link rel="stylesheet" type="text/css" media="screen" href="/css/text.css" /> 
+<link rel="stylesheet" type="text/css" media="screen" href="/css/960.css" /> 
 <link rel="stylesheet" type="text/css" media="screen" href="/css/layout.css" />
+<link rel="stylesheet" type="text/css" media="screen" href="/css/theme/ui.all.css" />
 <link href="/favicon.ico" type="image/ico" rel="shortcut icon" />
 <script type="text/javascript" src="/scripts/jquery-1.3.2.min.js"></script>
 <script type="text/javascript" src="/scripts/jquery.collapsible.js"></script>
 <script type="text/javascript" src="/scripts/jquery.jeditable.js"></script>
+<script type="text/javascript" src="/scripts/jquery.calendar.js"></script>
+<script type="text/javascript" src="/scripts/jquery.ui.all.min.js"></script>
 <script type="text/javascript">
 	$(document).ready(function() {
     // Combos dependientes.
@@ -63,7 +94,7 @@ $cursos = get_cursos_docente($_SESSION['loginuser']['codDocente']);
   <div class="clear"></div>
   <div id="icon" class="grid_3">
     <div id="sidebar">
-      <h3>Preguntas</h3>
+      <h3>Examen</h3>
       <ul>
         <li><a href="/examenes.php">Crear exámen</a></li>
         <li><a href="/pregunta-examen.php">Agregar pregunta a exámen</a></li>
@@ -78,7 +109,7 @@ $cursos = get_cursos_docente($_SESSION['loginuser']['codDocente']);
     <?php if (isset($msg)): ?>
     <p class="<?php echo ($error) ? "error" : "msg" ?>"><?php print $msg; ?></p>
     <?php endif; ?>
-    <form name="frmexamen" id="frmexamen" method="post" action="examenes.php">
+    <form name="frmexamenprograma" id="frmexamenprograma" method="post" action="examen-programa.php">
       <fieldset class="collapsible">
         <legend>Programar Examen</legend>  
 	      <p>
@@ -90,12 +121,24 @@ $cursos = get_cursos_docente($_SESSION['loginuser']['codDocente']);
 	          <?php endforeach; ?>
 	        </select>
 	      </p>
-        <p>
+          <p>
 	        <label for="codExamen">Examenes <span class="required">*</span>:</label>
 	        <select name="codExamen" id="codExamen">
 	          <option value="" selected="selected">Seleccione un curso</option>
 	        </select>
 	      </p>
+	      <p>
+	        <label for="fecha">Fecha <span class="required">*</span>:</label>
+	        <input type="text" name="fecha" class="date" id="fecha" maxlength="20" size="20" />
+	      </p>
+        <p>
+          <label for="hora">Hora (hh:mm) <span class="required">*</span>:</label>
+          <input type="text" name="hora" id="hora" maxlength="5" size="8" value="" />        	
+        </p>
+        <p>
+          <label for="duracion">Duración (en segundos) <span class="required">*</span>:</label>
+          <input type="text" name="duracion" id="duracion" maxlength="5" size="8" value="" />        	
+        </p>
       </fieldset>
       <fieldset class="collapsible">
         <legend>Examenes</legend>
