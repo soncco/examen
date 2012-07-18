@@ -93,6 +93,33 @@ function get_temas_curso($codCurso) {
 }
 
 /**
+ * Guarda una asignación de un docente
+ * 
+ * @param array $datos Los datos de la asignacion
+ * @return boolean
+ */
+function save_asignacion($datos) {
+  $q = sprintf("INSERT INTO %s (codDocente, codCurso)
+          VALUES ('%s', '%s')",
+          $bcdb->docentecurso,
+          $datos['codDdocente'],
+          $datos['codCurso']);
+  
+  $resultado1 = $bcdb->query($q);
+  
+  $q = sprintf("INSERT INTO %s (codDocente, codCurso, codSemestre)
+          VALUES ('%s', '%s', '%s')",
+          $bcdb->docentecurso,
+          $datos['codDdocente'],
+          $datos['codCurso'],
+          $datos['codSemestre']);
+  
+  $resultado2 = $bcdb->query($q);
+  
+  return ($resultado1 && $resultado2);
+}
+
+/**
 * Guarda un usuario
 *
 * @param int $idusuario El id del usuario
