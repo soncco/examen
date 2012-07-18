@@ -59,6 +59,7 @@ if($id) {
 }
 
 $cursos = get_cursos_docente($_SESSION['loginuser']['codDocente']);
+krumo($cursos);
 //$cursos = get_items($bcdb->curso, 'codCurso');
 
 ?>
@@ -133,7 +134,7 @@ $cursos = get_cursos_docente($_SESSION['loginuser']['codDocente']);
           <select name="codCurso" id="codTema">
             <option value="" selected="selected">Seleccione un curso</option>
             <?php foreach ($cursos as $k => $curso) : ?>
-            <option value="<?php print $curso['codCurso']; ?>"
+            <option value="<?php print $curso['codCurso']; ?>">
                   <?php print $curso['nombre']; ?>
             </option>
             <?php endforeach; ?>
