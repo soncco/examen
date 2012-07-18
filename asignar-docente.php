@@ -3,14 +3,38 @@
 require_once('home.php');
 require_once('redirect.php');
 
+
 $docentes = get_items($bcdb->docente, 'codDocente');
 $cursos = get_items($bcdb->curso, 'codCurso');
 
 $postback = isset($_POST['submit']);
-if ($postback) {
-  
-}
+$error = false;
 
+// Si es que el formulario se ha enviado
+if($postback) :
+  $datos = array(
+  	'codDocente' => $_POST['codDocente'],
+    'codCurso' => $_POST['codCurso'],
+	  'codSemestre' => get_option('semestre_actual'),
+  );
+
+  // Verificación
+  if (empty($datos['codDocente']) || empty($datos['codCurso'])) :
+    $error = true;
+    $msg = "Ingrese la información obligatoria.";
+  else :
+    // Guarda la asignacion
+    $resultado = save_asignacion($datos);
+    
+    if($resultado) :
+      $msg = "La información se guardó correctamente.";
+    else:
+      $error = true;
+      $msg = "El Curso ya esta Asignado";
+    endif;
+  endif;
+endif;
+$asignaciones = mostrarAsignaciones();
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -55,6 +79,7 @@ if ($postback) {
       <p>
         <label for="codCurso">Curso <span class="required">*</span>:</label>
         <select name="codCurso" id="codCurso">
+          <option value="">Seleccione</option>
           <?php foreach($cursos as $k => $curso) : ?>
           <option value="<?php print $curso['codCurso']; ?>"><?php print $curso['nombre']; ?></option>
           <?php endforeach; ?>
@@ -62,8 +87,9 @@ if ($postback) {
       </p>
       
       <p>
-        <label for="codCurso">Docente <span class="required">*</span>:</label>
+        <label for="codDocente">Docente <span class="required">*</span>:</label>
         <select name="codDocente" id="codDocente">
+          <option value="">Seleccione</option>
           <?php foreach($docentes as $k => $docente) : ?>
           <option value="<?php print $docente['codDocente']; ?>"><?php print $docente['nombres']; ?> <?php print $docente['apellidoP']; ?> <?php print $docente['apellidoM']; ?></option>
           <?php endforeach; ?>
@@ -75,26 +101,22 @@ if ($postback) {
       </fieldset>
     </form>
     <fieldset class="<?php if(!isset($_GET['PageIndex'])): ?>collapsibleClosed<?php else: ?>collapsible<?php endif; ?>">
-      <legend>Cursos existentes</legend>
-      <p class="war">Las cursos se pueden editar, sin embargo tenga cuidado al hacerlo ya que se pueden confundir datos existentes.</p>
+      <legend>Asignaciones</legend>
       <table>
         <thead>
           <tr>
-          <th>Código</th>
-          <th>Nombre</th>
-          <th>Créditos</th>
-          <th>Activo</th>
+          <th>Curso </th>
+          <th>Docente</th>
           </tr>
         </thead>
         <tbody>
-          <?php if ($cursos): ?>
+          <?php if ($asignaciones): ?>
           <?php $alt = "even"; ?>
-          <?php foreach($cursos as $k => $curso): ?>
+          <?php foreach($asignaciones as $k => $asignacion): ?>
           <tr class="<?php print $alt ?>">
-            <th><span class="click" id="codCurso-<?php print $curso['codCurso']; ?>"><?php print $curso['codCurso']; ?></span></td>
-            <th><span class="click" id="nombre-<?php print $curso['codCurso']; ?>"><?php print $curso['nombre']; ?></span></td>
-            <th><span class="click" id="creditos-<?php print $curso['codCurso']; ?>"><?php print $curso['creditos']; ?></td>
-            <td><?php print $curso['activo']; ?></span></td>
+            <td><?php print $asignacion['nombres']; ?> <?php print $asignacion['apellidoP']; ?> <?php print $asignacion['apellidoM']; ?></td>
+            <td><?php print $asignacion['nombre']; ?></td>
+         
             <?php $alt = ($alt == "even") ? "odd" : "even"; ?>
           </tr>
           <?php endforeach; ?>
