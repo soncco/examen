@@ -18,7 +18,7 @@ require_once('home.php');
 <script type="text/javascript" src="/scripts/jquery.jeditable.js"></script>
 <script type="text/javascript">
 	$(document).ready(function() {
-		//$('codTema').focus();
+		$('nombre').focus();
 	});
 </script>
 <title>Preguntas | Sistema de exámenes</title>
@@ -38,7 +38,8 @@ require_once('home.php');
     <div id="sidebar">
       <h3>Preguntas</h3>
       <ul>
-        <li><a href="/preguntas.php">Crear exámenes</a></li>
+        <li><a href="/examenes.php">Crear exámen</a></li>
+        <li><a href="/pregunta-examen.php">Agregar pregunta a exámen</a></li>
         <li><a href="/ver-examenes.php">Lista de examenes</a></li>
       </ul>
     </div>
@@ -51,34 +52,14 @@ require_once('home.php');
     <?php endif; ?>
     <form name="frmexamen" id="frmexamen" method="post" action="examenes.php">
       <fieldset class="collapsible">
-        <legend>Información de la pregunta</legend>
+        <legend>Información del Examen</legend>
         <p>
-          <label for="codTema">Tema <span class="required">*</span>:</label><br />
-          <select name="codTema[]" id="codTema" multiple="multiple">
-            <option value="" selected="selected">Seleccione un tema</option>
-            <?php foreach ($temas as $k => $tema) : ?>
-            <option value="<?php print $tema['codTema']; ?>"
-              <?php
-              if (count($pregunta) > 0) {
-                if($tema['codTema'] == $pregunta['codTema']) 
-                  print 'selected="selected"';
-              }
-              ?>>
-                  <?php print $tema['nombre']; ?>
-            </option>
-            <?php endforeach; ?>
-          </select>
-        </p>
-        <p>
-          <label for="nivel">Nivel <span class="required">*</span>:</label>
-          <?php foreach($pniveles as $k => $nivel) : ?>
-          <input type="checkbox" name="nivel[]" id="nivel<?php print $k; ?>" value="<?php print $k; ?>" <?php if ($k == 'N') print 'checked="checked"'?> />
-          <label for="nivel<?php print $k; ?>"><?php print $nivel; ?></label>
-          <?php endforeach; ?>
-        </p>
+          <label for="nombre">Nombre <span class="required">*</span>:</label>
+          <input type="text" name="nombre" id="nombre" maxlength="20" size="25" value="" />        	
+        </p>        
       </fieldset>
       <fieldset class="collapsible">
-        <legend>Resultados</legend>
+        <legend>Examenes</legend>
       </fieldset>
       <p class="align-center">
         <button type="submit" name="submit" id="submit">Guardar</button>
