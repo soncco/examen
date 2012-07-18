@@ -13,7 +13,8 @@ $error = false;
 if($postback) :
   $tema = array(
     'nombre' => $_POST['nombre'],
-    'codCurso' => $_POST['codCurso'] 
+    'codCurso' => $_POST['codCurso'],
+    'codDocente' => $_SESSION['loginuser']['codDocente'] 
   );
 
   // Verificación
