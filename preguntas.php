@@ -93,27 +93,28 @@ $cursos = get_cursos_docente($_SESSION['loginuser']['codDocente']);
       return false;
     });
     
-		$('codTema').focus();
-	});
-</script>
-<script type="text/javascript">
-	$(document).ready(function() {
+    simg = '<img src="images/loading.gif" alt="Cargando" id="simg" />';
+    
     // Combos dependientes.
 		$('#codCurso').change(function () {
       codCurso = $(this).val();
       if (codCurso != '') {
+        $(this).after(simg);
         $.ajax({
           type: 'POST',
-          url: 'traer-temas.php',
+          url: 'traer-temas-pregunta.php',
           data: 'codCurso=' + codCurso,
           success: function(response){
             $('#codTema').html(response);
+            $('#simg').remove();
           }
         });
       } else {
         $('#codTema').html($('<option value="">Escoge un curso</option>'));
       }
     });
+    
+		$('codTema').focus();
 	});
 </script>
 <title>Preguntas | Sistema de exámenes</title>

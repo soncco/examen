@@ -55,21 +55,6 @@ $cursos = get_cursos_docente($_SESSION['loginuser']['codDocente']);
 <script type="text/javascript" src="/scripts/jquery.jeditable.js"></script>
 <script type="text/javascript">
 	$(document).ready(function() {
-		$(".click").editable("/datos-maquina.php", {
-			indicator : "Guardando...",
-			tooltip   : "Click para editar..."
-		});
-    $(".clicks").editable("/datos-maquina.php", { 
-      indicator : "Guardando...",
-      loadurl   : "/scripts/operadores.php",
-      type   : "select",
-      submit : "OK",
-      style  : "inherit",
-      submitdata : function() {
-        return {op : true};
-      }
-    });
-    
 		$('#nombre').focus();
 	});
 </script>

@@ -21,9 +21,7 @@
 <script type="text/javascript" src="/scripts/jquery.collapsible.js"></script>
 <script type="text/javascript">
 	$(document).ready(function() {
-    
     simg = '<img src="images/loading.gif" alt="Cargando" id="simg" />';
-    
     $('#codCurso').change(function(){
       $(this).after(simg);
       codCurso = $(this).val();
@@ -53,7 +51,14 @@
   </div>
   <div class="clear"></div>
   <div id="icon" class="grid_3">
-    <p class="align-center"><img src="images/report.png" alt="Informes" /></p>
+    <div id="sidebar">
+      <h3>Temas</h3>
+      <ul>
+        <li><a href="/temas.php">Crear temas</a></li>
+        <li><a href="/lista-temas.php">Lista de temas</a></li>
+      </ul>
+    </div>
+    <p class="align-center"><img src="images/opciones.png" alt="Opciones" /></p>
   </div>
   <div id="content" class="grid_13">
     <h1>Lista de temas</h1>

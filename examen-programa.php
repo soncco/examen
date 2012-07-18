@@ -59,15 +59,18 @@ $cursos = get_cursos_docente($_SESSION['loginuser']['codDocente']);
 <script type="text/javascript">
 	$(document).ready(function() {
     // Combos dependientes.
+    simg = '<img src="images/loading.gif" alt="Cargando" id="simg" />';
 		$('#codCurso').change(function () {
-      codCurso = $(this).val();
+      codCurso = $(this).val();      
       if (codCurso != '') {
+        $(this).after(simg);
         $.ajax({
           type: 'POST',
           url: 'traer-examenes.php',
           data: 'codCurso=' + codCurso,
           success: function(response){
             $('#codExamen').html(response);
+            $('#simg').remove();
           }
         });
       } else {
