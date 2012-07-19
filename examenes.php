@@ -1,8 +1,9 @@
 <?php
 
-require_once('home.php');
-//require_once('redirect.php');
+  require_once('home.php');
+  require_once('redirect.php');
 
+  $cursos = get_cursos_docente($_SESSION['loginuser']['codDocente']);
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -36,12 +37,11 @@ require_once('home.php');
   <div class="clear"></div>
   <div id="icon" class="grid_3">
     <div id="sidebar">
-      <h3>Preguntas</h3>
+      <h3>Exámenes</h3>
       <ul>
         <li><a href="/examenes.php">Crear exámen</a></li>
-        <li><a href="/pregunta-examen.php">Agregar pregunta a exámen</a></li>
         <li><a href="/ver-examenes.php">Lista de examenes</a></li>
-		<li><a href="/examen-programa.php">Programar Examen</a></li>
+        <li><a href="/examen-programa.php">Programar Examen</a></li>
       </ul>
     </div>
     <p class="align-center"><img src="images/opciones.png" alt="Opciones" /></p>
@@ -57,7 +57,16 @@ require_once('home.php');
         <p>
           <label for="nombre">Nombre <span class="required">*</span>:</label>
           <input type="text" name="nombre" id="nombre" maxlength="20" size="25" value="" />        	
-        </p>        
+        </p>
+        <p>
+          <label for="codCurso">Curso <span class="required">*</span>:</label>
+          <select name="codCurso" id="codCurso">
+            <option value="" selected="selected">Seleccione un curso</option>
+            <?php foreach ($cursos as $k => $curso) : ?>
+            <option value="<?php print $curso['codCurso']; ?>"><?php print $curso['nombre']; ?></option>
+            <?php endforeach; ?>
+          </select>
+        </p>
       </fieldset>
       <fieldset class="collapsible">
         <legend>Examenes</legend>
