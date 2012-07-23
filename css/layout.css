@@ -267,3 +267,17 @@ html ul.i-tabs li.active-tab, html ul.i-tabs li.active-tab a:hover  {
   font-weight: bold;
   font-size: 18px;
 }
+
+/* Paginator */
+.paginator {
+  font-size: 11px;
+}
+.paginator a,
+.paginator .ezr_nav_na {
+  padding: 2px 10px;
+  border: 1px solid #cdcaca;
+}
+
+.paginator .ezr_nav_na {
+  border-color: #000;
+}

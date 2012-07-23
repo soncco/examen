@@ -76,7 +76,11 @@
 			$msg = "Ya existe el usuario '$user_values[usuario]'.";
 	}
 	
+  // Paginación
+  $pager = true;
 	$users = get_items($tabla, $bcdb->field_id);
+  $results = @$bcrs->get_navigation();
+  
 	$user = array();
 	if($id) {
 		$user = get_item_by_field($tabla, $id, $bcdb->field_id);
@@ -101,11 +105,6 @@
 <script type="text/javascript">
 	$(document).ready(function() {
 		$("#frmusers").validate();
-		
-		/**
-		 * Varios
-		 */	
-		$('#codUsuario').focus();
 	});
 </script>
 <title>Usuarios | Sistema de Caja</title>
@@ -135,7 +134,7 @@
         <p>
           <?php if ($rol == 'docente' || $rol == 'alumno') : ?>
           <label for="<?php print $bcdb->field_id?>">Código:</label>
-          <input type="text" name="<?php print $bcdb->field_id?>" id="<?php print $bcdb->field_id?>" maxlength="6" size="10" value="<?php print ($user) ? $user[$bcdb->field_id] : ""; ?>" />
+          <input type="text" name="<?php print $bcdb->field_id?>" class="required" id="<?php print $bcdb->field_id?>" maxlength="6" size="10" value="<?php print ($user) ? $user[$bcdb->field_id] : ""; ?>" />
           <?php else: ?>
           <label for="usuario">Usuario:</label>
           <input type="text" name="usuario" id="usuario" maxlength="6" size="10" value="<?php print ($user) ? $user['codUsuario'] : ""; ?>" />

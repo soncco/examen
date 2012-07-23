@@ -12,10 +12,10 @@ $error = false;
 // Si es que el formulario se ha enviado
 if($postback) :
   $curso = array(
-  	'codCurso' => $_POST['codCurso'],
+    'codCurso' => $_POST['codCurso'],
     'nombre' => $_POST['nombre'],
-	'creditos' => $_POST['creditos'],
-	'activo' => $_POST['activo'],
+    'creditos' => $_POST['creditos'],
+    'activo' => $_POST['activo'],
   );
 
   // Verificación
@@ -38,8 +38,11 @@ if($postback) :
   endif;
 endif;
 
-/*$temas = get_items($bcdb->tema);*/
+$pager = true;
 $cursos = get_items($bcdb->curso, 'codCurso');
+
+// Paginación.
+$results = @$bcrs->get_navigation();
 
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
@@ -70,8 +73,8 @@ $cursos = get_items($bcdb->curso, 'codCurso');
         return {op : true};
       }
     });
-    
-		$('#codCurso').focus();
+
+  $('#codCurso').focus();
 	});
 </script>
 <title>Cursos | Sistema de exámenes</title>

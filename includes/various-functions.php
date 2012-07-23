@@ -51,7 +51,7 @@ function get_cursos_docente($codDocente) {
  * @return array
  */
 function get_examenes_curso($codCurso) {
-  global $bcdb;
+  global $bcdb, $bcrs, $pager;
   
   $q = sprintf("SELECT e.codExamen, e.nombre 
     FROM %s e
@@ -68,7 +68,7 @@ function get_examenes_curso($codCurso) {
           $bcdb->pregunta,
           $bcdb->tema,
           $codCurso);
-  $examenes = $bcdb->get_results($q);
+  $examenes = ($pager) ? $bcrs->get_results($sql) : $bcdb->get_results($sql);
   return $examenes;
 }
 
@@ -122,7 +122,7 @@ function save_asignacion($datos) {
 }
 
 function mostrarAsignaciones() {
-  global $bcdb;
+  global $bcdb, $bcrs, $pager;
   $sql = sprintf("SELECT D.nombres, D.apellidoP, D.apellidoM, C.nombre
         FROM %s CA
         INNER JOIN %s D ON CA.codDocente = D.CodDocente
@@ -132,7 +132,7 @@ function mostrarAsignaciones() {
          $bcdb->curso
           );
   
-  $asignaciones = $bcdb->get_results($sql);
+  $asignaciones = ($pager) ? $bcrs->get_results($sql) : $bcdb->get_results($sql);
   return $asignaciones;
 }
 
