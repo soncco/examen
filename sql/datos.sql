@@ -4,6 +4,9 @@ INSERT INTO tSemestre (codSemestre, fechaInicio, fechaFin) VALUES
 ('2012-I', '2012-01-04 05:00:00', '2012-03-16 05:00:00'),
 ('2012-II', '2012-05-10 05:00:00', '2012-08-31 05:00:00');
 
+INSERT INTO tOpcion (nombre, descripcion) VALUES
+('semestre_actual','2012-II');
+
 INSERT INTO tAdministrador (codAdmin, usuario, password, apellidoP, apellidoM, nombres, email) VALUES
 (1, 'admin', '21232f297a57a5a743894a0e4a801fc3', 'ADMIN', 'DE LOS', 'ADMIN', 'admin@miexamen.in');
 
