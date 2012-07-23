@@ -1,4 +1,6 @@
-USE examen ;
+DROP DATABASE IF EXISTS examen;
+CREATE DATABASE IF NOT EXISTS examen;
+USE examen;
 
 -- -----------------------------------------------------
 -- Table tAlumno
@@ -166,7 +168,7 @@ COMMENT = 'Guarda información de preguntas relacionadas a un ';
 -- -----------------------------------------------------
 CREATE  TABLE tExamenPrograma (
   codExamen INT UNSIGNED NOT NULL COMMENT 'Identificador.' ,
-  fecha TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Fecha y hora de la programación.' ,
+  fecha TIMESTAMP NOT NULL COMMENT 'Fecha y hora de la programación.' ,
   duracion INT NOT NULL DEFAULT 3600 ,
   rendido ENUM('S','N') NOT NULL DEFAULT 'N' COMMENT 'Información sobre si se ha rendido o no el ' ,
   PRIMARY KEY (codExamen, fecha) ,
@@ -214,8 +216,8 @@ COMMENT = 'Guarda información de respuestas de un alumno en un ';
 -- -----------------------------------------------------
 CREATE  TABLE tSemestre (
   codSemestre VARCHAR(7) NOT NULL COMMENT 'Identificador del semestre, por ejemplo: 2012-I.' ,
-  fechaInicio TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Inicio del semestre.' ,
-  fechaFin TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Fin del semestre.' ,
+  fechaInicio TIMESTAMP NOT NULL COMMENT 'Inicio del semestre.' ,
+  fechaFin TIMESTAMP NOT NULL COMMENT 'Fin del semestre.' ,
   PRIMARY KEY (codSemestre) )
 ENGINE = InnoDB
 COMMENT = 'Guarda información de semestres.';
