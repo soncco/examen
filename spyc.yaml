@@ -1,4 +1,13 @@
-hombres: [Pepe Lopez, Guillermo Garcia]
-mujeres:
- - Maria Garcia
- - Susana Marquez
+pregunta1: [alt1, alt2, alt3]
+pregunta2:
+ - alt1
+ - alt2
+ - alt3
+ - alt4
+ - alt5
+pregunta3:
+	alt1
+	alt2
+	alt3
+	alt4
+	alt5
