@@ -55,10 +55,13 @@ $results = @$bcrs->get_navigation();
 <link rel="stylesheet" type="text/css" media="screen" href="/css/layout.css" /> 
 <link href="/favicon.ico" type="image/ico" rel="shortcut icon" />
 <script type="text/javascript" src="/scripts/jquery-1.3.2.min.js"></script>
+<script type="text/javascript" src="/scripts/jquery.validate.js"></script>
 <script type="text/javascript" src="/scripts/jquery.collapsible.js"></script>
 <script type="text/javascript" src="/scripts/jquery.jeditable.js"></script>
 <script type="text/javascript">
 	$(document).ready(function() {
+    $('#frmcurso').validate();
+    
 		$(".click").editable("/datos-curso.php", {
 			indicator : "Guardando...",
 			tooltip   : "Click para editar..."
@@ -103,15 +106,15 @@ $results = @$bcrs->get_navigation();
       <legend>Información del Curso</legend>
       <p>
         <label for="codCurso">Código <span class="required">*</span>:</label>
-        <input type="text" name="codCurso" id="codCurso" maxlength="8" size="10" />
+        <input type="text" name="codCurso" id="codCurso" maxlength="8" size="10" class="required" />
       </p>
       <p>
         <label for="nombre">Nombre <span class="required">*</span>:</label>
-        <input type="text" name="nombre" id="nombre" maxlength="60" size="45" />
+        <input type="text" name="nombre" id="nombre" maxlength="60" size="45" class="required" />
       </p>
       <p>
         <label for="creditos">Créditos <span class="required">*</span>:</label>
-        <input type="text" name="creditos" id="creditos" maxlength="1" size="2" />
+        <input type="text" name="creditos" id="creditos" maxlength="1" size="2" class="required number" />
       </p>
         <label for="activo">Activo <span class="required">*</span>:</label>
         <select name="activo" id="activo">

@@ -113,6 +113,13 @@ label.block {
 	width: 150px;
 }
 
+label[generated="true"] {
+  clear: both;
+  background: none;
+  border: 0;
+  display: block;
+}
+
 span.click,
 span.sclick {
 	display: inline !important;

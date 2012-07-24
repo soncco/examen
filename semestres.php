@@ -51,14 +51,15 @@ $semestres = get_items($bcdb->semestre, 'codSemestre');
 <link rel="stylesheet" type="text/css" media="screen" href="/css/theme/ui.all.css" />
 <link href="/favicon.ico" type="image/ico" rel="shortcut icon" />
 <script type="text/javascript" src="/scripts/jquery-1.3.2.min.js"></script>
+<script type="text/javascript" src="/scripts/jquery.validate.js"></script>
 <script type="text/javascript" src="/scripts/jquery.collapsible.js"></script>
 <script type="text/javascript" src="/scripts/jquery.jeditable.js"></script>
 <script type="text/javascript" src="/scripts/jquery.calendar.js"></script>
 <script type="text/javascript" src="/scripts/jquery.ui.all.min.js"></script>
 <script type="text/javascript">
 	$(document).ready(function() {
-   
-		$('#codSemestre').focus();
+    $('#frmsemestre').validate();
+    $('#codSemestre').focus();
 	});
 </script>
 <title>Semestres | Sistema de exámenes</title>
@@ -87,15 +88,15 @@ $semestres = get_items($bcdb->semestre, 'codSemestre');
       <legend>Información del Semestre</legend>
       <p>
         <label for="codSemestre">Nombre del Semestre <span class="required">*</span>:</label>
-        <input type="text" name="codSemestre" id="codSemestre" maxlength="7" size="10" />
+        <input type="text" name="codSemestre" id="codSemestre" maxlength="7" size="10" class="required" />
       </p>
       <p>
         <label for="fechaInicio">Fecha Inicio <span class="required">*</span>:</label>
-        <input type="text" name="fechaInicio" class="date" id="fechaInicio" maxlength="20" size="20" />
+        <input type="text" name="fechaInicio" class="date" id="fechaInicio" maxlength="20" size="20" class="required" />
       </p>
       <p>
         <label for="fechaFin">Fecha Fin <span class="required">*</span>:</label>
-        <input type="text" name="fechaFin" class="date" id="fechaFin" maxlength="20" size="20" />
+        <input type="text" name="fechaFin" class="date" id="fechaFin" maxlength="20" size="20" class="required" />
       </p>
       <p class="align-center">
         <button type="submit" name="submit" id="submit">Guardar</button>

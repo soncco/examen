@@ -85,7 +85,7 @@ $results = @$bcrs->get_navigation();
         <select name="codCurso" id="codCurso">
           <option value="">Seleccione</option>
           <?php foreach($cursos as $k => $curso) : ?>
-          <option value="<?php print $curso['codCurso']; ?>"><?php print $curso['nombre']; ?></option>
+          <option value="<?php print $curso['codCurso']; ?>"><?php print sprintf("%s: %s", $curso['codCurso'], $curso['nombre']); ?></option>
           <?php endforeach; ?>
         </select>
       </p>
@@ -109,8 +109,9 @@ $results = @$bcrs->get_navigation();
       <table>
         <thead>
           <tr>
-          <th>Curso </th>
+          <th>Curso</th>
           <th>Docente</th>
+          <th>Acciones</th>
           </tr>
         </thead>
         <tbody>
@@ -120,7 +121,7 @@ $results = @$bcrs->get_navigation();
           <tr class="<?php print $alt ?>">
             <td><?php print $asignacion['nombres']; ?> <?php print $asignacion['apellidoP']; ?> <?php print $asignacion['apellidoM']; ?></td>
             <td><?php print $asignacion['nombre']; ?></td>
-         
+            <td><a href="asignar-docente.php?op=quitar&amp;codDocente=<?php print $asignacion['codDocente']; ?>&amp;codCurso=<?php print $asignacion['codCurso']; ?>">Quitar</a></td>
             <?php $alt = ($alt == "even") ? "odd" : "even"; ?>
           </tr>
           <?php endforeach; ?>

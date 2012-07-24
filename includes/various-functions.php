@@ -123,7 +123,7 @@ function save_asignacion($datos) {
 
 function mostrarAsignaciones() {
   global $bcdb, $bcrs, $pager;
-  $sql = sprintf("SELECT D.nombres, D.apellidoP, D.apellidoM, C.nombre
+  $sql = sprintf("SELECT D.codDocente, D.nombres, D.apellidoP, D.apellidoM, C.codCurso, C.nombre
         FROM %s CA
         INNER JOIN %s D ON CA.codDocente = D.CodDocente
         INNER JOIN %s C ON CA.codCurso = C.CodCurso",
@@ -142,15 +142,12 @@ function mostrarAsignaciones() {
 * @param int $idusuario El id del usuario
 * @return boolean
 */
-function save_user($idusuario, $user_values) {
+function save_user($idusuario, $user_values, $tabla) {
 	global $bcdb, $msg;
-
-	if ( $idusuario && get_item($idusuario, $bcdb->admin) ) {
-		unset($user_values['usuario']); // We don't want someone 'accidentally' update usuario
-	}		
-	
-	//$user_values['codUsuario'] = $idusuario;
-	if ( ($query = insert_update_query($bcdb->usuario, $user_values)) &&
+	if ( $idusuario && get_item($idusuario, $tabla) ) {
+		unset($user_values[$bcdb->current_field]); // We don't want someone 'accidentally' update usuario
+	}
+	if ( ($query = insert_update_query($tabla, $user_values)) &&
 		$bcdb->query($query) ) {
 		if (empty($idusuario))	
 			$idusuario = $bcdb->insert_id;

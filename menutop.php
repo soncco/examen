@@ -4,9 +4,11 @@
           'top' => array(
             'cursos.php' => 'Cursos',
             'semestres.php' => 'Semestres',
-            'usuarios.php?rol=docente' => 'Docentes',
+            'docentes.php' => 'Docentes',
             'asignar-docente.php' => 'Asignar docente',
-            'opciones.php' => 'Opciones'
+            'alumnos.php' => 'Alumnos',
+            'opciones.php' => 'Opciones',
+            'admins.php' => 'Admins',
           ),
           'side' => array(
           )

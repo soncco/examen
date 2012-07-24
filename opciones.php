@@ -47,8 +47,8 @@
     <fieldset class="collapsible">
       <legend>Opciones del sistema</legend>
       <p>
-        <label for="limite_dia">Límite de horas que se alquila una máquina por día:</label>
-        <span class="click" id="limite_dia"><?php print get_option('limite_dia'); ?></span> </p>
+        <label for="semestre_actual">Semestre actual:</label>
+        <span class="click" id="semestre_actual"><?php print get_option('semestre_actual'); ?></span> </p>
     </fieldset>
   </div>
   <div class="clear"></div>

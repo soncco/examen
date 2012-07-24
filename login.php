@@ -37,7 +37,7 @@ if($postback){
     default:
       $user = get_item_by_field("usuario", $_POST['username'], $bcdb->admin);
       $user['rol'] = 'admin';
-      $location = 'usuarios.php?rol=docente';
+      $location = 'cursos.php';
   endswitch;
 	if ( isset($user['password']) ) :
 		if( $user['password'] == md5($_POST['pwd']) ) :
