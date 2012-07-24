@@ -46,6 +46,7 @@ if($postback) :
 
     if($id) :
       $msg = "La información se guardó correctamente.";
+      $id = 0;
     else:
       $error = true;
       $msg = "Hubo un error al guardar la información, intente nuevamente.";
@@ -168,7 +169,7 @@ $cursos = get_cursos_docente($_SESSION['loginuser']['codDocente']);
         </p>
         <p>
           <label for="enunciado">Enunciado <span class="required">*</span>:</label>
-          <input type="text" name="enunciado" id="enunciado" maxlength="200" size="60" value="<?php print ($pregunta) ? $pregunta['enunciado'] : ""; ?>" />
+          <input type="text" name="enunciado" id="enunciado" size="60" value="<?php print ($pregunta) ? $pregunta['enunciado'] : ""; ?>" />
         </p>
         <p>
           <label for="nivel">Nivel <span class="required">*</span>:</label>
@@ -195,7 +196,7 @@ $cursos = get_cursos_docente($_SESSION['loginuser']['codDocente']);
             <?php if($id) : ?>
               <?php foreach($pregunta['alternativas'] as $k => $alternativa) : ?>
               <tr class="<?php print $alt ?>">
-                <td><input type="text" name="detalle[]" id="detalle<?php print $alternativa['codAlternativa']; ?>" maxlength="50" size="60" tabindex="<?php print $i+5; ?>" value="<?php print $alternativa['detalle']; ?>" /></td>
+                <td><input type="text" name="detalle[]" id="detalle<?php print $alternativa['codAlternativa']; ?>" size="60" tabindex="<?php print $i+5; ?>" value="<?php print $alternativa['detalle']; ?>" /></td>
                 <th><input type="radio" name="correcta" id="correcta<?php print $alternativa['codAlternativa']; ?>" value="<?php print $alternativa['codAlternativa']; ?>" <?php if ($alternativa['correcta'] == 'S') print 'checked="checked"'?> /></th>
                 <?php $alt = ($alt == "even") ? "odd" : "even"; ?>
               </tr>
@@ -203,7 +204,7 @@ $cursos = get_cursos_docente($_SESSION['loginuser']['codDocente']);
             <?php else : ?>
               <?php for($i = 0; $i < 5; $i++) : ?>
               <tr class="<?php print $alt ?>">
-                <td><input type="text" name="detalle[]" id="detalle<?php print $i; ?>" maxlength="50" size="60" tabindex="<?php print $i+5; ?>" /></td>
+                <td><input type="text" name="detalle[]" id="detalle<?php print $i; ?>" size="60" tabindex="<?php print $i+5; ?>" /></td>
                 <th><input type="radio" name="correcta" id="correcta<?php print $i; ?>" value="<?php print $i ?>" <?php if ($i == '0') print 'checked="checked"'?> /></th>
                 <?php $alt = ($alt == "even") ? "odd" : "even"; ?>
               </tr>
