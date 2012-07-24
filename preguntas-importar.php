@@ -33,7 +33,7 @@ if($postback){
 			
 			$bcdb->current_field = 'codPregunta';
 			save_item(0, $pregunta_i, $bcdb->pregunta);
-			$id_pregunta =  mysql_insert_id();
+			$id_pregunta =  $bcdb->insert_id;
 			$correcta = $preg['correcta'];
 			
 			foreach ($preg['alternativas'] as $alt) {
