@@ -8,9 +8,48 @@ $postback = isset($_POST['submit']);
 $error = false;
 
 if($postback){
-	$data = spyc_load_file($_FILES['archivo']['tmp_name']);
+	$pregunta = array(
+		'codTema' => $_POST['codTema'],
+	);
 	
-	krumo($data);
+	if (empty($pregunta['codTema']) || (filesize($_FILES['archivo']['tmp_name']) == 0)) {
+		$error = true;
+		$msg = "Ingrese la información obligatoria.";
+	} else {
+		$preguntas = spyc_load_file($_FILES['archivo']['tmp_name']);
+		
+		/*
+		 * TODO: VALIDAR QUE ARCHIVO ESTE EN EL FORMATO CORRECTO
+		 */
+		 
+		foreach ($preguntas as $preg) {
+			$pregunta_i = array(
+				'codTema' => $pregunta['codTema'],
+				'enunciado' => $preg['enunciado'],
+				'nivel' => $preg['nivel']
+			);
+			
+			if (!$pregunta_i['nivel']) $pregunta_i['nivel'] = 'N';
+			
+			$bcdb->current_field = 'codPregunta';
+			save_item(0, $pregunta_i, $bcdb->pregunta);
+			$id_pregunta =  mysql_insert_id();
+			$correcta = $preg['correcta'];
+			
+			foreach ($preg['alternativas'] as $alt) {
+				$alternativa_i = array(
+					'codPregunta' => $id_pregunta,
+					'correcta' => 'N',
+					'detalle' => $alt,
+				);
+				
+				if ($preg['alternativas'][$correcta] == $alt) $alternativa_i['correcta'] = 'S';
+				
+				$bcdb->current_field = 'codAlternativa';
+				save_item(0, $alternativa_i, $bcdb->alternativa);
+			}
+		}
+	}
 }
 
 $cursos = get_cursos_docente($_SESSION['loginuser']['codDocente']);
