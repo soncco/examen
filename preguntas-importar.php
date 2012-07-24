@@ -21,7 +21,6 @@ if($postback){
 		/*
 		 * TODO: VALIDAR QUE ARCHIVO ESTE EN EL FORMATO CORRECTO
 		 */
-		 
 		foreach ($preguntas as $preg) {
 			$pregunta_i = array(
 				'codTema' => $pregunta['codTema'],

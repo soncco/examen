@@ -44,6 +44,7 @@ $preguntas = get_items($bcdb->pregunta, 'codPregunta');
       <ul>
         <li><a href="/preguntas.php">Crear preguntas</a></li>
         <li><a href="/lista-preguntas.php">Lista de preguntas</a></li>
+        <li><a href="/preguntas-importar.php">Importar preguntas</a></li>
       </ul>
     </div>
     <p class="align-center"><img src="images/opciones.png" alt="Opciones" /></p>
@@ -66,6 +67,7 @@ $preguntas = get_items($bcdb->pregunta, 'codPregunta');
         </thead>
         <tbody>
           <?php $alt = "even"; ?>
+          <?php if($preguntas) : ?>
           <?php foreach($preguntas as $k => $pregunta) : ?>
           <tr class="<?php print $alt ?>">
             <th><?php print $pregunta['enunciado']; ?></th>
@@ -75,6 +77,11 @@ $preguntas = get_items($bcdb->pregunta, 'codPregunta');
             <?php $alt = ($alt == "even") ? "odd" : "even"; ?>
           </tr>
           <?php endforeach; ?>
+          <?php else : ?>
+          <tr class="<?php print $alt ?>">
+            <th colspan="4">Todavía no existen preguntas. <a href="/preguntas.php">Crear preguntas</a>.</th>
+          </tr>
+          <?php endif; ?>
         </tbody>
       </table>
     </fieldset>

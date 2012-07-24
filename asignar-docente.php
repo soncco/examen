@@ -111,7 +111,7 @@ $results = @$bcrs->get_navigation();
           <tr>
           <th>Curso</th>
           <th>Docente</th>
-          <th>Acciones</th>
+          <!--th>Acciones</th-->
           </tr>
         </thead>
         <tbody>
@@ -119,9 +119,9 @@ $results = @$bcrs->get_navigation();
           <?php $alt = "even"; ?>
           <?php foreach($asignaciones as $k => $asignacion): ?>
           <tr class="<?php print $alt ?>">
+            <td><?php print sprintf('<strong>%s:</strong> %s', $asignacion['codCurso'], $asignacion['nombre']); ?></td>
             <td><?php print $asignacion['nombres']; ?> <?php print $asignacion['apellidoP']; ?> <?php print $asignacion['apellidoM']; ?></td>
-            <td><?php print $asignacion['nombre']; ?></td>
-            <td><a href="asignar-docente.php?op=quitar&amp;codDocente=<?php print $asignacion['codDocente']; ?>&amp;codCurso=<?php print $asignacion['codCurso']; ?>">Quitar</a></td>
+            <!--td><a href="asignar-docente.php?op=quitar&amp;codDocente=<?php print $asignacion['codDocente']; ?>&amp;codCurso=<?php print $asignacion['codCurso']; ?>">Quitar</a></td-->
             <?php $alt = ($alt == "even") ? "odd" : "even"; ?>
           </tr>
           <?php endforeach; ?>
