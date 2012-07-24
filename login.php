@@ -13,7 +13,7 @@ if ( !empty($_SESSION['loginuser']) ) {
       safe_redirect('mis-cursos.php');
     break;
     default:
-      safe_redirect('usuarios.php?rol=docente');
+      safe_redirect('cursos.php');
   endswitch;
 }
 
