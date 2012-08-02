@@ -4,7 +4,7 @@
  * Imprime recibos individuales
  */
 require_once('home.php');
-require_once('redirect.php');
+//require_once('redirect.php');
 require(INCLUDE_PATH . 'fpdf/fpdf.php');
 
 class PDF extends FPDF {
@@ -12,7 +12,7 @@ class PDF extends FPDF {
 	
 	function LoadData() {
 		global $bcdb;
-		$data = get_recibos_dia($this->fecha);
+		//$data = get_recibos_dia($this->fecha);
 		return $data;
 	}
 	
