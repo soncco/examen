@@ -3,14 +3,14 @@
  * Imprime recibos individuales
  */
 require_once('home.php');
-require_once('redirect.php');
+//require_once('redirect.php');
 require(INCLUDE_PATH . 'fpdf/fpdf.php');
 
 class PDF extends FPDF {
 	
 	function LoadData($id) {
 		global $bcdb;
-		$data = get_recibo($id);
+		//$data = get_recibo($id);
 		return $data;
 	}
 	
@@ -37,7 +37,7 @@ class PDF extends FPDF {
 		$this->Cell(25, 7, "RUC: 20164370349");
 		$this->SetFont('Arial', '' ,11);
 		$this->Cell(40, 7, "Importe: ", 0, 0, 'R');
-		$this->Cell(35, 7, "S/." . nuevos_soles($data['monto']), 1, 0, 'R');
+		//$this->Cell(35, 7, "S/." . nuevos_soles($data['monto']), 1, 0, 'R');
 		$this->Ln(9);
 		
 		$this->Cell($hl);
@@ -77,7 +77,7 @@ class PDF extends FPDF {
 		$this->Cell(20, 7, "", 0, 0, 0, true);
 		$this->Cell(30, 8, $cod_hora, 0, 0, 'C');
 		$this->Cell(20, 7, "", 0, 0, 0, true);
-		$this->Cell(30, 8, nuevos_soles($data['monto']), 0, 0, 'C');
+		//$this->Cell(30, 8, nuevos_soles($data['monto']), 0, 0, 'C');
 		$this->Cell(25, 7, "", 0, 0, 0, true);
 	}
 }

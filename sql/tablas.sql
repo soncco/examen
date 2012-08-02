@@ -1,6 +1,10 @@
 DROP DATABASE IF EXISTS examen;
 CREATE DATABASE IF NOT EXISTS examen;
 USE examen;
+DROP TABLE tAdministrador, tAlternativa, tAlumno, tCargaAcademica, tCurso, tDocente, tDocenteCurso, tExamen, tExamenPregunta, tExamenPrograma, tMatricula, tOpcion, tPregunta, tRespuesta, tSemestre, tTema, tWatchdog;
+DROP TABLE tAlternativa, tAlumno, tCargaAcademica, tCurso, tDocente, tDocenteCurso, tExamen, tExamenPrograma, tPregunta, tSemestre, tTema;
+DROP TABLE tCurso, tDocente, tDocenteCurso, tExamen;
+DROP TABLE tCurso, tDocente;
 
 -- -----------------------------------------------------
 -- Table tAlumno
@@ -77,7 +81,7 @@ CREATE  TABLE tTema (
   codTema INT UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'Identificador del tema.' ,
   codDocente CHAR(5) NOT NULL ,
   codCurso CHAR(8) NOT NULL ,
-  nombre VARCHAR(60) NOT NULL COMMENT 'Nombre del tema.' ,
+  nombre VARCHAR(255) NOT NULL COMMENT 'Nombre del tema.' ,
   PRIMARY KEY (codTema) ,
   INDEX fk_tTema_tDocenteCurso1 (codDocente ASC, codCurso ASC) ,
   CONSTRAINT fk_tTema_tDocenteCurso1
@@ -95,7 +99,7 @@ COMMENT = 'Guarda información de Temas.';
 CREATE  TABLE tPregunta (
   codPregunta INT UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'Identificador de la pregunta.' ,
   codTema INT UNSIGNED NOT NULL COMMENT 'Código del tema al cual pertenece la pregunta.' ,
-  enunciado VARCHAR(200) NOT NULL COMMENT 'Enunciado de la pregunta.' ,
+  enunciado VARCHAR(500) NOT NULL COMMENT 'Enunciado de la pregunta.' ,
   nivel ENUM('F','N','D') NOT NULL DEFAULT 'F' COMMENT 'Nivel de la pregunta. F: Fácil, N: Normal y D: Difícil.' ,
   imagen VARCHAR(100) NULL COMMENT 'Nombre de la imagen relativa a la pregunta.' ,
   PRIMARY KEY (codPregunta) ,
