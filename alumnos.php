@@ -2,75 +2,63 @@
 /**
  * Gestión de alumnos que usan el sistema.
  */
-  require_once('home.php');
-  require_once('redirect.php');	
+require_once ('home.php');
+require_once ('redirect.php');
 
-  $id = ! empty($_REQUEST['id']) ? (string)$_REQUEST['id'] : 0;
+$id = !empty($_REQUEST['id']) ? (string)$_REQUEST['id'] : 0;
 
-  $bcdb->current_field = 'codAlumno';
-  $tabla = $bcdb->alumno;
-  $title = 'Alumnos';
-  $singular = 'Alumno';
-  
-	
-  if ( $_SERVER['REQUEST_METHOD'] == 'POST' ) {
-    if ( validate_required(array(
-    'Nombres' => $_POST['nombres'], 
-    'Apellido Paterno' => $_POST['apellidoP'],
-    'Apellido Materno' => $_POST['apellidoM'],
-    'Email' => $_POST['email'],
-    ))) {
+$bcdb -> current_field = 'codAlumno';
+$tabla = $bcdb -> alumno;
+$title = 'Alumnos';
+$singular = 'Alumno';
 
-      $error = false;
-      if($_POST['pwd']!=$_POST['pwd2']) {
-        $error = true;
-        $msg = "Las contraseñas no coinciden.";
-      } else {
-        $pwd = trim($_POST['pwd']);
-        if(empty($pwd)&&(!$id)) {
-          $error = true;
-          $msg = "La contrase&ntilde;a es un campo requerido.";
-        }
-      }
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+	if (validate_required(array('Nombres' => $_POST['nombres'], 'Apellido Paterno' => $_POST['apellidoP'], 'Apellido Materno' => $_POST['apellidoM'], 'Email' => $_POST['email'], ))) {
 
-      if(!$error) :
-        $user_values = array(
-          'codAlumno' => $_POST['codAlumno'],
-          'nombres' => $_POST['nombres'],
-          'apellidoP' => $_POST['apellidoP'],
-          'apellidoM' => $_POST['apellidoM'],
-          'email' => $_POST['email'],
-        );
-      
-        //krumo($user_values);
+		$error = false;
+		if ($_POST['pwd'] != $_POST['pwd2']) {
+			$error = true;
+			$msg = "Las contraseñas no coinciden.";
+		} else {
+			$pwd = trim($_POST['pwd']);
+			if (empty($pwd) && (!$id)) {
+				$error = true;
+				$msg = "La contrase&ntilde;a es un campo requerido.";
+			}
+		}
 
-        if($id&&(!empty($_POST['pwd']))) {
-          $user_values['password'] = md5(trim($_POST['pwd']));
-        }
+		if (!$error) :
+			$user_values = array('codAlumno' => $_POST['codAlumno'], 'nombres' => $_POST['nombres'], 'apellidoP' => $_POST['apellidoP'], 'apellidoM' => $_POST['apellidoM'], 'email' => $_POST['email'], );
 
-        if($id===0) {
-          $user_values['password'] = md5(trim($_POST['pwd']));
-        }
+			//krumo($user_values);
 
-        $user_values = array_map('strip_tags', $user_values);
-        $id = save_user($id, $user_values, $tabla);
-        if($id) $id = 0;
-        $msg = "Los datos se guardaron satisfactoriamente.";
-      endif;
-    } else 
-      $msg = "Ya existe el alumno.";
-  }
-	
-  // Paginación
-  $pager = true;
-	$users = get_items($tabla, $bcdb->current_field);
-  $results = @$bcrs->get_navigation();
-  
-	$user = array();
-	if($id) {
-		$user = get_item_by_field($bcdb->current_field, $id, $tabla);
-	}
+			if ($id && (!empty($_POST['pwd']))) {
+				$user_values['password'] = md5(trim($_POST['pwd']));
+			}
 
+			if ($id === 0) {
+				$user_values['password'] = md5(trim($_POST['pwd']));
+			}
+
+			$user_values = array_map('strip_tags', $user_values);
+			$id = save_user($id, $user_values, $tabla);
+			if ($id)
+				$id = 0;
+			$msg = "Los datos se guardaron satisfactoriamente.";
+		endif;
+	} else
+		$msg = "Ya existe el alumno.";
+}
+
+// Paginación
+$pager = true;
+$users = get_items($tabla, $bcdb -> current_field);
+$results = @$bcrs -> get_navigation();
+
+$user = array();
+if ($id) {
+	$user = get_item_by_field($bcdb -> current_field, $id, $tabla);
+}
 ?>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
@@ -90,7 +78,7 @@
 <script type="text/javascript">
 	$(document).ready(function() {
 		$("#frmusers").validate();
-	});
+	}); 
 </script>
 <title><?php print $title; ?> | Sistema de Caja</title>
 </head>
@@ -99,7 +87,9 @@
 <div class="container_16">
   <div id="header">
     <h1 id="logo"> <a href="/"><span>Sistema de Exámenes</span></a> </h1>
-    <?php include "menutop.php"; ?>
+    <?php
+	include "menutop.php";
+ ?>
     <?php if(isset($_SESSION['loginuser'])) : ?>
     <div id="logout">Sesión: <?php print $_SESSION['loginuser']['nombres']; ?> <a href="logout.php">Salir</a></div>
     <?php endif; ?>
@@ -118,7 +108,10 @@
         <legend>Datos del <?php print $singular; ?></legend>
         <p>
           <label for="<?php print $bcdb->current_field?>">Código:</label>
-          <input type="text" name="<?php print $bcdb->current_field?>" class="required number" id="<?php print $bcdb->current_field?>" maxlength="6" size="10" value="<?php print ($user) ? $user[$bcdb->current_field] : ""; ?>" <?php if ($user) print 'disabled="disabled"'; ?> />
+          <input type="text" name="<?php print $bcdb->current_field?>" class="required number" id="<?php print $bcdb->current_field?>" maxlength="6" size="10" value="<?php print ($user) ? $user[$bcdb->current_field] : ""; ?>" <?php
+		if ($user)
+			print 'disabled="disabled"';
+ ?> />
         </p>
         <p>
           <label for="nombres">Nombres:</label>
@@ -170,10 +163,10 @@
           <?php $alt = "even"; ?>
           <?php foreach($users as $k => $usuario): ?>
           <tr class="<?php print $alt ?>">
-            <th><?php print $usuario[$bcdb->current_field]; ?> </th>
+            <th><?php print $usuario[$bcdb -> current_field]; ?> </th>
             <th><?php print $usuario['nombres']; ?> </th>
             <td><?php print $usuario['apellidoP']; ?> <?php print $usuario['apellidoM']; ?></td>
-            <td><a href="alumnos.php?id=<?php print $usuario[$bcdb->current_field]; ?>">Editar</a></td>
+            <td><a href="alumnos.php?id=<?php print $usuario[$bcdb -> current_field]; ?>">Editar</a></td>
             <?php $alt = ($alt == "even") ? "odd" : "even"; ?>
           </tr>
           <?php endforeach; ?>
@@ -184,11 +177,15 @@
           <?php endif; ?>
         </tbody>
       </table>
-      <?php include "pager.php"; ?>
+      <?php
+	include "pager.php";
+ ?>
     </fieldset>
   </div>
   <div class="clear"></div>
-  <?php include "footer.php"; ?>
+  <?php
+include "footer.php";
+ ?>
 </div>
 </body>
 </html>
