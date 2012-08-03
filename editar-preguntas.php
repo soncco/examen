@@ -80,23 +80,6 @@ if($id) {
 <script type="text/javascript">
 	$(document).ready(function() {
     $('#frmpregunta').validate();
-    $("#clone").click(function(){
-      alternativas = $('#alternativas');
-      tr = alternativas.find('tr:last').clone(true);
-      n = alternativas.find('tr').length;
-      tr.find('input').each(function() {
-      if($(this).attr('type') == 'text') {
-        $(this).val('');
-        $(this).attr('id', 'detalle' + n);
-      } else {
-        $(this).val(n);
-        $(this).attr('id', 'correcta' + n);
-      }
-      });
-      alternativas.append(tr);
-      return false;
-    });
-    
 		$('enunciado').focus();
 	});
 </script>
@@ -181,8 +164,6 @@ if($id) {
               <?php endforeach; ?>
           </tbody>
         </table>
-        <p class="align-center"><a href="#" id="clone">Añadir otra alternativa</a></p>
-        <p class="war">Si no va a utilizar un campo, déjelo vacío.</p>
       </fieldset>
       <p class="align-center">
         <button type="submit" name="submit" id="submit">Guardar</button>

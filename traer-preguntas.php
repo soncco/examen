@@ -40,7 +40,7 @@
       <th><?php print substr($pregunta['enunciado'], 0, 50) . "..."; ?></th>
       <td><?php print $pniveles[$pregunta['nivel']]; ?></td>
       <td><?php print get_var_from_field('nombre', 'codTema', $pregunta['codTema'], $bcdb->tema); ?></td>
-      <td><input type="text" name="puntaje[]" id="puntaje<?php print $pregunta['codPregunta']; ?>" size="2" maxlength="2" disabled="disabled" /></td>
+      <td><input type="text" name="puntaje[]" id="puntaje<?php print $pregunta['codPregunta']; ?>" size="2" maxlength="5" disabled="disabled" class="required number" /></td>
       <?php $alt = ($alt == "even") ? "odd" : "even"; ?>
     </tr>
     <?php endforeach; ?>

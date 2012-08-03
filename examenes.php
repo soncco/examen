@@ -21,14 +21,14 @@
     $examen = array_map('strip_tags', $examen);
     $id = save_item(0, $examen, $bcdb->examen);
     
-    if ($id) :
+    if ($id > 0) :
       foreach ($preguntas as $k => $pregunta) {
         $examen_pregunta = array(
           'codExamen' => $id,
           'codPregunta' => $pregunta,
           'puntaje' => $puntajes[$k],
         );
-        $pid = save_item(0, $examen_pregunta, $bcdb->examenpregunta);
+        save_examen_pregunta($examen_pregunta);
       }
       $msg = "El examen se guardó correctamente.";
     else :
@@ -105,11 +105,12 @@
           $('#preguntas').fadeIn();
           $('#preguntas-content').fadeIn().html(response);
           $('#simg').remove();
-          
+          $('#frmexamen').validate();
           // Habilita el textbox relativo al checkbox.
           $('#preguntas-content input[type="checkbox"]').click(function () {
             inp = $(this).parent().parent().find('input[type="text"]');
             inp.attr('disabled', !$(this).attr('checked'));
+            $('#frmexamen').validate();
           })
         }
       });
@@ -168,13 +169,13 @@
         <legend>Preguntas</legend>
         <p>
           <label for="nombre">Nombre del examen <span class="required">*</span>:</label>
-          <input type="text" name="nombre" id="nombre" maxlength="60" size="40" value="" />        	
+          <input type="text" name="nombre" id="nombre" maxlength="60" size="40" value="" class="required" />        	
         </p>
         <div id="preguntas-content">
           
         </div>
         <p class="align-center">
-          <button type="submit" name="submit" id="submit">Guardar</button>
+          <button type="submit" name="submit" id="submit">Crear Examen</button>
         </p>
       </fieldset>
     </form>

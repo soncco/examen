@@ -97,7 +97,6 @@ $cursos = get_cursos_docente($_SESSION['loginuser']['codDocente']);
       <h3>Examen</h3>
       <ul>
         <li><a href="/examenes.php">Crear exámen</a></li>
-        <li><a href="/pregunta-examen.php">Agregar pregunta a exámen</a></li>
         <li><a href="/ver-examenes.php">Lista de examenes</a></li>
         <li><a href="/examen-programa.php">Programar Examen</a></li>
       </ul>

@@ -121,14 +121,13 @@ function save_item($id, $item_values, $table) {
 	global $bcdb, $msg;
 
 	$item_values[$bcdb->current_field] = $id;
-
-	if ( ($query = insert_update_query($table, $item_values)) &&
+  $query = insert_update_query($table, $item_values);
+	if ( ($query) &&
 		$bcdb->query($query) ) {
-		if (empty($id))	
+		if ($id == 0)	 {
 			$id = $bcdb->insert_id;
-		
+    }
 		$msg = "Los datos han sido guardados satisfactoriamente.";
-		
 		return $id;
 	}
 	$msg = "Hubo un problema al guardar.";

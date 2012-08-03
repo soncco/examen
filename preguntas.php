@@ -26,8 +26,7 @@ if($postback) :
   else :
     $pregunta = array_map('strip_tags', $pregunta);
   
-    if(isset($_FILES['imagen']['name']))
-    {
+    if(isset($_FILES['imagen']['name'])) {
         // Importar imagen.
         $nombre = $_FILES['imagen']['name'];
         $origen = $_FILES['imagen']['tmp_name'];
@@ -35,7 +34,7 @@ if($postback) :
         $nombrenuevo = time() . $nombre;
         $destino = "archivo/" . $nombrenuevo;
 
-        copy($origen,$destino);
+        copy($origen, $destino);
 
         $pregunta['imagen'] = $nombrenuevo;
     }
@@ -194,7 +193,7 @@ $cursos = get_cursos_docente($_SESSION['loginuser']['codDocente']);
           <?php endforeach; ?>
         </p>
         <p>
-          <label for="imagenpregunta">Imagen <span class="required">*</span>:</label>
+          <label for="imagenpregunta">Imagen:</label>
           <input name="imagen" type="file" id="imagen" /> 
         </p>
       </fieldset>

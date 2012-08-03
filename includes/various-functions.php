@@ -159,6 +159,23 @@ function save_user($idusuario, $user_values, $tabla) {
 }
 
 /**
+ * Guarda preguntas relacionadas a un examen.
+ * @param array $examen_pregunta los datos de la pregunta y el examen.
+ * @return boolean
+ */
+function save_examen_pregunta($examen_pregunta) {
+  global $bcdb;
+  
+  $sql = sprintf("INSERT INTO %s VALUES ('%s', '%s', '%s')",
+          $bcdb->examenpregunta,
+          $examen_pregunta['codExamen'],
+          $examen_pregunta['codPregunta'],
+          $examen_pregunta['puntaje']);
+  echo $sql;
+  return ($bcdb->query($sql));
+}
+
+/**
 * Es Administrador
 *
 * @param int $idusuario El id del usuario
