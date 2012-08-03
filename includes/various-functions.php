@@ -136,7 +136,6 @@ function save_user($idusuario, $user_values, $tabla) {
 }
 
 /**
-<<<<<<< HEAD
  * Guarda preguntas relacionadas a un examen.
  * @param array $examen_pregunta los datos de la pregunta y el examen.
  * @return boolean
@@ -159,15 +158,7 @@ function save_examen_pregunta($examen_pregunta) {
 * @param int $idusuario El id del usuario
 * @return boolean
 */
-function is_admin ($idusuario) {
-=======
- * Es Administrador
- *
- * @param int $idusuario El id del usuario
- * @return boolean
- */
 function is_admin($idusuario) {
->>>>>>> a4de47e453c5e299b78650dcec4b1a90ea72dfe9
 	return true;
 }
 
@@ -202,7 +193,6 @@ WHERE ep.codExamen = $codExamen;";
 function get_alternativas_de_pregunta($codPregunta) {
 	global $bcdb;
 	$sql = "SELECT * FROM tAlternativa WHERE codPregunta = $codPregunta";
-
 	return $bcdb -> get_results($sql);
 }
 ?>
