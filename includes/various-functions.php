@@ -162,6 +162,15 @@ function is_admin($idusuario) {
 	return true;
 }
 
+function get_cursos_de_alumno($codAlumno, $codSemestre) {
+	global $bcdb;
+	$sql = "SELECT * FROM tCurso c
+INNER JOIN tMatricula m ON c.codCurso = m.codCurso
+WHERE (m.codAlumno = '$codAlumno' AND m.codSemestre = '$codSemestre');";
+
+	return $bcdb -> get_results($sql);
+}
+
 /* FUNCIONES PARA REPORTES */
 function get_curso_de_examen($codExamen) {
 	global $bcdb;
