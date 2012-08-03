@@ -13,6 +13,8 @@ function get_pregunta($codPregunta) {
   $alternativas = $bcdb->get_results($q2);
   
   foreach ($alternativas as $alternativa) {
+    $pregunta['tema'] = $bcdb->get_row(sprintf("SELECT * FROM %s WHERE codTema = '%s'", $bcdb->tema, $pregunta['codTema']));
+    $pregunta['curso'] = $bcdb->get_row(sprintf("SELECT * FROM %s WHERE codCurso = '%s'", $bcdb->curso, $pregunta['tema']['codCurso']));
     $pregunta['alternativas'][] = $alternativa;
   }
   return $pregunta;

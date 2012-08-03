@@ -73,7 +73,7 @@ $preguntas = get_items($bcdb->pregunta, 'codPregunta');
             <th><?php print $pregunta['enunciado']; ?></th>
             <td><?php print $pniveles[$pregunta['nivel']]; ?></td>
             <td><?php print get_var_from_field('nombre', 'codTema', $pregunta['codTema'], $bcdb->tema); ?></td>
-            <td><a href="preguntas.php?id=<?php print $pregunta['codPregunta'] ?>">Ver o Editar</a></td>
+            <td><a href="editar-preguntas.php?id=<?php print $pregunta['codPregunta'] ?>">Ver o Editar</a></td>
             <?php $alt = ($alt == "even") ? "odd" : "even"; ?>
           </tr>
           <?php endforeach; ?>
