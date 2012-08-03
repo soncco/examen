@@ -72,10 +72,12 @@ $cursos = get_cursos_docente($_SESSION['loginuser']['codDocente']);
 <link rel="stylesheet" type="text/css" media="screen" href="/css/layout.css" />
 <link href="/favicon.ico" type="image/ico" rel="shortcut icon" />
 <script type="text/javascript" src="/scripts/jquery-1.3.2.min.js"></script>
+<script type="text/javascript" src="/scripts/jquery.validate.js"></script>
 <script type="text/javascript" src="/scripts/jquery.collapsible.js"></script>
 <script type="text/javascript" src="/scripts/jquery.jeditable.js"></script>
 <script type="text/javascript">
 	$(document).ready(function() {
+    $('#frmpregunta').validate();
     $("#clone").click(function(){
       alternativas = $('#alternativas');
       tr = alternativas.find('tr:last').clone(true);
@@ -169,7 +171,7 @@ $cursos = get_cursos_docente($_SESSION['loginuser']['codDocente']);
         </p>
         <p>
           <label for="enunciado">Enunciado <span class="required">*</span>:</label>
-          <input type="text" name="enunciado" id="enunciado" size="60" value="<?php print ($pregunta) ? $pregunta['enunciado'] : ""; ?>" />
+          <input type="text" name="enunciado" id="enunciado" size="60" value="<?php print ($pregunta) ? $pregunta['enunciado'] : ""; ?>" class="required" />
         </p>
         <p>
           <label for="nivel">Nivel <span class="required">*</span>:</label>

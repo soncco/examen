@@ -288,3 +288,8 @@ html ul.i-tabs li.active-tab, html ul.i-tabs li.active-tab a:hover  {
 .paginator .ezr_nav_na {
   border-color: #000;
 }
+
+.help {
+  font-size: 13px;
+  color: #707070;
+}

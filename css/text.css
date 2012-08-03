@@ -116,6 +116,10 @@ span.click select {
 	font-size: 15px;
 }
 
+select[multiple] {
+  border: 1px solid #b5b5b5 !important;
+}
+
 textarea {
 	border: 1px solid #b5b5b5;
 	font: normal 15px Arial, Helvetica, sans-serif;
