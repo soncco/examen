@@ -26,7 +26,7 @@
       <?php $alt = "even"; ?>
       <?php foreach($temas as $k => $tema): ?>
         <tr class="<?php print $alt ?>">
-          <td><?php print $tema['nombre']; ?></td>
+          <td><span class="click" id="nombre-<?php print $tema['codTema']; ?>"><?php print $tema['nombre']; ?></span></td>
         </tr>
       <?php endforeach; ?>
       <?php else: ?>

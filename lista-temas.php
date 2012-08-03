@@ -19,6 +19,7 @@
 <link href="/favicon.ico" type="image/ico" rel="shortcut icon" />
 <script type="text/javascript" src="/scripts/jquery-1.3.2.min.js"></script>
 <script type="text/javascript" src="/scripts/jquery.collapsible.js"></script>
+<script type="text/javascript" src="/scripts/jquery.jeditable.js"></script>
 <script type="text/javascript">
 	$(document).ready(function() {
     simg = '<img src="images/loading.gif" alt="Cargando" id="simg" />';
@@ -33,6 +34,10 @@
           $('#temas-results').empty();
           $('#temas-results').append(response);
           $('#simg').remove();
+          $('#temas-results').find(".click").editable("/datos-temas.php", {
+            indicator : "Guardando...",
+            tooltip   : "Click para editar..."
+          });
 			   }
 			 });
 		});
@@ -67,6 +72,7 @@
     <?php endif; ?>
     <fieldset class="collapsible">
       <legend>Escoge el curso</legend>
+      <p class="help">Escoge el curso para ver las preguntas o para editarlas.</p>
       <p>
 	      <label for="codCurso">Curso <span class="required">*</span>:</label>
         <select name="codCurso" id="codCurso">

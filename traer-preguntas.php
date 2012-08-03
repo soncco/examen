@@ -46,7 +46,7 @@
     <?php endforeach; ?>
     <?php else : ?>
     <tr class="<?php print $alt ?>">
-      <th colspan="3">Todavía no existen preguntas. <a href="/preguntas.php">Crear preguntas</a>.</th>
+      <th colspan="5">Todavía no existen preguntas. <a href="/preguntas.php">Crear preguntas</a>.</th>
     </tr>
     <?php endif; ?>
   </tbody>

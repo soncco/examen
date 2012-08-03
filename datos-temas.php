@@ -1,6 +1,6 @@
 <?php
 /**
- * Modifica los valores de un curso
+ * Modifica los valores de un tema
  */
 	require_once('home.php');
 	//require_once('redirect.php');
@@ -16,9 +16,9 @@
 	$value = $_POST['value'];
 
 	// Actualizamos
-	$bcdb->query("UPDATE $bcdb->curso SET $field = '$value' WHERE codCurso = '$id'");
+	$bcdb->query("UPDATE $bcdb->tema SET $field = '$value' WHERE codTema = '$id'");
 
   // Escribimos
-  print $bcdb->get_var("SELECT $field FROM $bcdb->curso WHERE codCurso = '$id'");
+  print $bcdb->get_var("SELECT $field FROM $bcdb->tema WHERE codTema = '$id'");
   
 ?>
