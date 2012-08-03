@@ -18,7 +18,6 @@
             'temas.php' => 'Temas',
             'preguntas.php' => 'Preguntas',
             'examenes.php' => 'Exámenes',
-            'cursos-docente.php' => 'Cursos'
           ),
           'side' => array(
             'preguntas.php' => 'Crear Preguntas',
