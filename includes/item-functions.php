@@ -53,7 +53,8 @@ function get_var_from_item ($var, $id, $table) {
 */
 function get_var_from_field ($var, $field, $value, $table) {
 	global $bcdb;
-	return $bcdb->get_var("SELECT $var FROM $table WHERE $field = '$value'");
+  $sql = "SELECT $var FROM $table WHERE $field = '$value'";
+	return $bcdb->get_var($sql);
 }
 
 /**

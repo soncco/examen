@@ -55,9 +55,12 @@ $cursos = get_cursos_docente($_SESSION['loginuser']['codDocente']);
 <script type="text/javascript" src="/scripts/jquery.collapsible.js"></script>
 <script type="text/javascript" src="/scripts/jquery.jeditable.js"></script>
 <script type="text/javascript" src="/scripts/jquery.calendar.js"></script>
+<script type="text/javascript" src="/scripts/jquery.validate.js"></script>
 <script type="text/javascript" src="/scripts/jquery.ui.all.min.js"></script>
 <script type="text/javascript">
 	$(document).ready(function() {
+    
+    $('#frmexamenprograma').validate();
     // Combos dependientes.
     simg = '<img src="images/loading.gif" alt="Cargando" id="simg" />';
 		$('#codCurso').change(function () {
@@ -132,7 +135,7 @@ $cursos = get_cursos_docente($_SESSION['loginuser']['codDocente']);
 	      </p>
         <p>
           <label for="hora">Hora (hh:mm) <span class="required">*</span>:</label>
-          <input type="text" name="hora" id="hora" maxlength="5" size="8" value="" />        	
+          <input type="text" name="hora" id="hora" maxlength="5" size="8"  />        	
         </p>
         <p>
           <label for="duracion">Duración (en segundos) <span class="required">*</span>:</label>

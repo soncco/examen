@@ -149,7 +149,7 @@
     <?php endif; ?>
     <form name="frmexamen" id="frmexamen" method="post" action="examenes.php">
       <fieldset class="collapsible">
-        <legend>Información del Examen</legend>
+        <legend>Crear Examen</legend>
         <p class="help">Primero escoja un curso y se le mostrarán la lista de temas disponibles. Puede escoger más de un tema para crear el examen.</p>
         <p>
           <label for="codCurso">Curso <span class="required">*</span>:</label>

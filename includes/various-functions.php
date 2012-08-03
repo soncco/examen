@@ -50,8 +50,10 @@ function get_cursos_docente($codDocente) {
  */
 function get_examenes_curso($codCurso) {
 	global $bcdb, $bcrs, $pager;
+  
+  $examenes = array();
 
-	$sql = sprintf("SELECT DISTINCT e.codExamen, e.nombre 
+	$sql = sprintf("SELECT DISTINCT e.codExamen, e.nombre, t.codCurso 
     FROM %s e
     INNER JOIN %s ep
     ON e.codExamen = ep.codExamen
@@ -62,6 +64,12 @@ function get_examenes_curso($codCurso) {
     WHERE t.codCurso = '%s'
     ORDER BY e.codExamen", $bcdb -> examen, $bcdb -> examenpregunta, $bcdb -> pregunta, $bcdb -> tema, $codCurso);
 	$examenes = ($pager) ? $bcrs -> get_results($sql) : $bcdb -> get_results($sql);
+  
+  if (count($examenes) > 0) {
+    foreach ($examenes as $k => $examen) {
+      $examenes[$k]['preguntas'] = get_preguntas_de_examen($examen['codExamen']);
+    }
+  }
 	return $examenes;
 }
 
@@ -153,6 +161,29 @@ function save_examen_pregunta($examen_pregunta) {
 }
 
 /**
+ * Devuelve los exámenes creados por un docente.
+ * @param string $codDocente el Código del docente.
+ * @return array
+ */
+function get_examenes_docente($codDocente) {
+  $results = array();
+  $examenes = array();
+  $cursos = get_cursos_docente($codDocente);
+  foreach ($cursos as $k => $curso) {
+    $examen = get_examenes_curso($curso['codCurso']);
+    if (count($examen) > 0)
+      $results[] = $examen;
+  }
+  
+  foreach ($results as $i => $result) {
+    foreach ($result as $j => $v) {
+      $examenes[] = $v;
+    }
+  }
+  return $examenes;
+}
+
+/**
 * Es Administrador
 *
 * @param int $idusuario El id del usuario
@@ -169,14 +200,14 @@ function get_curso_de_examen($codExamen) {
 INNER JOIN tTema t ON t.codCurso = c.codCurso
 INNER JOIN tPregunta p ON p.codTema = t.codTema
 INNER JOIN tExamenPregunta ep ON ep.codPregunta = p.codPregunta
-WHERE ep.codExamen = $codExamen;";
+WHERE ep.codExamen = '$codExamen';";
 
 	return $bcdb -> get_results($sql);
 }
 
 function get_examen($codExamen) {
 	global $bcdb;
-	$sql = "SELECT * FROM tExamen WHERE codExamen = $codExamen;";
+	$sql = "SELECT * FROM tExamen WHERE codExamen = '$codExamen';";
 
 	return $bcdb -> get_results($sql);
 }
@@ -185,14 +216,14 @@ function get_preguntas_de_examen($codExamen) {
 	global $bcdb;
 	$sql = "SELECT * FROM tPregunta p
 INNER JOIN tExamenPregunta ep ON p.codPregunta = ep.codPregunta
-WHERE ep.codExamen = $codExamen;";
+WHERE ep.codExamen = '$codExamen';";
 
 	return $bcdb -> get_results($sql);
 }
 
 function get_alternativas_de_pregunta($codPregunta) {
 	global $bcdb;
-	$sql = "SELECT * FROM tAlternativa WHERE codPregunta = $codPregunta";
+	$sql = "SELECT * FROM tAlternativa WHERE codPregunta = '$codPregunta'";
 	return $bcdb -> get_results($sql);
 }
 ?>
