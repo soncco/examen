@@ -23,6 +23,16 @@
             'preguntas.php' => 'Crear Preguntas',
             'lista-preguntas.php' => 'Lista de Preguntas'
           )
+      ),
+      'alumno' => array(
+          'top' => array(
+            'mis-cursos.php' => 'Cursos',
+            'examenes.php' => 'Exámenes',
+          ),
+          'side' => array(
+            'preguntas.php' => 'Crear Preguntas',
+            'lista-preguntas.php' => 'Lista de Preguntas'
+          )
       )
   );
           
