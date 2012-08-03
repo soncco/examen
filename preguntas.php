@@ -26,6 +26,19 @@ if($postback) :
   else :
     $pregunta = array_map('strip_tags', $pregunta);
   
+    if(isset($_FILES['imagen']['name']))
+    {
+        // Importar imagen.
+        $nombre = $_FILES['imagen']['name'];
+        $origen = $_FILES['imagen']['tmp_name'];
+        $imagen_tipo = $_FILES['imagen']['type'];
+        $nombrenuevo = time() . $nombre;
+        $destino = "archivo/" . $nombrenuevo;
+
+        copy($origen,$destino);
+
+        $pregunta['imagen'] = $nombrenuevo;
+    }
     // Guarda la pregunta
     $id = save_item(0, $pregunta, $bcdb->pregunta);
 
@@ -149,7 +162,7 @@ $cursos = get_cursos_docente($_SESSION['loginuser']['codDocente']);
     <?php if (isset($msg)): ?>
     <p class="<?php echo ($error) ? "error" : "msg" ?>"><?php print $msg; ?></p>
     <?php endif; ?>
-    <form name="frmpregunta" id="frmpregunta" method="post" action="preguntas.php">
+    <form name="frmpregunta" id="frmpregunta" method="post" action="preguntas.php" enctype="multipart/form-data">
       <fieldset class="collapsible">
         <legend>Información de la pregunta</legend>
         <p>
@@ -180,7 +193,14 @@ $cursos = get_cursos_docente($_SESSION['loginuser']['codDocente']);
           <label for="nivel<?php print $k; ?>"><?php print $nivel; ?></label>
           <?php endforeach; ?>
         </p>
+        <p>
+          <label for="imagenpregunta">Imagen <span class="required">*</span>:</label>
+          <input name="imagen" type="file" id="imagen" /> 
+        </p>
       </fieldset>
+      <p class="align-center">
+        <button type="submit" name="submit" id="importar">Importar</button>
+      </p>
       <fieldset class="collapsible">
         <legend>Alternativas</legend>
         <table>
