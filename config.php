@@ -14,10 +14,14 @@ define("SCRIPTS_URL", BASE_URL . "scripts/");
 define("CHARSET", "UTF-8");
 define("NUM_ITEMS", 10); // Número de items mostrados en la paginación
 
+<<<<<<< HEAD
 // Número de items mostrados en la paginación.
 define("NUM_ITEMS", 20);
 
 error_reporting(E_ALL);
+=======
+error_reporting(E_ALL & ~E_DEPRECATED & ~E_STRICT & ~E_NOTICE);
+>>>>>>> b0a770acc3200ba759856f5bd271640032832513
 
 setlocale(LC_ALL, '');
 

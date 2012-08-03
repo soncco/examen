@@ -53,7 +53,7 @@ function get_cursos_docente($codDocente) {
 function get_examenes_curso($codCurso) {
   global $bcdb, $bcrs, $pager;
   
-  $q = sprintf("SELECT e.codExamen, e.nombre 
+  $sql = sprintf("SELECT DISTINCT e.codExamen, e.nombre 
     FROM %s e
     INNER JOIN %s ep
     ON e.codExamen = ep.codExamen
