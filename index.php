@@ -39,13 +39,13 @@
     <div id="welcome">
       <div class="welcome-icon">
         <a href="login.php?rol=docente">
-          <img src="/images/teacher.png" alt="Docentes" width="180" />
+          <img src="<?php print IMAGES_URL; ?>teacher.png" alt="Docentes" width="180" />
           <span>Ingreso a Docentes</span>
         </a>
       </div>
       <div class="welcome-icon">
         <a href="login.php?rol=alumno">
-          <img src="/images/student.png" alt="Estudiantes" width="180" />
+          <img src="<?php print IMAGES_URL; ?>student.png" alt="Estudiantes" width="180" />
           <span>Ingreso a Alumnos</span>
         </a>
       </div>
