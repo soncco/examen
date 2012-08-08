@@ -67,13 +67,7 @@ $semestres = get_items($bcdb->semestre, 'codSemestre');
 
 <body>
 <div class="container_16">
-  <div id="header">
-    <h1 id="logo"> <a href="/"><span>Sistema de exámenes</span></a> </h1>
-    <?php include "menutop.php"; ?>
-    <?php if(isset($_SESSION['loginuser'])) : ?>
-    <div id="logout">Sesión: <?php print $_SESSION['loginuser']['nombres']; ?> <a href="logout.php">Salir</a></div>
-    <?php endif; ?>
-  </div>
+  <?php include "header.php"; ?>
   <div class="clear"></div>
   <div id="icon" class="grid_3">
     <p class="align-center"><img src="images/opciones.png" alt="Opciones" /></p>
