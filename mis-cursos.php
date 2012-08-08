@@ -49,15 +49,15 @@ $results = @$bcrs->get_navigation();
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<link rel="stylesheet" type="text/css" media="screen" href="/css/reset.css" /> 
-<link rel="stylesheet" type="text/css" media="screen" href="/css/text.css" /> 
-<link rel="stylesheet" type="text/css" media="screen" href="/css/960.css" /> 
-<link rel="stylesheet" type="text/css" media="screen" href="/css/layout.css" /> 
+<link rel="stylesheet" type="text/css" media="screen" href="<?php print STYLES_URL; ?>reset.css" /> 
+<link rel="stylesheet" type="text/css" media="screen" href="<?php print STYLES_URL; ?>text.css" /> 
+<link rel="stylesheet" type="text/css" media="screen" href="<?php print STYLES_URL; ?>960.css" /> 
+<link rel="stylesheet" type="text/css" media="screen" href="<?php print STYLES_URL; ?>layout.css" /> 
 <link href="/favicon.ico" type="image/ico" rel="shortcut icon" />
-<script type="text/javascript" src="/scripts/jquery-1.3.2.min.js"></script>
-<script type="text/javascript" src="/scripts/jquery.validate.js"></script>
-<script type="text/javascript" src="/scripts/jquery.collapsible.js"></script>
-<script type="text/javascript" src="/scripts/jquery.jeditable.js"></script>
+<script type="text/javascript" src="<?php print SCRIPTS_URL; ?>jquery-1.3.2.min.js"></script>
+<script type="text/javascript" src="<?php print SCRIPTS_URL; ?>jquery.validate.js"></script>
+<script type="text/javascript" src="<?php print SCRIPTS_URL; ?>jquery.collapsible.js"></script>
+<script type="text/javascript" src="<?php print SCRIPTS_URL; ?>jquery.jeditable.js"></script>
 <title>Cursos | Sistema de exámenes</title>
 </head>
 
@@ -84,6 +84,7 @@ $results = @$bcrs->get_navigation();
           <th>Código</th>
           <th>Nombre</th>
           <th>Créditos</th>
+          <th colspan="2">Acciones</th>
           </tr>
         </thead>
         <tbody>
@@ -91,9 +92,11 @@ $results = @$bcrs->get_navigation();
           <?php $alt = "even"; ?>
           <?php foreach($cursos as $k => $curso): ?>
           <tr class="<?php print $alt ?>">
-            <th><span id="codCurso-<?php print $curso['codCurso']; ?>"><?php print $curso['codCurso']; ?></span></td>
-            <th><span id="nombre-<?php print $curso['codCurso']; ?>"><?php print $curso['nombre']; ?></span></td>
-            <th><span id="creditos-<?php print $curso['codCurso']; ?>"><?php print $curso['creditos']; ?></td>
+            <th><?php print $curso['codCurso']; ?></th>
+            <td><?php print $curso['nombre']; ?></td>
+            <td><?php print $curso['creditos']; ?></td>
+            <td><a href="rendir-examen.php?codCurso=<?php print $curso['codCurso']; ?>">Rendir examen</a></td>
+            <td><a href="ver-notas.php?codCurso=<?php print $curso['codCurso']; ?>">Ver notas</a></td>
             <?php $alt = ($alt == "even") ? "odd" : "even"; ?>
           </tr>
           <?php endforeach; ?>

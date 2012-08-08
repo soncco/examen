@@ -66,6 +66,8 @@ if($postback) :
   endif;
 endif;
 
+if (isset($_GET['saved'])) $msg = "La información se guardó correctamente.";
+
 $pregunta = array();
 if($id) {
   $pregunta = get_pregunta($id);
@@ -78,15 +80,15 @@ $cursos = get_cursos_docente($_SESSION['loginuser']['codDocente']);
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<link rel="stylesheet" type="text/css" media="screen" href="/css/reset.css" />
-<link rel="stylesheet" type="text/css" media="screen" href="/css/text.css" />
-<link rel="stylesheet" type="text/css" media="screen" href="/css/960.css" />
-<link rel="stylesheet" type="text/css" media="screen" href="/css/layout.css" />
+<link rel="stylesheet" type="text/css" media="screen" href="<?php print STYLES_URL; ?>reset.css" />
+<link rel="stylesheet" type="text/css" media="screen" href="<?php print STYLES_URL; ?>text.css" />
+<link rel="stylesheet" type="text/css" media="screen" href="<?php print STYLES_URL; ?>960.css" />
+<link rel="stylesheet" type="text/css" media="screen" href="<?php print STYLES_URL; ?>layout.css" />
 <link href="/favicon.ico" type="image/ico" rel="shortcut icon" />
-<script type="text/javascript" src="/scripts/jquery-1.3.2.min.js"></script>
-<script type="text/javascript" src="/scripts/jquery.validate.js"></script>
-<script type="text/javascript" src="/scripts/jquery.collapsible.js"></script>
-<script type="text/javascript" src="/scripts/jquery.jeditable.js"></script>
+<script type="text/javascript" src="<?php print SCRIPTS_URL; ?>jquery-1.3.2.min.js"></script>
+<script type="text/javascript" src="<?php print SCRIPTS_URL; ?>jquery.validate.js"></script>
+<script type="text/javascript" src="<?php print SCRIPTS_URL; ?>jquery.collapsible.js"></script>
+<script type="text/javascript" src="<?php print SCRIPTS_URL; ?>jquery.jeditable.js"></script>
 <script type="text/javascript">
 	$(document).ready(function() {
     $('#frmpregunta').validate();
@@ -166,7 +168,7 @@ $cursos = get_cursos_docente($_SESSION['loginuser']['codDocente']);
         <legend>Información de la pregunta</legend>
         <p>
           <label for="codCurso">Curso <span class="required">*</span>:</label>
-          <select name="codCurso" id="codCurso">
+          <select name="codCurso" id="codCurso" class="required">
             <option value="" selected="selected">Seleccione un curso</option>
             <?php foreach ($cursos as $k => $curso) : ?>
             <option value="<?php print $curso['codCurso']; ?>">
@@ -177,7 +179,7 @@ $cursos = get_cursos_docente($_SESSION['loginuser']['codDocente']);
         </p>
         <p>
           <label for="codTema">Tema <span class="required">*</span>:</label>
-          <select name="codTema" id="codTema">
+          <select name="codTema" id="codTema" class="required">
             <option value="" selected="selected">Seleccione un curso</option>
           </select>
         </p>
@@ -193,13 +195,10 @@ $cursos = get_cursos_docente($_SESSION['loginuser']['codDocente']);
           <?php endforeach; ?>
         </p>
         <p>
-          <label for="imagenpregunta">Imagen:</label>
+          <label for="imagenpregunta">Imagen (Opcional):</label>
           <input name="imagen" type="file" id="imagen" /> 
         </p>
       </fieldset>
-      <p class="align-center">
-        <button type="submit" name="submit" id="importar">Importar</button>
-      </p>
       <fieldset class="collapsible">
         <legend>Alternativas</legend>
         <table>

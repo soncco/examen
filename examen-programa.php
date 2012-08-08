@@ -45,22 +45,38 @@ $cursos = get_cursos_docente($_SESSION['loginuser']['codDocente']);
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<link rel="stylesheet" type="text/css" media="screen" href="/css/reset.css" /> 
-<link rel="stylesheet" type="text/css" media="screen" href="/css/text.css" /> 
-<link rel="stylesheet" type="text/css" media="screen" href="/css/960.css" /> 
-<link rel="stylesheet" type="text/css" media="screen" href="/css/layout.css" />
-<link rel="stylesheet" type="text/css" media="screen" href="/css/theme/ui.all.css" />
+<link rel="stylesheet" type="text/css" media="screen" href="<?php print STYLES_URL; ?>reset.css" /> 
+<link rel="stylesheet" type="text/css" media="screen" href="<?php print STYLES_URL; ?>text.css" /> 
+<link rel="stylesheet" type="text/css" media="screen" href="<?php print STYLES_URL; ?>960.css" /> 
+<link rel="stylesheet" type="text/css" media="screen" href="<?php print STYLES_URL; ?>layout.css" />
+<link rel="stylesheet" type="text/css" media="screen" href="<?php print STYLES_URL; ?>theme/ui.all.css" />
+<link rel="stylesheet" type="text/css" media="screen" href="<?php print STYLES_URL; ?>jquery.timepicker.css" />
 <link href="/favicon.ico" type="image/ico" rel="shortcut icon" />
-<script type="text/javascript" src="/scripts/jquery-1.3.2.min.js"></script>
-<script type="text/javascript" src="/scripts/jquery.collapsible.js"></script>
-<script type="text/javascript" src="/scripts/jquery.jeditable.js"></script>
-<script type="text/javascript" src="/scripts/jquery.calendar.js"></script>
-<script type="text/javascript" src="/scripts/jquery.validate.js"></script>
-<script type="text/javascript" src="/scripts/jquery.ui.all.min.js"></script>
+<script type="text/javascript" src="<?php print SCRIPTS_URL; ?>jquery-1.3.2.min.js"></script>
+<script type="text/javascript" src="<?php print SCRIPTS_URL; ?>jquery.collapsible.js"></script>
+<script type="text/javascript" src="<?php print SCRIPTS_URL; ?>jquery.jeditable.js"></script>
+<script type="text/javascript" src="<?php print SCRIPTS_URL; ?>jquery.calendar.js"></script>
+<script type="text/javascript" src="<?php print SCRIPTS_URL; ?>jquery.validate.js"></script>
+<script type="text/javascript" src="<?php print SCRIPTS_URL; ?>jquery.ui.all.min.js"></script>
+<script type="text/javascript" src="<?php print SCRIPTS_URL; ?>jquery.timepicker.js"></script>
 <script type="text/javascript">
 	$(document).ready(function() {
     
     $('#frmexamenprograma').validate();
+    // Timepicker.
+    $('#inicio').timepicker({
+      'minTime' : '5:00am', // Hora mínima.
+      'maxTime' : '11:00pm' // Hora máxima.
+    });
+    
+    $('#inicio').blur(function () {
+      inicio = $(this).val();
+      $('#fin').val('').timepicker({
+        'minTime' : inicio,
+        'maxTime' : '12:00pm'
+      });
+    })
+    
     // Combos dependientes.
     simg = '<img src="images/loading.gif" alt="Cargando" id="simg" />';
 		$('#codCurso').change(function () {
@@ -134,12 +150,10 @@ $cursos = get_cursos_docente($_SESSION['loginuser']['codDocente']);
 	        <input type="text" name="fecha" class="date" id="fecha" maxlength="20" size="20" />
 	      </p>
         <p>
-          <label for="hora">Hora (hh:mm) <span class="required">*</span>:</label>
-          <input type="text" name="hora" id="hora" maxlength="5" size="8"  />        	
-        </p>
-        <p>
-          <label for="duracion">Duración (en segundos) <span class="required">*</span>:</label>
-          <input type="text" name="duracion" id="duracion" maxlength="5" size="8" value="" />        	
+          <label for="inicio">Hora de inicio <span class="required">*</span>:</label>
+          <input type="text" name="inicio" id="inicio" size="8" value="" class="required" />
+          <label for="fin">Hora de fin <span class="required">*</span>:</label>
+          <input type="text" name="fin" id="fin" size="8" value="" class="required" />
         </p>
       </fieldset>
       <fieldset class="collapsible">

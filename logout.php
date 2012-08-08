@@ -26,10 +26,10 @@ session_destroy();
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<link rel="stylesheet" type="text/css" media="screen" href="/css/reset.css" />
-<link rel="stylesheet" type="text/css" media="screen" href="/css/text.css" />
-<link rel="stylesheet" type="text/css" media="screen" href="/css/960.css" />
-<link rel="stylesheet" type="text/css" media="screen" href="/css/layout.css" />
+<link rel="stylesheet" type="text/css" media="screen" href="<?php print STYLES_URL; ?>reset.css" />
+<link rel="stylesheet" type="text/css" media="screen" href="<?php print STYLES_URL; ?>text.css" />
+<link rel="stylesheet" type="text/css" media="screen" href="<?php print STYLES_URL; ?>960.css" />
+<link rel="stylesheet" type="text/css" media="screen" href="<?php print STYLES_URL; ?>layout.css" />
 <link href="/favicon.ico" type="image/ico" rel="shortcut icon" />
 <title>Sistema de exámenes</title>
 </head>

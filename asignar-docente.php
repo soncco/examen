@@ -44,14 +44,14 @@ $results = @$bcrs->get_navigation();
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<link rel="stylesheet" type="text/css" media="screen" href="/css/reset.css" /> 
-<link rel="stylesheet" type="text/css" media="screen" href="/css/text.css" /> 
-<link rel="stylesheet" type="text/css" media="screen" href="/css/960.css" /> 
-<link rel="stylesheet" type="text/css" media="screen" href="/css/layout.css" /> 
+<link rel="stylesheet" type="text/css" media="screen" href="<?php print STYLES_URL; ?>reset.css" /> 
+<link rel="stylesheet" type="text/css" media="screen" href="<?php print STYLES_URL; ?>text.css" /> 
+<link rel="stylesheet" type="text/css" media="screen" href="<?php print STYLES_URL; ?>960.css" /> 
+<link rel="stylesheet" type="text/css" media="screen" href="<?php print STYLES_URL; ?>layout.css" /> 
 <link href="/favicon.ico" type="image/ico" rel="shortcut icon" />
-<script type="text/javascript" src="/scripts/jquery-1.3.2.min.js"></script>
-<script type="text/javascript" src="/scripts/jquery.collapsible.js"></script>
-<script type="text/javascript" src="/scripts/jquery.jeditable.js"></script>
+<script type="text/javascript" src="<?php print SCRIPTS_URL; ?>jquery-1.3.2.min.js"></script>
+<script type="text/javascript" src="<?php print SCRIPTS_URL; ?>jquery.collapsible.js"></script>
+<script type="text/javascript" src="<?php print SCRIPTS_URL; ?>jquery.jeditable.js"></script>
 <script type="text/javascript">
 	$(document).ready(function() {
 	});
