@@ -23,22 +23,28 @@ if ($postback) :
 		'codExamen' => $_POST['codExamen'],
 		'fecha' => strftime("%Y-%m-%d %H:%M:%S", strtotime($_POST['fecha']) + $time_i),
 		'rendido' => 'N',
-		'duracion' => $time);
+		'duracion' => $time
+		);
 
 	// Verificación
 	if (empty($_POST['codExamen']) || empty($_POST['fecha']) || empty($_POST['inicio']) || empty($_POST['fin'])) :
 		$error = true;
 		$msg = "Ingrese la información obligatoria.";
 	else :
-		$examenprograma = array_map('strip_tags', $examenprograma);
-		// Guarda
-		$id = save_item($examenprograma['codExamen'], $examenprograma, $bcdb -> examenprograma);
-
-		if ($id) :
-			$msg = "La información se guardó correctamente.";
-		else :
+		if (empty($_POST['inicio']) == empty($_POST['fin'])) :
 			$error = true;
-			$msg = "Hubo un error al guardar la información, intente nuevamente.";
+			$msg = "Hora de inicio y hora de fin no pueden ser las mismas";
+		else:
+			$examenprograma = array_map('strip_tags', $examenprograma);
+			// Guarda
+			$id = save_item($examenprograma['codExamen'], $examenprograma, $bcdb -> examenprograma);
+	
+			if ($id) :
+				$msg = "La información se guardó correctamente.";
+			else :
+				$error = true;
+				$msg = "Hubo un error al guardar la información, intente nuevamente.";
+			endif;
 		endif;
 	endif;
 endif;
