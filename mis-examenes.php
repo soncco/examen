@@ -21,24 +21,36 @@ $cursos = get_cursos_con_examenes_pendientes($_SESSION['loginuser']['codAlumno']
 <script type="text/javascript" src="<?php print SCRIPTS_URL; ?>jquery.jeditable.js"></script>
 <script type="text/javascript">
 	simg = '<img src="images/loading.gif" alt="Cargando" id="simg" />';
+	
+	function examenesPendientes() {
+		codCurso = $('#codCurso').val();
+		if (codCurso != '') {
+			$('#codCurso').after(simg);
+			$.ajax({
+				type: 'POST',
+				url: 'traer-mis-examenes.php',
+				data: 'codCurso=' + codCurso,
+				success: function(response){
+					$('#examenes').html(response);
+					$('#simg').remove();
+				}
+			});
+		} else {
+			$('#examenes').html($('Escoge un curso'));
+		}
+	};
+	
 	$(document).ready(function() {
+		$('#srefresh').hide();
+
 		$('#codCurso').change(function () {
-			codCurso = $(this).val();
-			if (codCurso != '') {
-				$(this).after(simg);
-				$.ajax({
-					type: 'POST',
-					url: 'traer-mis-examenes.php',
-					data: 'codCurso=' + codCurso,
-					success: function(response){
-						$('#examenes').html(response);
-						$('#simg').remove();
-					}
-				});
-			} else {
-				$('#examenes').html($('Escoge un curso'));
-			}
+			examenesPendientes();
 		});
+		
+		setInterval(function(){
+			examenesPendientes();
+		}, 10000);
+	
 	});
 </script>
 <title>Cursos | Sistema de exámenes</title>
@@ -54,7 +66,7 @@ $cursos = get_cursos_con_examenes_pendientes($_SESSION['loginuser']['codAlumno']
     <h1>Exámenes</h1>
     <fieldset class="<?php if(!isset($_GET['PageIndex'])): ?>collapsible<?php endif; ?>"> 	
       <legend>Programados</legend>
-      	<p class="help">Escoja un curso y se le mostrarán sus exámenes programados. Tiempos expresados en hh:mm:ss.</p>
+      	<p class="help">Escoja un curso y se mostrarán sus exámenes. Tiempos en hh:mm:ss, se actualiza cada 10 segundos.</p>
         <p>
           <label for="codCurso">Curso <span class="required">*</span>:</label>
           <select name="codCurso" id="codCurso" class="required">
@@ -67,7 +79,7 @@ $cursos = get_cursos_con_examenes_pendientes($_SESSION['loginuser']['codAlumno']
           </select>
         </p>
 	    <p id="examenes">
-	    </p>        
+	    </p>
     </fieldset>
   </div>
   <div class="clear"></div>
