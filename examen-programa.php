@@ -31,7 +31,7 @@ if ($postback) :
 		$error = true;
 		$msg = "Ingrese la información obligatoria.";
 	else :
-		if (empty($_POST['inicio']) == empty($_POST['fin'])) :
+		if ($_POST['inicio'] == $_POST['fin']) :
 			$error = true;
 			$msg = "Hora de inicio y hora de fin no pueden ser las mismas";
 		else:

@@ -69,9 +69,20 @@ $results = @$bcrs->get_navigation();
     <p class="align-center"><img src="images/opciones.png" alt="Opciones" /></p>
   </div>
   <div id="content" class="grid_13">
-    <h1>Cursos</h1>
-    <fieldset class="<?php if(!isset($_GET['PageIndex'])): ?>collapsible<?php endif; ?>">
-      <legend>Semestre: <?= get_option('semestre_actual') ?></legend>
+    <h1>Exámenes</h1>
+    <fieldset class="<?php if(!isset($_GET['PageIndex'])): ?>collapsible<?php endif; ?>"> 	
+      <legend>Programados</legend>
+        <p>
+          <label for="codCurso">Curso <span class="required">*</span>:</label>
+          <select name="codCurso" id="codCurso" class="required">
+            <option value="" selected="selected">Seleccione un curso</option>
+            <?php foreach ($cursos as $k => $curso) : ?>
+            <option value="<?php print $curso['codCurso']; ?>">
+                  <?php print $curso['nombre']; ?>
+            </option>
+            <?php endforeach; ?>
+          </select>
+        </p>      
       <table>
         <thead>
           <tr>

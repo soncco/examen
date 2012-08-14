@@ -26,6 +26,7 @@
       'alumno' => array(
           'top' => array(
             'mis-cursos.php' => 'Cursos',
+            'mis-examenes.php' => 'Exámenes',
           ),
           'side' => array(
           )
