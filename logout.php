@@ -31,13 +31,13 @@ session_destroy();
 <link rel="stylesheet" type="text/css" media="screen" href="<?php print STYLES_URL; ?>960.css" />
 <link rel="stylesheet" type="text/css" media="screen" href="<?php print STYLES_URL; ?>layout.css" />
 <link href="/favicon.ico" type="image/ico" rel="shortcut icon" />
-<title>Sistema de exámenes</title>
+<title>Sistema de Exámenes</title>
 </head>
 
 <body>
 <div class="container_16">
   <div id="header">
-    <h1 id="logo"> <a href="/"><span>Sistema de exámenes</span></a> </h1>
+    <h1 id="logo"> <a href="/"><span>Sistema de Exámenes</span></a> </h1>
     <?php include "menutop.php"; ?>
   </div>
   <div class="clear"></div>
