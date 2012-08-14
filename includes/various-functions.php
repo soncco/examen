@@ -202,6 +202,39 @@ WHERE (m.codAlumno = '$codAlumno' AND m.codSemestre = '$codSemestre');";
 	return $bcdb -> get_results($sql);
 }
 
+function get_examenes_pendientes_de_alumno($codAlumno, $codCurso, $codSemestre) {
+	global $bcdb;
+	$sql = "SELECT DISTINCT
+e.nombre AS examen,
+DATE_FORMAT(ep.fecha, '%m/%d/%Y %h:%i %p') AS fecha,
+SEC_TO_TIME(ep.duracion) AS duracion,
+TIMEDIFF(ep.fecha, CURRENT_TIMESTAMP()) AS comienzo
+FROM tExamenPrograma ep
+INNER JOIN tExamen e ON ep.codExamen = e.codExamen
+INNER JOIN tExamenPregunta epr ON e.codExamen = epr.codExamen
+INNER JOIN tPregunta p ON epr.codPregunta = p.codPregunta
+INNER JOIN tTema t ON p.codTema = t.codTema
+INNER JOIN tMatricula m ON m.codCurso = t.codCurso
+WHERE ep.rendido = 'N' AND m.codCurso = '$codCurso' AND m.codAlumno = '$codAlumno' AND m.codSemestre = '$codSemestre';";
+
+	return $bcdb -> get_results($sql);
+}
+
+function get_cursos_con_examenes_pendientes($codAlumno, $codSemestre) {
+	global $bcdb;
+	$sql = "SELECT DISTINCT c.codCurso, c.nombre
+FROM tExamenPrograma ep
+INNER JOIN tExamen e ON ep.codExamen = e.codExamen
+INNER JOIN tExamenPregunta epr ON e.codExamen = epr.codExamen
+INNER JOIN tPregunta p ON epr.codPregunta = p.codPregunta
+INNER JOIN tTema t ON p.codTema = t.codTema
+INNER JOIN tMatricula m ON m.codCurso = t.codCurso
+INNER JOIN tCurso c on t.codCurso = c.codCurso
+WHERE ep.rendido = 'N' AND m.codAlumno = '$codAlumno' AND m.codSemestre = '$codSemestre';";
+
+	return $bcdb -> get_results($sql);
+}
+
 /* FUNCIONES PARA REPORTES */
 function get_curso_de_examen($codExamen) {
 	global $bcdb;
