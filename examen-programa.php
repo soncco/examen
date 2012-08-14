@@ -1,38 +1,42 @@
 <?php
 
-require_once('home.php');
-require_once('redirect.php');
+require_once ('home.php');
+require_once ('redirect.php');
 
 // Clave principal
-$bcdb->current_field = 'codExamen';
+$bcdb -> current_field = 'codExamen';
 
 $postback = isset($_POST['submit']);
 $error = false;
 
 // Si es que el formulario se ha enviado
-if($postback) :
-	$hora = explode(":", $_POST['hora']);
-	$time = ($hora[0] * 3600) + ($hora[1] * 60); 
+if ($postback) :
+	$hora = explode(":", $_POST['inicio']);
+	$time_i = ($hora[0] * 3600) + ($hora[1] * 60);
 	
+	$hora = explode(":", $_POST['fin']);
+	$time_f = ($hora[0] * 3600) + ($hora[1] * 60);
+	
+	$time = $time_f - $time_i;
+
 	$examenprograma = array(
 		'codExamen' => $_POST['codExamen'],
-		'fecha' => strftime("%Y-%m-%d %H:%M:%S", strtotime($_POST['fecha']) + $time),
+		'fecha' => strftime("%Y-%m-%d %H:%M:%S", strtotime($_POST['fecha']) + $time_i),
 		'rendido' => 'N',
-		'duracion' => $_POST['duracion']
-	);
-	
+		'duracion' => $time);
+
 	// Verificación
-	if (empty($examenprograma['codExamen']) || empty($_POST['fecha']) || empty($_POST['hora'])  || empty($examenprograma['duracion'])) :
+	if (empty($_POST['codExamen']) || empty($_POST['fecha']) || empty($_POST['inicio']) || empty($_POST['fin'])) :
 		$error = true;
 		$msg = "Ingrese la información obligatoria.";
 	else :
 		$examenprograma = array_map('strip_tags', $examenprograma);
-		// Guarda el semestre
-		$id = save_item($examenprograma['codExamen'], $examenprograma, $bcdb->examenprograma);
-	
-		if($id) :
+		// Guarda
+		$id = save_item($examenprograma['codExamen'], $examenprograma, $bcdb -> examenprograma);
+
+		if ($id) :
 			$msg = "La información se guardó correctamente.";
-		else:
+		else :
 			$error = true;
 			$msg = "Hubo un error al guardar la información, intente nuevamente.";
 		endif;
@@ -61,49 +65,53 @@ $cursos = get_cursos_docente($_SESSION['loginuser']['codDocente']);
 <script type="text/javascript" src="<?php print SCRIPTS_URL; ?>jquery.timepicker.js"></script>
 <script type="text/javascript">
 	$(document).ready(function() {
-    
-    $('#frmexamenprograma').validate();
-    // Timepicker.
-    $('#inicio').timepicker({
-      'minTime' : '5:00am', // Hora mínima.
-      'maxTime' : '11:00pm' // Hora máxima.
-    });
-    
-    $('#inicio').blur(function () {
-      inicio = $(this).val();
-      $('#fin').val('').timepicker({
-        'minTime' : inicio,
-        'maxTime' : '12:00pm'
-      });
-    })
-    
-    // Combos dependientes.
-    simg = '<img src="images/loading.gif" alt="Cargando" id="simg" />';
-		$('#codCurso').change(function () {
-      codCurso = $(this).val();      
-      if (codCurso != '') {
-        $(this).after(simg);
-        $.ajax({
-          type: 'POST',
-          url: 'traer-examenes.php',
-          data: 'codCurso=' + codCurso,
-          success: function(response){
-            $('#codExamen').html(response);
-            $('#simg').remove();
-          }
-        });
-      } else {
-        $('#codCurso').html($('<option value="">Escoge un curso</option>'));
-      }
-    });
-	});
+
+		$('#frmexamenprograma').validate();
+		// Timepicker.
+
+		$('#inicio').timepicker({
+			'timeFormat' : 'H:i',
+			'minTime' : '5:00am',
+			'maxTime' : '10:00pm'
+		});
+
+		$('#inicio').blur(function() {
+			inicio = $(this).val();
+			$('#fin').val('').timepicker({
+				'timeFormat' : 'H:i',
+				'minTime' : inicio,
+				'maxTime' : '11:00pm'
+			});
+		})
+		// Combos dependientes.
+		simg = '<img src="images/loading.gif" alt="Cargando" id="simg" />';
+		$('#codCurso').change(function() {
+			codCurso = $(this).val();
+			if (codCurso != '') {
+				$(this).after(simg);
+				$.ajax({
+					type : 'POST',
+					url : 'traer-examenes.php',
+					data : 'codCurso=' + codCurso,
+					success : function(response) {
+						$('#codExamen').html(response);
+						$('#simg').remove();
+					}
+				});
+			} else {
+				$('#codCurso').html($('<option value="">Escoge un curso</option>'));
+			}
+		});
+	}); 
 </script>
 <title>Preguntas | Sistema de exámenes</title>
 </head>
 
 <body>
 <div class="container_16">
-  <?php include "header.php"; ?>
+  <?php
+	include "header.php";
+ ?>
   <div class="clear"></div>
   <div id="icon" class="grid_3">
     <div id="sidebar">
@@ -159,7 +167,9 @@ $cursos = get_cursos_docente($_SESSION['loginuser']['codDocente']);
     </form>
   </div>
   <div class="clear"></div>
-  <?php include "footer.php"; ?>
+  <?php
+	include "footer.php";
+ ?>
 </div>
 </body>
 </html>
