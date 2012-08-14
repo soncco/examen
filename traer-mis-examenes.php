@@ -10,10 +10,10 @@ $examenes = get_examenes_pendientes_de_alumno($_SESSION['loginuser']['codAlumno'
 <table>
   <thead>
     <tr>
-      <th>Nombre</th>
-      <th>Fecha y Hora</th>
-      <th>Duración</th>
-      <th>Comienza en</th>
+      <th style="width: 52%;">Nombre</th>
+      <th style="width: 23%;">Fecha y Hora</th>
+      <th style="width: 10%;">Duración</th>
+      <th style="width: 15%;">Comienza en</th>
     </tr>
   </thead>
   <tbody>
@@ -21,9 +21,17 @@ $examenes = get_examenes_pendientes_de_alumno($_SESSION['loginuser']['codAlumno'
     <? foreach($examenes as $k => $examen) : ?>
     <tr class="<?= $alt ?>" title="<?= $examen['examen']; ?>">
       <th><?= $examen['examen'] ?></th>
-      <td><?= $examen['fecha']; ?></td>
-      <td><?= $examen['duracion'] ?></td>
-      <td><?= $examen['comienzo'] ?></td>
+      <td style=" text-align: center;"><?= $examen['fecha']; ?></td>
+      <td style=" text-align: center;"><?= $examen['duracion'] ?></td>
+      <td style=" text-align: center;">
+        <?
+          if (substr($examen['comienzo'], 0, 1) == "-") {
+          	?><a href="#"><?= 'Dar examen' ?></a><?
+          } else {
+          	echo $examen['comienzo'];
+          }
+        ?>
+      </td>
       <? $alt = ($alt == "even") ? "odd" : "even"; ?>
     </tr>
     <? endforeach; ?>

@@ -54,6 +54,7 @@ $cursos = get_cursos_con_examenes_pendientes($_SESSION['loginuser']['codAlumno']
     <h1>Exámenes</h1>
     <fieldset class="<?php if(!isset($_GET['PageIndex'])): ?>collapsible<?php endif; ?>"> 	
       <legend>Programados</legend>
+      	<p class="help">Escoja un curso y se le mostrarán sus exámenes programados. Tiempos expresados en hh:mm:ss.</p>
         <p>
           <label for="codCurso">Curso <span class="required">*</span>:</label>
           <select name="codCurso" id="codCurso" class="required">
