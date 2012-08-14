@@ -92,7 +92,7 @@ if($postback){
     <?php endif; ?>
     <form name="frmlogin" id="frmlogin" method="post" action="login.php">
       <fieldset>
-        <legend>Iniciar Sesión (<?= $_GET['rol'] ?>)</legend>
+        <legend>Iniciar Sesión (<?php print $rol; ?>)</legend>
         <p>
           <label for="username" accesskey="u"><span class="accesskey">U</span>suario:</label>
           <input type="text" name="username" id="username" maxlength="100" class="required" title="Ingresa el nombre de usuario" />
