@@ -7,7 +7,7 @@ require_once('home.php');
 if ( !empty($_SESSION['loginuser']) ) {
   switch ($_SESSION['loginuser']['rol']) :
     case 'docente':
-      safe_redirect('preguntas.php');
+      safe_redirect('temas.php');
     break;
     case 'alumno':
       safe_redirect('mis-cursos.php');
@@ -27,7 +27,7 @@ if($postback){
     case 'docente':
       $user = get_item_by_field("codDocente", $_POST['username'], $bcdb->docente);	
       $user['rol'] = 'docente';
-      $location = 'preguntas.php';
+      $location = 'temas.php';
     break;
     case 'alumno':
       $user = get_item_by_field("codAlumno", $_POST['username'], $bcdb->alumno);	
@@ -72,13 +72,13 @@ if($postback){
 		$("#username").focus();
 	});
 </script>
-<title>Login | Sistema de exámenes</title>
+<title>Login | Sistema de Exámenes</title>
 </head>
 
 <body>
 <div class="container_16">
   <div id="header">
-    <h1 id="logo"> <a href="/"><span>Sistema de exámenes</span></a> </h1>
+    <h1 id="logo"> <a href="/"><span>Sistema de Exámenes</span></a> </h1>
     <?php include "menutop.php"; ?>
   </div>
   <div class="clear"></div>
@@ -92,7 +92,7 @@ if($postback){
     <?php endif; ?>
     <form name="frmlogin" id="frmlogin" method="post" action="login.php">
       <fieldset>
-        <legend>Iniciar Sesión</legend>
+        <legend>Iniciar Sesión (<?= $_GET['rol'] ?>)</legend>
         <p>
           <label for="username" accesskey="u"><span class="accesskey">U</span>suario:</label>
           <input type="text" name="username" id="username" maxlength="100" class="required" title="Ingresa el nombre de usuario" />

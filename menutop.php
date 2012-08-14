@@ -8,7 +8,6 @@
             'asignar-docente.php' => 'Asignar docente',
             'alumnos.php' => 'Alumnos',
             'opciones.php' => 'Opciones',
-            'admins.php' => 'Admins',
           ),
           'side' => array(
           )
