@@ -3,46 +3,7 @@
 require_once('home.php');
 require_once('redirect.php');
 
-// Clave principal
-$bcdb->current_field = 'codCurso';
-
-$postback = isset($_POST['submit']);
-$error = false;
-
-// Si es que el formulario se ha enviado
-if($postback) :
-  $curso = array(
-    'codCurso' => $_POST['codCurso'],
-    'nombre' => $_POST['nombre'],
-    'creditos' => $_POST['creditos'],
-    'activo' => $_POST['activo'],
-  );
-
-  // Verificación
-  if (empty($curso['codCurso']) || empty($curso['nombre'])) :
-    $error = true;
-    $msg = "Ingrese la información obligatoria.";
-  else :
-
-    $curso = array_map('strip_tags', $curso);
-  
-    // Guarda el curso
-    $id = save_item($_POST['codCurso'], $curso, $bcdb->curso);
-
-    if($id) :
-      $msg = "La información se guardó correctamente.";
-    else:
-      $error = true;
-      $msg = "Hubo un error al guardar la información, intente nuevamente.";
-    endif;
-  endif;
-endif;
-
-$pager = true;
-$cursos = get_cursos_de_alumno($_SESSION['loginuser']['codAlumno'], get_option('semestre_actual'));
-
-// Paginación.
-$results = @$bcrs->get_navigation();
+$cursos = get_cursos_con_examenes_pendientes($_SESSION['loginuser']['codAlumno'], get_option('semestre_actual'));
 
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
@@ -58,9 +19,30 @@ $results = @$bcrs->get_navigation();
 <script type="text/javascript" src="<?php print SCRIPTS_URL; ?>jquery.validate.js"></script>
 <script type="text/javascript" src="<?php print SCRIPTS_URL; ?>jquery.collapsible.js"></script>
 <script type="text/javascript" src="<?php print SCRIPTS_URL; ?>jquery.jeditable.js"></script>
+<script type="text/javascript">
+	simg = '<img src="images/loading.gif" alt="Cargando" id="simg" />';
+	$(document).ready(function() {
+		$('#codCurso').change(function () {
+			codCurso = $(this).val();
+			if (codCurso != '') {
+				$(this).after(simg);
+				$.ajax({
+					type: 'POST',
+					url: 'traer-mis-examenes.php',
+					data: 'codCurso=' + codCurso,
+					success: function(response){
+						$('#examenes').html(response);
+						$('#simg').remove();
+					}
+				});
+			} else {
+				$('#examenes').html($('Escoge un curso'));
+			}
+		});
+	});
+</script>
 <title>Cursos | Sistema de exámenes</title>
 </head>
-
 <body>
 <div class="container_16">
   <?php include "header.php"; ?>
@@ -82,36 +64,9 @@ $results = @$bcrs->get_navigation();
             </option>
             <?php endforeach; ?>
           </select>
-        </p>      
-      <table>
-        <thead>
-          <tr>
-          <th>Código</th>
-          <th>Nombre</th>
-          <th>Créditos</th>
-          <th colspan="2">Acciones</th>
-          </tr>
-        </thead>
-        <tbody>
-          <?php if ($cursos): ?>
-          <?php $alt = "even"; ?>
-          <?php foreach($cursos as $k => $curso): ?>
-          <tr class="<?php print $alt ?>">
-            <th><?php print $curso['codCurso']; ?></th>
-            <td><?php print $curso['nombre']; ?></td>
-            <td><?php print $curso['creditos']; ?></td>
-            <td><a href="ver-notas.php?codCurso=<?php print $curso['codCurso']; ?>">Ver notas</a></td>
-            <?php $alt = ($alt == "even") ? "odd" : "even"; ?>
-          </tr>
-          <?php endforeach; ?>
-          <?php else: ?>
-          <tr class="<?php print $alt; ?>">
-            <td colspan="2">No existen datos</th>
-          </tr>
-          <?php endif; ?>
-        </tbody>
-      </table>
-      <?php include "pager.php"; ?>
+        </p>
+	    <p id="examenes">
+	    </p>        
     </fieldset>
   </div>
   <div class="clear"></div>
