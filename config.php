@@ -16,7 +16,7 @@ define("CHARSET", "UTF-8");
 // Número de items mostrados en la paginación.
 define("NUM_ITEMS", 20);
 
-error_reporting(E_ALL);
+error_reporting(E_ALL & ~E_NOTICE);
 
 setlocale(LC_ALL, '');
 
