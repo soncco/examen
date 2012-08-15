@@ -39,9 +39,6 @@ $cursos = get_cursos_con_examenes_pendientes($_SESSION['loginuser']['codAlumno']
 		      </td>
 		    </tr>
 			<? endforeach; ?>
-	    <tr>
-	      <th style="height: 25px;" colspan="4"></th>
-	    </tr>
 	    <? else : ?>
 	    <tr>
 	      <th colspan="4">No existen exámenes pendientes.</th>
