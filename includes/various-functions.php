@@ -313,7 +313,7 @@ function get_examenes_rendidos_de_alumno($codAlumno, $codCurso, $codSemestre) {
 	global $bcdb;
 	$sql = "SELECT DISTINCT
 e.nombre AS examen,
-DATE_FORMAT(ep.fecha, '%m/%d/%Y %h:%i %p') AS fecha, e.codExamen, ep.fecha
+DATE_FORMAT(ep.fecha, '%m/%d/%Y %h:%i %p') AS fechaF, e.codExamen, ep.fecha
 FROM tExamenPrograma ep
 INNER JOIN tExamen e ON ep.codExamen = e.codExamen
 INNER JOIN tExamenPregunta epr ON e.codExamen = epr.codExamen
@@ -328,8 +328,8 @@ WHERE ep.rendido = 'S' AND m.codCurso = '$codCurso' AND m.codAlumno = '$codAlumn
 /**
  * Devuelve calificacion de examen de un alumno.
  * @param type $codAlumno
- * @param type $codCurso
- * @param type $codSemestre
+ * @param type $codExamen
+ * @param type $fecha
  * @return type 
  */
 function get_nota_examen($codAlumno, $codExamen, $fecha) {

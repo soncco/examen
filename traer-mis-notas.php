@@ -3,16 +3,16 @@
 require_once('home.php');
 require_once('redirect.php');
 
-$cursos = get_cursos_con_examenes_pendientes($_SESSION['loginuser']['codAlumno'], get_option('semestre_actual'));
+$cursos = get_cursos_con_examenes_rendidos($_SESSION['loginuser']['codAlumno'], get_option('semestre_actual'));
 
 ?>
 <table>
   <thead>
     <tr>
-      <th style="width: 52%;">Nombre</th>
-      <th style="width: 23%;">Fecha y Hora</th>
-      <th style="width: 10%;">Duración</th>
-      <th style="width: 15%;">Comienza en</th>
+      <th style="width: 50%;">Nombre</th>
+      <th style="width: 20%;">Fecha y Hora</th>
+      <th style="width: 5%;">Correctas</th>
+      <th style="width: 5%;">Nota</th>
     </tr>
   </thead>
   <tbody>
@@ -21,22 +21,15 @@ $cursos = get_cursos_con_examenes_pendientes($_SESSION['loginuser']['codAlumno']
 		<tr class="odd">
 			<th colspan="5"><?= $curso[nombre]; ?> (<?= $curso[codCurso]; ?>)</th>
 		</tr>
-		<? $examenes = $cursos = get_examenes_pendientes_de_alumno($_SESSION['loginuser']['codAlumno'], $curso['codCurso'], get_option('semestre_actual')); ?>
+		<? $examenes = get_examenes_rendidos_de_alumno($_SESSION['loginuser']['codAlumno'], $curso['codCurso'], get_option('semestre_actual')); ?>
 	    <? if($examenes) : ?>
 		    <? foreach($examenes as $k => $examen) : ?>
 		    <tr title="<?= $examen['examen']; ?>">
+		    	<? $notas = get_nota_examen($_SESSION['loginuser']['codAlumno'], $examen['codExamen'], $examen['fecha']) ?>
 		      <th style="text-indent: 0.5cm;"><?= $examen['examen'] ?></th>
-		      <td class="align-center"><?= $examen['fecha']; ?></td>
-		      <td class="align-center"><?= $examen['duracion'] ?></td>
-		      <td class="align-center">
-		        <?
-		          if (substr($examen['comienzo'], 0, 1) == "-") {
-		          	?><a href="#"><?= 'Dar examen' ?></a><?
-		          } else {
-		          	echo $examen['comienzo'];
-		          }
-		        ?>
-		      </td>
+		      <td class="align-center"><?= $examen['fechaF']; ?></td>
+		      <td class="align-center"><?= $notas[0]['correctas'] ?></td>
+		      <td class="align-center"><?= $notas[0]['nota'] ?></td>
 		    </tr>
 			<? endforeach; ?>
 	    <? else : ?>
