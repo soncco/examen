@@ -9,7 +9,7 @@ DROP TABLE tCurso, tDocente;
 -- -----------------------------------------------------
 -- Table tAlumno
 -- -----------------------------------------------------
-CREATE  TABLE tAlumno (
+CREATE  TABLE IF NOT EXISTS tAlumno (
   codAlumno CHAR(6) NOT NULL COMMENT 'Código del alumno.' ,
   password VARCHAR(32) NOT NULL COMMENT 'Contraseña encriptada con MD5.' ,
   apellidoP VARCHAR(40) NOT NULL COMMENT 'Apellido paterno del alumno.' ,
@@ -25,7 +25,7 @@ COMMENT = 'Guarda información de alumnos.';
 -- -----------------------------------------------------
 -- Table tCurso
 -- -----------------------------------------------------
-CREATE  TABLE tCurso (
+CREATE  TABLE IF NOT EXISTS tCurso (
   codCurso CHAR(8) NOT NULL COMMENT 'Código del curso incluido el grupo y la carrera. Ejemplo: IF101AIN.' ,
   nombre VARCHAR(60) NOT NULL COMMENT 'Nombre del curso.' ,
   creditos INT UNSIGNED NOT NULL COMMENT 'Número de créditos.' ,
@@ -39,7 +39,7 @@ COMMENT = 'Datos de los cursos.';
 -- -----------------------------------------------------
 -- Table tDocente
 -- -----------------------------------------------------
-CREATE  TABLE tDocente (
+CREATE  TABLE IF NOT EXISTS tDocente (
   codDocente CHAR(5) NOT NULL COMMENT 'Identificador de un docente.' ,
   password VARCHAR(32) NOT NULL COMMENT 'Contraseña encriptada con MD5.' ,
   apellidoP VARCHAR(40) NOT NULL COMMENT 'Apellido paterno del docente.' ,
@@ -55,7 +55,7 @@ COMMENT = 'Guarda información de docentes.';
 -- -----------------------------------------------------
 -- Table tDocenteCurso
 -- -----------------------------------------------------
-CREATE  TABLE tDocenteCurso (
+CREATE  TABLE IF NOT EXISTS tDocenteCurso (
   codDocente CHAR(5) NOT NULL ,
   codCurso CHAR(8) NOT NULL ,
   INDEX fk_tDocenteCurso_tDocente2 (codDocente ASC) ,
@@ -77,11 +77,11 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 -- Table tTema
 -- -----------------------------------------------------
-CREATE  TABLE tTema (
+CREATE  TABLE IF NOT EXISTS tTema (
   codTema INT UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'Identificador del tema.' ,
   codDocente CHAR(5) NOT NULL ,
   codCurso CHAR(8) NOT NULL ,
-  nombre VARCHAR(255) NOT NULL COMMENT 'Nombre del tema.' ,
+  nombre VARCHAR(60) NOT NULL COMMENT 'Nombre del tema.' ,
   PRIMARY KEY (codTema) ,
   INDEX fk_tTema_tDocenteCurso1 (codDocente ASC, codCurso ASC) ,
   CONSTRAINT fk_tTema_tDocenteCurso1
@@ -96,10 +96,10 @@ COMMENT = 'Guarda información de Temas.';
 -- -----------------------------------------------------
 -- Table tPregunta
 -- -----------------------------------------------------
-CREATE  TABLE tPregunta (
+CREATE  TABLE IF NOT EXISTS tPregunta (
   codPregunta INT UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'Identificador de la pregunta.' ,
   codTema INT UNSIGNED NOT NULL COMMENT 'Código del tema al cual pertenece la pregunta.' ,
-  enunciado VARCHAR(500) NOT NULL COMMENT 'Enunciado de la pregunta.' ,
+  enunciado TEXT NOT NULL COMMENT 'Enunciado de la pregunta.' ,
   nivel ENUM('F','N','D') NOT NULL DEFAULT 'F' COMMENT 'Nivel de la pregunta. F: Fácil, N: Normal y D: Difícil.' ,
   imagen VARCHAR(100) NULL COMMENT 'Nombre de la imagen relativa a la pregunta.' ,
   PRIMARY KEY (codPregunta) ,
@@ -116,11 +116,11 @@ COMMENT = 'Guarda información de preguntas.';
 -- -----------------------------------------------------
 -- Table tAlternativa
 -- -----------------------------------------------------
-CREATE  TABLE tAlternativa (
+CREATE  TABLE IF NOT EXISTS tAlternativa (
   codAlternativa INT UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'Identificador de la alternativa.' ,
   codPregunta INT UNSIGNED NOT NULL COMMENT 'Código de la pregunta al que pertenece la alternativa.' ,
   correcta ENUM('S','N') NOT NULL DEFAULT 'N' COMMENT 'Muestra si la alternativa es o no correcta.' ,
-  detalle VARCHAR(255) NOT NULL COMMENT 'La alternativa.' ,
+  detalle MEDIUMTEXT NOT NULL COMMENT 'La alternativa.' ,
   PRIMARY KEY (codAlternativa) ,
   INDEX fk_tAlternativa_tPregunta1 (codPregunta ASC) ,
   CONSTRAINT fk_tAlternativa_tPregunta1
@@ -135,9 +135,9 @@ COMMENT = 'Guarda información de las alternativas.';
 -- -----------------------------------------------------
 -- Table tExamen
 -- -----------------------------------------------------
-CREATE  TABLE tExamen (
+CREATE  TABLE IF NOT EXISTS tExamen (
   codExamen INT UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'Identificador del ' ,
-  nombre VARCHAR(20) NOT NULL COMMENT 'Nombre del  Ejemplo: Primera parcial de ...' ,
+  nombre VARCHAR(60) NOT NULL COMMENT 'Nombre del  Ejemplo: Primera parcial de ...' ,
   PRIMARY KEY (codExamen) )
 ENGINE = InnoDB
 COMMENT = 'Guarda información de exámenes.';
@@ -146,7 +146,7 @@ COMMENT = 'Guarda información de exámenes.';
 -- -----------------------------------------------------
 -- Table tExamenPregunta
 -- -----------------------------------------------------
-CREATE  TABLE tExamenPregunta (
+CREATE  TABLE IF NOT EXISTS tExamenPregunta (
   codExamen INT UNSIGNED NOT NULL COMMENT 'Código del ' ,
   codPregunta INT UNSIGNED NOT NULL COMMENT 'Código de la pregunta.' ,
   puntaje INT(2) UNSIGNED NOT NULL COMMENT 'Puntaje de la pregunta en el ' ,
@@ -170,9 +170,9 @@ COMMENT = 'Guarda información de preguntas relacionadas a un ';
 -- -----------------------------------------------------
 -- Table tExamenPrograma
 -- -----------------------------------------------------
-CREATE  TABLE tExamenPrograma (
+CREATE  TABLE IF NOT EXISTS tExamenPrograma (
   codExamen INT UNSIGNED NOT NULL COMMENT 'Identificador.' ,
-  fecha TIMESTAMP NOT NULL COMMENT 'Fecha y hora de la programación.' ,
+  fecha DATETIME NOT NULL COMMENT 'Fecha y hora de la programación.' ,
   duracion INT NOT NULL DEFAULT 3600 ,
   rendido ENUM('S','N') NOT NULL DEFAULT 'N' COMMENT 'Información sobre si se ha rendido o no el ' ,
   PRIMARY KEY (codExamen, fecha) ,
@@ -188,10 +188,10 @@ COMMENT = 'Guarda información de programación de exámenes.';
 -- -----------------------------------------------------
 -- Table tRespuesta
 -- -----------------------------------------------------
-CREATE  TABLE tRespuesta (
+CREATE  TABLE IF NOT EXISTS tRespuesta (
   codAlumno CHAR(6) NOT NULL COMMENT 'El código del alumno.' ,
   codExamen INT UNSIGNED NOT NULL COMMENT 'El código del ' ,
-  fecha TIMESTAMP NOT NULL COMMENT 'La fecha del ' ,
+  fecha DATETIME NOT NULL COMMENT 'La fecha del ' ,
   codAlternativa INT UNSIGNED NOT NULL COMMENT 'Alternativa marcada por el alumno.' ,
   PRIMARY KEY (codAlumno, codExamen, fecha, codAlternativa) ,
   INDEX fk_tRespuesta_tExamenPrograma1 (codExamen ASC, fecha ASC) ,
@@ -218,10 +218,10 @@ COMMENT = 'Guarda información de respuestas de un alumno en un ';
 -- -----------------------------------------------------
 -- Table tSemestre
 -- -----------------------------------------------------
-CREATE  TABLE tSemestre (
+CREATE  TABLE IF NOT EXISTS tSemestre (
   codSemestre VARCHAR(7) NOT NULL COMMENT 'Identificador del semestre, por ejemplo: 2012-I.' ,
-  fechaInicio TIMESTAMP NOT NULL COMMENT 'Inicio del semestre.' ,
-  fechaFin TIMESTAMP NOT NULL COMMENT 'Fin del semestre.' ,
+  fechaInicio DATETIME NOT NULL COMMENT 'Inicio del semestre.' ,
+  fechaFin DATETIME NOT NULL COMMENT 'Fin del semestre.' ,
   PRIMARY KEY (codSemestre) )
 ENGINE = InnoDB
 COMMENT = 'Guarda información de semestres.';
@@ -230,7 +230,7 @@ COMMENT = 'Guarda información de semestres.';
 -- -----------------------------------------------------
 -- Table tCargaAcademica
 -- -----------------------------------------------------
-CREATE  TABLE tCargaAcademica (
+CREATE  TABLE IF NOT EXISTS tCargaAcademica (
   codDocente CHAR(5) NOT NULL ,
   codCurso CHAR(8) NOT NULL ,
   codSemestre VARCHAR(7) NOT NULL ,
@@ -254,7 +254,7 @@ COMMENT = 'Guarda información de docentes asignados a cursos.';
 -- -----------------------------------------------------
 -- Table tMatricula
 -- -----------------------------------------------------
-CREATE  TABLE tMatricula (
+CREATE  TABLE IF NOT EXISTS tMatricula (
   codDocente CHAR(5) NOT NULL ,
   codCurso CHAR(8) NOT NULL ,
   codSemestre VARCHAR(7) NOT NULL ,
@@ -279,7 +279,7 @@ COMMENT = 'Guarda información de matrículas de alumnos.';
 -- -----------------------------------------------------
 -- Table tAdministrador
 -- -----------------------------------------------------
-CREATE  TABLE tAdministrador (
+CREATE  TABLE IF NOT EXISTS tAdministrador (
   codAdmin INT NOT NULL AUTO_INCREMENT ,
   usuario VARCHAR(12) NOT NULL ,
   password VARCHAR(32) NOT NULL ,
@@ -297,7 +297,7 @@ COMMENT = 'Guarda datos de administradores.';
 -- -----------------------------------------------------
 -- Table tWatchdog
 -- -----------------------------------------------------
-CREATE  TABLE tWatchdog (
+CREATE  TABLE IF NOT EXISTS tWatchdog (
   codWatch INT NOT NULL AUTO_INCREMENT COMMENT 'Identificador del evento.' ,
   codUsuario VARCHAR(6) NOT NULL COMMENT 'Código del usuario que generó el evento.' ,
   tipoUsuario ENUM('A', 'D', 'S') NOT NULL DEFAULT 'S' COMMENT 'Tipo de usuario que generó el evento.' ,
@@ -311,7 +311,7 @@ COMMENT = 'Registra eventos del sistema.';
 -- -----------------------------------------------------
 -- Table tOpcion
 -- -----------------------------------------------------
-CREATE  TABLE tOpcion (
+CREATE  TABLE IF NOT EXISTS tOpcion (
   codOpcion INT NOT NULL AUTO_INCREMENT COMMENT 'Identificador de la opción.' ,
   nombre VARCHAR(45) NOT NULL COMMENT 'La opción.' ,
   descripcion TEXT NOT NULL COMMENT 'Valor de la opción.' ,
