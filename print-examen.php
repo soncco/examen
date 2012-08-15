@@ -71,14 +71,14 @@ class PDF extends FPDF {
 		for ($i = 1; $i <= $n; $i++) {
 			$this->Cell(0, 3.5, "$i)");
 			$this->SetX(16);
-			$this->MultiCell(0, 3.5, utf8_decode($this->preguntas[$i-1][enunciado]));
+			$this->MultiCell(0, 3.5, utf8_decode($this->preguntas[$i-1]['enunciado']));
 			$this->Ln();
 			
 			foreach ($this->alternativas[$i-1] as $alt) {
 				$this->SetX(16);
 				$this->Cell(0, 3.5, chr($j).")");
 				$this->SetX(22);
-				$this->MultiCell(0, 3.5, utf8_decode($alt[detalle]));
+				$this->MultiCell(0, 3.5, utf8_decode($alt['detalle']));
 				
 				$j++;
 			}
@@ -96,17 +96,17 @@ $pdf->font = 'Arial';
 $codExamen = $_GET['id']; /*VALIDAR QUE SEA ENTERO Y QUE TENGA PERMISOS PARA VER EXAMEN*/
 
 $arr_tmp = get_curso_de_examen($codExamen);
-$pdf->curso = $arr_tmp[0][nombre] . " (" . $arr_tmp[0][codCurso] . ")";
+$pdf->curso = $arr_tmp[0]['nombre'] . " (" . $arr_tmp[0]['codCurso'] . ")";
 
 $arr_tmp = get_examen($codExamen);
-$pdf->examen = $arr_tmp[0][nombre];
+$pdf->examen = $arr_tmp['nombre'];
 
 $pdf->preguntas = get_preguntas_de_examen($codExamen);
 
 $n = sizeof($pdf->preguntas);
 $pdf->alternativas = array();
 for ($i = 0; $i < $n; $i++)
-	array_push($pdf->alternativas, get_alternativas_de_pregunta($pdf->preguntas[$i][codPregunta]));
+	array_push($pdf->alternativas, get_alternativas_de_pregunta($pdf->preguntas[$i]['codPregunta']));
 
 $pdf->AliasNbPages();
 $pdf->AddPage();

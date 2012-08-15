@@ -243,6 +243,7 @@ WHERE (m.codAlumno = '$codAlumno' AND m.codSemestre = '$codSemestre');";
 function get_examenes_pendientes_de_alumno($codAlumno, $codCurso, $codSemestre) {
 	global $bcdb;
 	$sql = "SELECT DISTINCT
+e.codExamen,
 e.nombre AS examen,
 DATE_FORMAT(ep.fecha, '%m/%d/%Y %h:%i %p') AS fecha,
 SEC_TO_TIME(ep.duracion) AS duracion,
@@ -360,7 +361,7 @@ function get_examen($codExamen) {
 	global $bcdb;
 	$sql = "SELECT * FROM tExamen WHERE codExamen = '$codExamen';";
 
-	return $bcdb -> get_results($sql);
+	return $bcdb -> get_row($sql);
 }
 
 function get_preguntas_de_examen($codExamen) {
@@ -376,5 +377,17 @@ function get_alternativas_de_pregunta($codPregunta) {
 	global $bcdb;
 	$sql = "SELECT * FROM tAlternativa WHERE codPregunta = '$codPregunta'";
 	return $bcdb -> get_results($sql);
+}
+
+function get_countdown($codExamen) {
+  global $bcdb;
+  $sql = sprintf("SELECT DISTINCT SUBTIME( SEC_TO_TIME( ep.duracion ) , TIMEDIFF( CURRENT_TIMESTAMP( ) , ep.fecha ) ) 
+        AS falta
+        FROM tExamenPrograma ep
+        WHERE ep.rendido =  'N'
+        AND ep.codExamen =  '%s';", $codExamen);
+  $falta = $bcdb->get_var($sql);
+  
+  return ($falta);
 }
 ?>
