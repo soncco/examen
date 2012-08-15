@@ -22,9 +22,9 @@ $examenes = get_examenes_pendientes_de_alumno($_SESSION['loginuser']['codAlumno'
     <? foreach($examenes as $k => $examen) : ?>
     <tr class="<?= $alt ?>" title="<?= $examen['examen']; ?>">
       <th><?= $examen['examen'] ?></th>
-      <td style=" text-align: center;"><?= $examen['fecha']; ?></td>
-      <td style=" text-align: center;"><?= $examen['duracion'] ?></td>
-      <td style=" text-align: center;">
+      <td class="align-center"><?= $examen['fecha']; ?></td>
+      <td class="align-center"><?= $examen['duracion'] ?></td>
+      <td class="align-center">
         <?
           if (substr($examen['comienzo'], 0, 1) == "-") {
           	?><a href="#"><?= 'Dar examen' ?></a><?
