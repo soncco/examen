@@ -27,6 +27,7 @@
           'top' => array(
             'mis-cursos.php' => 'Cursos',
             'mis-examenes.php' => 'Exámenes',
+            'mis-notas.php' => 'Notas',            
           ),
           'side' => array(
           )

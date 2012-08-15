@@ -75,10 +75,9 @@ $results = @$bcrs->get_navigation();
       <table>
         <thead>
           <tr>
-          <th>Código</th>
-          <th>Nombre</th>
-          <th>Créditos</th>
-          <th colspan="2">Acciones</th>
+          <th style="width: 15%;">Código</th>
+          <th style="width: 80%;">Curso</th>
+          <th style="width: 5%;">Créditos</th>
           </tr>
         </thead>
         <tbody>
@@ -86,10 +85,9 @@ $results = @$bcrs->get_navigation();
           <?php $alt = "even"; ?>
           <?php foreach($cursos as $k => $curso): ?>
           <tr class="<?php print $alt ?>">
-            <th><?php print $curso['codCurso']; ?></th>
+            <th class="align-center"><?php print $curso['codCurso']; ?></th>
             <td><?php print $curso['nombre']; ?></td>
-            <td><?php print $curso['creditos']; ?></td>
-            <td><a href="ver-notas.php?codCurso=<?php print $curso['codCurso']; ?>">Ver notas</a></td>
+            <td class="align-center"><?php print $curso['creditos']; ?></td>
             <?php $alt = ($alt == "even") ? "odd" : "even"; ?>
           </tr>
           <?php endforeach; ?>

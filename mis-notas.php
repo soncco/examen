@@ -23,7 +23,7 @@ require_once('redirect.php');
 	function examenesPendientes() {
 		$.ajax({
 			type: 'GET',
-			url: 'traer-mis-examenes.php',
+			url: 'traer-mis-notas.php',
 			success: function(response){
 				$('#examenes').html(response);
 				$('#simg').remove();
@@ -36,10 +36,10 @@ require_once('redirect.php');
 		
 		setInterval(function(){
 			examenesPendientes();
-		}, 10000);
+		}, 60000);
 	});
 </script>
-<title>Exámenes | Sistema de exámenes</title>
+<title>Notas | Sistema de exámenes</title>
 </head>
 <body>
 <div class="container_16">
@@ -49,10 +49,10 @@ require_once('redirect.php');
     <p class="align-center"><img src="images/opciones.png" alt="Opciones" /></p>
   </div>
   <div id="content" class="grid_13">
-    <h1>Exámenes</h1>
+    <h1>Notas</h1>
     <fieldset class="<?php if(!isset($_GET['PageIndex'])): ?>collapsible<?php endif; ?>"> 	
-      <legend>Programados</legend>
-      	<p class="help">Tiempos en hh:mm:ss, se actualiza automáticamente cada 10 segundos.</p>
+      <legend>Exámenes concluidos</legend>
+      	<p class="help">Se actualiza automáticamente cada minuto.</p>
 	    <p id="examenes">
 	    </p>
     </fieldset>
