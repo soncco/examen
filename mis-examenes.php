@@ -3,8 +3,6 @@
 require_once('home.php');
 require_once('redirect.php');
 
-$cursos = get_cursos_con_examenes_pendientes($_SESSION['loginuser']['codAlumno'], get_option('semestre_actual'));
-
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -23,34 +21,22 @@ $cursos = get_cursos_con_examenes_pendientes($_SESSION['loginuser']['codAlumno']
 	simg = '<img src="images/loading.gif" alt="Cargando" id="simg" />';
 	
 	function examenesPendientes() {
-		codCurso = $('#codCurso').val();
-		if (codCurso != '') {
-			$('#codCurso').after(simg);
-			$.ajax({
-				type: 'POST',
-				url: 'traer-mis-examenes.php',
-				data: 'codCurso=' + codCurso,
-				success: function(response){
-					$('#examenes').html(response);
-					$('#simg').remove();
-				}
-			});
-		} else {
-			$('#examenes').html($('Escoge un curso'));
-		}
+		$.ajax({
+			type: 'GET',
+			url: 'traer-mis-examenes.php',
+			success: function(response){
+				$('#examenes').html(response);
+				$('#simg').remove();
+			}
+		});
 	};
 	
 	$(document).ready(function() {
-		$('#srefresh').hide();
-
-		$('#codCurso').change(function () {
-			examenesPendientes();
-		});
+		examenesPendientes();
 		
 		setInterval(function(){
 			examenesPendientes();
 		}, 10000);
-	
 	});
 </script>
 <title>Cursos | Sistema de exámenes</title>
@@ -66,18 +52,7 @@ $cursos = get_cursos_con_examenes_pendientes($_SESSION['loginuser']['codAlumno']
     <h1>Exámenes</h1>
     <fieldset class="<?php if(!isset($_GET['PageIndex'])): ?>collapsible<?php endif; ?>"> 	
       <legend>Programados</legend>
-      	<p class="help">Escoja un curso y se mostrarán sus exámenes. Tiempos en hh:mm:ss, se actualiza cada 10 segundos.</p>
-        <p>
-          <label for="codCurso">Curso <span class="required">*</span>:</label>
-          <select name="codCurso" id="codCurso" class="required">
-            <option value="" selected="selected">Seleccione un curso</option>
-            <?php foreach ($cursos as $k => $curso) : ?>
-            <option value="<?php print $curso['codCurso']; ?>">
-                  <?php print $curso['nombre']; ?>
-            </option>
-            <?php endforeach; ?>
-          </select>
-        </p>
+      	<p class="help">Tiempos en hh:mm:ss, se actualiza cada 10 segundos.</p>
 	    <p id="examenes">
 	    </p>
     </fieldset>
