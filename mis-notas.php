@@ -28,7 +28,11 @@ require_once('redirect.php');
 			success: function(response){
 				$('#examenes').html(response);
 				$('#simg').remove();
-			}
+			},
+			error: function(){
+				$('#simg').remove();
+			},
+			timeout: 5000
 		});
 	};
 	

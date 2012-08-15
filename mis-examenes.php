@@ -28,7 +28,11 @@ require_once('redirect.php');
 			success: function(response){
 				$('#examenes').html(response);
 				$('#simg').remove();
-			}
+			},
+			error: function(){
+				$('#simg').remove();
+			},
+			timeout: 5000
 		});
 	};
 	
@@ -37,7 +41,7 @@ require_once('redirect.php');
 		
 		setInterval(function(){
 			examenesPendientes();
-		}, 10000);
+		}, 20000);
 	});
 </script>
 <title>Exámenes | Sistema de exámenes</title>
@@ -53,7 +57,7 @@ require_once('redirect.php');
     <h1>Exámenes</h1>
     <fieldset class="<?php if(!isset($_GET['PageIndex'])): ?>collapsible<?php endif; ?>"> 	
       <legend>Programados</legend>
-      	<p class="help"><span id="referencia">Tiempos en hh:mm:ss, se actualiza automáticamente cada 10 segundos.</span></p>
+      	<p class="help"><span id="referencia">Tiempos en hh:mm:ss, se actualiza automáticamente cada 20 segundos.</span></p>
 	    <p id="examenes">
 	    </p>
     </fieldset>
