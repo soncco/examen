@@ -313,7 +313,7 @@ function get_examenes_rendidos_de_alumno($codAlumno, $codCurso, $codSemestre) {
 	global $bcdb;
 	$sql = "SELECT DISTINCT
 e.nombre AS examen,
-DATE_FORMAT(ep.fecha, '%m/%d/%Y %h:%i %p') AS fecha
+DATE_FORMAT(ep.fecha, '%m/%d/%Y %h:%i %p') AS fecha, e.codExamen, ep.fecha
 FROM tExamenPrograma ep
 INNER JOIN tExamen e ON ep.codExamen = e.codExamen
 INNER JOIN tExamenPregunta epr ON e.codExamen = epr.codExamen
@@ -321,6 +321,25 @@ INNER JOIN tPregunta p ON epr.codPregunta = p.codPregunta
 INNER JOIN tTema t ON p.codTema = t.codTema
 INNER JOIN tMatricula m ON m.codCurso = t.codCurso
 WHERE ep.rendido = 'S' AND m.codCurso = '$codCurso' AND m.codAlumno = '$codAlumno' AND m.codSemestre = '$codSemestre';";
+
+	return $bcdb -> get_results($sql);
+}
+
+/**
+ * Devuelve calificacion de examen de un alumno.
+ * @param type $codAlumno
+ * @param type $codCurso
+ * @param type $codSemestre
+ * @return type 
+ */
+function get_nota_examen($codAlumno, $codExamen, $fecha) {
+	global $bcdb;
+	$sql = "SELECT COUNT(*) AS correctas, SUM(ep.puntaje) AS nota FROM
+tRespuesta r
+INNER JOIN tAlternativa a ON (a.codAlternativa = r.codAlternativa)
+INNER JOIN tPregunta p ON (p.codPregunta = a.codPregunta AND a.correcta = 'S')
+INNER JOIN tExamenPregunta ep ON (ep.codExamen = r.codExamen AND ep.codPregunta = p.codPregunta)
+WHERE r.codAlumno = '$codAlumno' AND r.codExamen = '$codExamen' AND r.fecha = '$fecha';";
 
 	return $bcdb -> get_results($sql);
 }
