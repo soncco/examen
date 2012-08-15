@@ -18,6 +18,7 @@ $examenes = get_examenes_pendientes_de_alumno($_SESSION['loginuser']['codAlumno'
   </thead>
   <tbody>
     <? $alt = "even"; ?>
+    <? if($examenes) : ?>
     <? foreach($examenes as $k => $examen) : ?>
     <tr class="<?= $alt ?>" title="<?= $examen['examen']; ?>">
       <th><?= $examen['examen'] ?></th>
@@ -35,5 +36,10 @@ $examenes = get_examenes_pendientes_de_alumno($_SESSION['loginuser']['codAlumno'
       <? $alt = ($alt == "even") ? "odd" : "even"; ?>
     </tr>
     <? endforeach; ?>
+    <? else : ?>
+    <tr class="<?= $alt ?>">
+      <th colspan="4">No existen exámenes pendientes.</th>
+    </tr>
+    <? endif; ?>    
   </tbody>
 </table>
