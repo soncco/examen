@@ -50,6 +50,7 @@ if ($postback) :
 endif;
 
 $cursos = get_cursos_docente($_SESSION['loginuser']['codDocente']);
+$examenes_programados = get_examenes_programados_docente($_SESSION['loginuser']['codDocente']);
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -163,19 +164,48 @@ $cursos = get_cursos_docente($_SESSION['loginuser']['codDocente']);
           <label for="fin">Hora de fin <span class="required">*</span>:</label>
           <input type="text" name="fin" id="fin" size="8" value="" class="required" />
         </p>
+        <p class="align-center">
+          <button type="submit" name="submit" id="submit">Guardar</button>
+        </p>
       </fieldset>
-      <fieldset class="collapsible">
-        <legend>Examenes</legend>
-      </fieldset>
-      <p class="align-center">
-        <button type="submit" name="submit" id="submit">Guardar</button>
-      </p>
     </form>
+    <fieldset class="collapsible">
+      <legend>Examenes programados</legend>
+      <table>
+        <thead>
+          <tr>
+            <th>Nombre</th>
+            <th>Curso</th>
+            <th>Fecha</th>
+            <th>Duración</th>
+            <th>Rendido</th>
+          </tr>
+        </thead>
+        <tbody>
+          <?php if ($examenes_programados) : ?>
+          <?php foreach ($examenes_programados as $k => $examen) : ?>
+          <tr>
+            <th><?php print $examen['nombre']; ?></th>
+            <th><?php print $examen['curso'][0]['nombre']; ?></th>
+            <td><?php print strftime('%d %b %Y', strtotime($examen['fecha'])); ?></td>
+            <td><?php print $examen['duracion']/60; ?> minutos</td>
+            <td><?php print ($examen['rendido'] == 'S') ? 'Si' : 'No' ; ?></td>
+          </tr>
+          <?php endforeach; ?>
+          <?php else : ?>
+          <tr>
+            <th colspan="4"></th>
+          </tr>
+          <?php endif; ?>
+        </tbody>
+      </table>
+    </fieldset>
+      
   </div>
   <div class="clear"></div>
   <?php
-	include "footer.php";
- ?>
+    include "footer.php";
+  ?>
 </div>
 </body>
 </html>

@@ -183,6 +183,31 @@ function get_examenes_docente($codDocente) {
   return $examenes;
 }
 
+function get_examenes_programados_docente($codDocente) {
+  global $bcdb;
+  
+  $examenes_existentes = get_examenes_docente($codDocente);
+  $examenes = array();
+  
+  if ($examenes_existentes) :
+    foreach ($examenes_existentes as $k => $examen) {
+      $sql = sprintf("SELECT EP.*, E.nombre
+              FROM %s EP 
+              INNER JOIN %s E
+              ON EP.codExamen = E.codExamen
+              WHERE EP.codExamen = '%s'", 
+              $bcdb->examenprograma, 
+              $bcdb->examen, 
+              $examen['codExamen']);
+      $examen = $bcdb->get_row($sql);
+      $examen['curso'] = get_curso_de_examen($examen['codExamen']);
+      
+      $examenes[] = $examen;
+    }
+  endif;
+  return $examenes;
+}
+
 /**
 * Es Administrador
 *
@@ -193,6 +218,12 @@ function is_admin($idusuario) {
 	return true;
 }
 
+/**
+ * Devuelve los cursos de un alumno en un semestre.
+ * @param type $codAlumno
+ * @param type $codSemestre
+ * @return type 
+ */
 function get_cursos_de_alumno($codAlumno, $codSemestre) {
 	global $bcdb;
 	$sql = "SELECT * FROM tCurso c
@@ -202,6 +233,13 @@ WHERE (m.codAlumno = '$codAlumno' AND m.codSemestre = '$codSemestre');";
 	return $bcdb -> get_results($sql);
 }
 
+/**
+ * Devuelve examenes pendientes de un alumno.
+ * @param type $codAlumno
+ * @param type $codCurso
+ * @param type $codSemestre
+ * @return type 
+ */
 function get_examenes_pendientes_de_alumno($codAlumno, $codCurso, $codSemestre) {
 	global $bcdb;
 	$sql = "SELECT DISTINCT
@@ -220,6 +258,13 @@ WHERE ep.rendido = 'N' AND m.codCurso = '$codCurso' AND m.codAlumno = '$codAlumn
 	return $bcdb -> get_results($sql);
 }
 
+/**
+ *
+ * @global type $bcdb
+ * @param type $codAlumno
+ * @param type $codSemestre
+ * @return type 
+ */
 function get_cursos_con_examenes_pendientes($codAlumno, $codSemestre) {
 	global $bcdb;
 	$sql = "SELECT DISTINCT c.codCurso, c.nombre
