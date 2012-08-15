@@ -24,7 +24,7 @@ $cursos = get_cursos_con_examenes_pendientes($_SESSION['loginuser']['codAlumno']
 		<? $examenes = $cursos = get_examenes_pendientes_de_alumno($_SESSION['loginuser']['codAlumno'], $curso['codCurso'], get_option('semestre_actual')); ?>
 	    <? if($examenes) : ?>
 		    <? foreach($examenes as $k => $examen) : ?>
-		    <tr title="<?= $examen['examen']; ?>">
+		    <tr title="<?= $curso[nombre]; ?> (<?= $curso[codCurso]; ?>) - <?= $examen['examen']; ?>">
 		      <th style="text-indent: 0.5cm;"><?= $examen['examen'] ?></th>
 		      <td class="align-center"><?= $examen['fecha']; ?></td>
 		      <td class="align-center"><?= $examen['duracion'] ?></td>

@@ -334,7 +334,7 @@ WHERE ep.rendido = 'S' AND m.codCurso = '$codCurso' AND m.codAlumno = '$codAlumn
  */
 function get_nota_examen($codAlumno, $codExamen, $fecha) {
 	global $bcdb;
-	$sql = "SELECT COUNT(*) AS correctas, SUM(ep.puntaje) AS nota FROM
+	$sql = "SELECT COUNT(*) AS correctas, CASE WHEN ISNULL(SUM(ep.puntaje)) THEN 0 ELSE SUM(ep.puntaje) END AS nota FROM
 tRespuesta r
 INNER JOIN tAlternativa a ON (a.codAlternativa = r.codAlternativa)
 INNER JOIN tPregunta p ON (p.codPregunta = a.codPregunta AND a.correcta = 'S')

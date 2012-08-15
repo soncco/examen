@@ -11,8 +11,8 @@ $cursos = get_cursos_con_examenes_rendidos($_SESSION['loginuser']['codAlumno'], 
     <tr>
       <th style="width: 50%;">Nombre</th>
       <th style="width: 20%;">Fecha y Hora</th>
-      <th style="width: 5%;">Correctas</th>
       <th style="width: 5%;">Nota</th>
+      <th style="width: 5%;">Solución</th>
     </tr>
   </thead>
   <tbody>
@@ -24,12 +24,12 @@ $cursos = get_cursos_con_examenes_rendidos($_SESSION['loginuser']['codAlumno'], 
 		<? $examenes = get_examenes_rendidos_de_alumno($_SESSION['loginuser']['codAlumno'], $curso['codCurso'], get_option('semestre_actual')); ?>
 	    <? if($examenes) : ?>
 		    <? foreach($examenes as $k => $examen) : ?>
-		    <tr title="<?= $examen['examen']; ?>">
+		    <tr title="<?= $curso[nombre]; ?> (<?= $curso[codCurso]; ?>) - <?= $examen['examen']; ?>">
 		    	<? $notas = get_nota_examen($_SESSION['loginuser']['codAlumno'], $examen['codExamen'], $examen['fecha']) ?>
 		      <th style="text-indent: 0.5cm;"><?= $examen['examen'] ?></th>
 		      <td class="align-center"><?= $examen['fechaF']; ?></td>
-		      <td class="align-center"><?= $notas[0]['correctas'] ?></td>
-		      <td class="align-center"><?= $notas[0]['nota'] ?></td>
+		      <td class="align-center"><?= str_pad($notas[0]['nota'], 2, '0', STR_PAD_LEFT) ?></td>
+		      <td class="align-center"><a href="#">Ver</a></td>
 		    </tr>
 			<? endforeach; ?>
 	    <? else : ?>
