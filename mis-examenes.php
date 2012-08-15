@@ -21,6 +21,7 @@ require_once('redirect.php');
 	simg = '<img src="images/loading.gif" alt="Cargando" id="simg" />';
 	
 	function examenesPendientes() {
+		$('#referencia').after(simg);
 		$.ajax({
 			type: 'GET',
 			url: 'traer-mis-examenes.php',
@@ -52,7 +53,7 @@ require_once('redirect.php');
     <h1>Exámenes</h1>
     <fieldset class="<?php if(!isset($_GET['PageIndex'])): ?>collapsible<?php endif; ?>"> 	
       <legend>Programados</legend>
-      	<p class="help">Tiempos en hh:mm:ss, se actualiza automáticamente cada 10 segundos.</p>
+      	<p class="help"><span id="referencia">Tiempos en hh:mm:ss, se actualiza automáticamente cada 10 segundos.</span></p>
 	    <p id="examenes">
 	    </p>
     </fieldset>

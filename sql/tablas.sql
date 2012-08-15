@@ -1,5 +1,5 @@
 DROP DATABASE IF EXISTS examen;
-CREATE DATABASE IF NOT EXISTS examen;
+CREATE DATABASE examen;
 USE examen;
 DROP TABLE tAdministrador, tAlternativa, tAlumno, tCargaAcademica, tCurso, tDocente, tDocenteCurso, tExamen, tExamenPregunta, tExamenPrograma, tMatricula, tOpcion, tPregunta, tRespuesta, tSemestre, tTema, tWatchdog;
 DROP TABLE tAlternativa, tAlumno, tCargaAcademica, tCurso, tDocente, tDocenteCurso, tExamen, tExamenPrograma, tPregunta, tSemestre, tTema;
@@ -9,7 +9,7 @@ DROP TABLE tCurso, tDocente;
 -- -----------------------------------------------------
 -- Table tAlumno
 -- -----------------------------------------------------
-CREATE  TABLE IF NOT EXISTS tAlumno (
+CREATE TABLE tAlumno (
   codAlumno CHAR(6) NOT NULL COMMENT 'Código del alumno.' ,
   password VARCHAR(32) NOT NULL COMMENT 'Contraseña encriptada con MD5.' ,
   apellidoP VARCHAR(40) NOT NULL COMMENT 'Apellido paterno del alumno.' ,
@@ -25,7 +25,7 @@ COMMENT = 'Guarda información de alumnos.';
 -- -----------------------------------------------------
 -- Table tCurso
 -- -----------------------------------------------------
-CREATE  TABLE IF NOT EXISTS tCurso (
+CREATE TABLE tCurso (
   codCurso CHAR(8) NOT NULL COMMENT 'Código del curso incluido el grupo y la carrera. Ejemplo: IF101AIN.' ,
   nombre VARCHAR(60) NOT NULL COMMENT 'Nombre del curso.' ,
   creditos INT UNSIGNED NOT NULL COMMENT 'Número de créditos.' ,
@@ -39,7 +39,7 @@ COMMENT = 'Datos de los cursos.';
 -- -----------------------------------------------------
 -- Table tDocente
 -- -----------------------------------------------------
-CREATE  TABLE IF NOT EXISTS tDocente (
+CREATE TABLE tDocente (
   codDocente CHAR(5) NOT NULL COMMENT 'Identificador de un docente.' ,
   password VARCHAR(32) NOT NULL COMMENT 'Contraseña encriptada con MD5.' ,
   apellidoP VARCHAR(40) NOT NULL COMMENT 'Apellido paterno del docente.' ,
@@ -55,7 +55,7 @@ COMMENT = 'Guarda información de docentes.';
 -- -----------------------------------------------------
 -- Table tDocenteCurso
 -- -----------------------------------------------------
-CREATE  TABLE IF NOT EXISTS tDocenteCurso (
+CREATE TABLE tDocenteCurso (
   codDocente CHAR(5) NOT NULL ,
   codCurso CHAR(8) NOT NULL ,
   INDEX fk_tDocenteCurso_tDocente2 (codDocente ASC) ,
@@ -77,7 +77,7 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 -- Table tTema
 -- -----------------------------------------------------
-CREATE  TABLE IF NOT EXISTS tTema (
+CREATE TABLE tTema (
   codTema INT UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'Identificador del tema.' ,
   codDocente CHAR(5) NOT NULL ,
   codCurso CHAR(8) NOT NULL ,
@@ -96,7 +96,7 @@ COMMENT = 'Guarda información de Temas.';
 -- -----------------------------------------------------
 -- Table tPregunta
 -- -----------------------------------------------------
-CREATE  TABLE IF NOT EXISTS tPregunta (
+CREATE TABLE tPregunta (
   codPregunta INT UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'Identificador de la pregunta.' ,
   codTema INT UNSIGNED NOT NULL COMMENT 'Código del tema al cual pertenece la pregunta.' ,
   enunciado TEXT NOT NULL COMMENT 'Enunciado de la pregunta.' ,
@@ -116,7 +116,7 @@ COMMENT = 'Guarda información de preguntas.';
 -- -----------------------------------------------------
 -- Table tAlternativa
 -- -----------------------------------------------------
-CREATE  TABLE IF NOT EXISTS tAlternativa (
+CREATE TABLE tAlternativa (
   codAlternativa INT UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'Identificador de la alternativa.' ,
   codPregunta INT UNSIGNED NOT NULL COMMENT 'Código de la pregunta al que pertenece la alternativa.' ,
   correcta ENUM('S','N') NOT NULL DEFAULT 'N' COMMENT 'Muestra si la alternativa es o no correcta.' ,
@@ -135,7 +135,7 @@ COMMENT = 'Guarda información de las alternativas.';
 -- -----------------------------------------------------
 -- Table tExamen
 -- -----------------------------------------------------
-CREATE  TABLE IF NOT EXISTS tExamen (
+CREATE TABLE tExamen (
   codExamen INT UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'Identificador del ' ,
   nombre VARCHAR(60) NOT NULL COMMENT 'Nombre del  Ejemplo: Primera parcial de ...' ,
   PRIMARY KEY (codExamen) )
@@ -146,7 +146,7 @@ COMMENT = 'Guarda información de exámenes.';
 -- -----------------------------------------------------
 -- Table tExamenPregunta
 -- -----------------------------------------------------
-CREATE  TABLE IF NOT EXISTS tExamenPregunta (
+CREATE TABLE tExamenPregunta (
   codExamen INT UNSIGNED NOT NULL COMMENT 'Código del ' ,
   codPregunta INT UNSIGNED NOT NULL COMMENT 'Código de la pregunta.' ,
   puntaje INT(2) UNSIGNED NOT NULL COMMENT 'Puntaje de la pregunta en el ' ,
@@ -170,7 +170,7 @@ COMMENT = 'Guarda información de preguntas relacionadas a un ';
 -- -----------------------------------------------------
 -- Table tExamenPrograma
 -- -----------------------------------------------------
-CREATE  TABLE IF NOT EXISTS tExamenPrograma (
+CREATE TABLE tExamenPrograma (
   codExamen INT UNSIGNED NOT NULL COMMENT 'Identificador.' ,
   fecha DATETIME NOT NULL COMMENT 'Fecha y hora de la programación.' ,
   duracion INT NOT NULL DEFAULT 3600 ,
@@ -188,7 +188,7 @@ COMMENT = 'Guarda información de programación de exámenes.';
 -- -----------------------------------------------------
 -- Table tRespuesta
 -- -----------------------------------------------------
-CREATE  TABLE IF NOT EXISTS tRespuesta (
+CREATE TABLE tRespuesta (
   codAlumno CHAR(6) NOT NULL COMMENT 'El código del alumno.' ,
   codExamen INT UNSIGNED NOT NULL COMMENT 'El código del ' ,
   fecha DATETIME NOT NULL COMMENT 'La fecha del ' ,
@@ -218,7 +218,7 @@ COMMENT = 'Guarda información de respuestas de un alumno en un ';
 -- -----------------------------------------------------
 -- Table tSemestre
 -- -----------------------------------------------------
-CREATE  TABLE IF NOT EXISTS tSemestre (
+CREATE TABLE tSemestre (
   codSemestre VARCHAR(7) NOT NULL COMMENT 'Identificador del semestre, por ejemplo: 2012-I.' ,
   fechaInicio DATETIME NOT NULL COMMENT 'Inicio del semestre.' ,
   fechaFin DATETIME NOT NULL COMMENT 'Fin del semestre.' ,
@@ -230,7 +230,7 @@ COMMENT = 'Guarda información de semestres.';
 -- -----------------------------------------------------
 -- Table tCargaAcademica
 -- -----------------------------------------------------
-CREATE  TABLE IF NOT EXISTS tCargaAcademica (
+CREATE TABLE tCargaAcademica (
   codDocente CHAR(5) NOT NULL ,
   codCurso CHAR(8) NOT NULL ,
   codSemestre VARCHAR(7) NOT NULL ,
@@ -254,7 +254,7 @@ COMMENT = 'Guarda información de docentes asignados a cursos.';
 -- -----------------------------------------------------
 -- Table tMatricula
 -- -----------------------------------------------------
-CREATE  TABLE IF NOT EXISTS tMatricula (
+CREATE TABLE tMatricula (
   codDocente CHAR(5) NOT NULL ,
   codCurso CHAR(8) NOT NULL ,
   codSemestre VARCHAR(7) NOT NULL ,
@@ -279,7 +279,7 @@ COMMENT = 'Guarda información de matrículas de alumnos.';
 -- -----------------------------------------------------
 -- Table tAdministrador
 -- -----------------------------------------------------
-CREATE  TABLE IF NOT EXISTS tAdministrador (
+CREATE TABLE tAdministrador (
   codAdmin INT NOT NULL AUTO_INCREMENT ,
   usuario VARCHAR(12) NOT NULL ,
   password VARCHAR(32) NOT NULL ,
@@ -297,7 +297,7 @@ COMMENT = 'Guarda datos de administradores.';
 -- -----------------------------------------------------
 -- Table tWatchdog
 -- -----------------------------------------------------
-CREATE  TABLE IF NOT EXISTS tWatchdog (
+CREATE TABLE tWatchdog (
   codWatch INT NOT NULL AUTO_INCREMENT COMMENT 'Identificador del evento.' ,
   codUsuario VARCHAR(6) NOT NULL COMMENT 'Código del usuario que generó el evento.' ,
   tipoUsuario ENUM('A', 'D', 'S') NOT NULL DEFAULT 'S' COMMENT 'Tipo de usuario que generó el evento.' ,
@@ -311,7 +311,7 @@ COMMENT = 'Registra eventos del sistema.';
 -- -----------------------------------------------------
 -- Table tOpcion
 -- -----------------------------------------------------
-CREATE  TABLE IF NOT EXISTS tOpcion (
+CREATE TABLE tOpcion (
   codOpcion INT NOT NULL AUTO_INCREMENT COMMENT 'Identificador de la opción.' ,
   nombre VARCHAR(45) NOT NULL COMMENT 'La opción.' ,
   descripcion TEXT NOT NULL COMMENT 'Valor de la opción.' ,

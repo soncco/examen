@@ -280,6 +280,51 @@ WHERE ep.rendido = 'N' AND m.codAlumno = '$codAlumno' AND m.codSemestre = '$codS
 	return $bcdb -> get_results($sql);
 }
 
+/**
+ *
+ * @global type $bcdb
+ * @param type $codAlumno
+ * @param type $codSemestre
+ * @return type 
+ */
+function get_cursos_con_examenes_rendidos($codAlumno, $codSemestre) {
+	global $bcdb;
+	$sql = "SELECT DISTINCT c.codCurso, c.nombre
+FROM tExamenPrograma ep
+INNER JOIN tExamen e ON ep.codExamen = e.codExamen
+INNER JOIN tExamenPregunta epr ON e.codExamen = epr.codExamen
+INNER JOIN tPregunta p ON epr.codPregunta = p.codPregunta
+INNER JOIN tTema t ON p.codTema = t.codTema
+INNER JOIN tMatricula m ON m.codCurso = t.codCurso
+INNER JOIN tCurso c on t.codCurso = c.codCurso
+WHERE ep.rendido = 'S' AND m.codAlumno = '$codAlumno' AND m.codSemestre = '$codSemestre';";
+
+	return $bcdb -> get_results($sql);
+}
+
+/**
+ * Devuelve examenes rendidos de un alumno.
+ * @param type $codAlumno
+ * @param type $codCurso
+ * @param type $codSemestre
+ * @return type 
+ */
+function get_examenes_rendidos_de_alumno($codAlumno, $codCurso, $codSemestre) {
+	global $bcdb;
+	$sql = "SELECT DISTINCT
+e.nombre AS examen,
+DATE_FORMAT(ep.fecha, '%m/%d/%Y %h:%i %p') AS fecha
+FROM tExamenPrograma ep
+INNER JOIN tExamen e ON ep.codExamen = e.codExamen
+INNER JOIN tExamenPregunta epr ON e.codExamen = epr.codExamen
+INNER JOIN tPregunta p ON epr.codPregunta = p.codPregunta
+INNER JOIN tTema t ON p.codTema = t.codTema
+INNER JOIN tMatricula m ON m.codCurso = t.codCurso
+WHERE ep.rendido = 'S' AND m.codCurso = '$codCurso' AND m.codAlumno = '$codAlumno' AND m.codSemestre = '$codSemestre';";
+
+	return $bcdb -> get_results($sql);
+}
+
 /* FUNCIONES PARA REPORTES */
 function get_curso_de_examen($codExamen) {
 	global $bcdb;
