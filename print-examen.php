@@ -58,11 +58,11 @@ class PDF extends FPDF {
 		$codigo = utf8_decode("CÓDIGO:");
 		$this->Cell(10, 0, $codigo);
 		
-		$this->Line($this->GetStringWidth($apellidosynombres)+12, $this->GetY()+1.5, 160, $this->GetY()+1.5);		
+		$this->Line($this->GetStringWidth($apellidosynombres)+12, $this->GetY()+1.5, 160, $this->GetY()+1.5);
 		$this->Line(174, $this->GetY()+1.5, $this->GetStringWidth($codigo)+188, $this->GetY()+1.5);	
 		
 		$this->Ln(8);
-					
+		
 		$i = 1;
 		$j_b = 65;
 		$j = $j_b;
@@ -80,7 +80,7 @@ class PDF extends FPDF {
 				$this->SetX(22);
 				$this->MultiCell(0, 3.5, utf8_decode($alt[detalle]));
 				
-				$j++;			
+				$j++;
 			}
 			
 			$this->Ln();

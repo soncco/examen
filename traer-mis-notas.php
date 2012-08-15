@@ -34,13 +34,13 @@ $cursos = get_cursos_con_examenes_rendidos($_SESSION['loginuser']['codAlumno'], 
 			<? endforeach; ?>
 	    <? else : ?>
 	    <tr>
-	      <th colspan="4">No existen exámenes pendientes.</th>
+	      <th colspan="4">No existen exámenes concluidos.</th>
 	    </tr>
 	    <? endif; ?>
 	  <? endforeach; ?>
     <? else : ?>
     <tr>
-      <th colspan="4">No existen cursos con exámenes pendientes.</th>
+      <th colspan="4">No existen cursos con exámenes concluidos.</th>
     </tr>
     <? endif; ?>
   </tbody>

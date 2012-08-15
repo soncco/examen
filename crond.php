@@ -1,7 +1,7 @@
 <?php
 
 // Este archivo se ejecuta con crond, cada minuto, revisa y actualiza el parametro 'rendido' de la tabla tExamenPrograma
-// esto se coloca en crontab -e: */1 * * * * wget -O /dev/null http://localhost/crond.php
+// esto se coloca en crontab -e: */1 * * * * wget -q -O /dev/null http://localhost/crond.php
 // con eso se ejecuta el script cada minuto, en localhost ponga el dominio que haga accesible el script
 
 	require_once('home.php');
