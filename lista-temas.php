@@ -66,7 +66,7 @@
     <?php endif; ?>
     <fieldset class="collapsible">
       <legend>Escoge el curso</legend>
-      <p class="help">Escoge el curso para ver las preguntas o para editarlas.</p>
+      <p class="help">Escoge el curso para ver o editar los temas</p>
       <p>
 	      <label for="codCurso">Curso <span class="required">*</span>:</label>
         <select name="codCurso" id="codCurso">

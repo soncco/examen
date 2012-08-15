@@ -6,8 +6,7 @@ require_once('redirect.php');
 // Clave principal
 $bcdb->current_field = 'codPregunta';
 
-$preguntas = get_items($bcdb->pregunta, 'codPregunta');
-
+$cursos = get_cursos_docente($_SESSION['loginuser']['codDocente']);
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -23,6 +22,23 @@ $preguntas = get_items($bcdb->pregunta, 'codPregunta');
 <script type="text/javascript" src="<?php print SCRIPTS_URL; ?>jquery.jeditable.js"></script>
 <script type="text/javascript">
 	$(document).ready(function() {
+    simg = '<img src="images/loading.gif" alt="Cargando" id="simg" />';
+    $('#codCurso').change(function(){
+      codCurso = $(this).val();
+      if (codCurso != '') {
+        $(this).after(simg);
+        $.ajax({
+          type: 'POST',
+          url: 'traer-preguntas.php',
+          data: 'codCurso=' + codCurso + '&op=lista&niveles=',
+          success: function(response){
+            $('#temas-results').empty();
+            $('#temas-results').append(response);
+            $('#simg').remove();
+          }
+        });
+      }
+		});
 	});
 </script>
 <title>Preguntas | Sistema de exámenes</title>
@@ -48,36 +64,22 @@ $preguntas = get_items($bcdb->pregunta, 'codPregunta');
     <?php if (isset($msg)): ?>
     <p class="<?php echo ($error) ? "error" : "msg" ?>"><?php print $msg; ?></p>
     <?php endif; ?>
+    <fieldset>
+    <legend>Escoge el curso</legend>
+      <p class="help">Escoge el curso para ver las preguntas.</p>
+      <p>
+	      <label for="codCurso">Curso <span class="required">*</span>:</label>
+        <select name="codCurso" id="codCurso">
+          <option value="" selected="selected">Seleccione un curso</option>
+          <?php foreach ($cursos as $k => $curso) : ?>
+          <option value="<?php print $curso['codCurso']; ?>"><?php print $curso['nombre']; ?></option>
+          <?php endforeach; ?>
+        </select>
+      </p>
+    </fieldset>
     <fieldset class="collapsible">
       <legend>Banco de Preguntas</legend>
-      <table>
-        <thead>
-          <tr>
-            <th>Pregunta</th>
-            <th>Nivel</th>
-            <th>Tema</th>
-            <th>Operaciones</th>
-          </tr>
-        </thead>
-        <tbody>
-          <?php $alt = "even"; ?>
-          <?php if($preguntas) : ?>
-          <?php foreach($preguntas as $k => $pregunta) : ?>
-          <tr class="<?php print $alt ?>">
-            <th><?php print $pregunta['enunciado']; ?></th>
-            <td><?php print $pniveles[$pregunta['nivel']]; ?></td>
-            <td><?php print get_var_from_field('nombre', 'codTema', $pregunta['codTema'], $bcdb->tema); ?></td>
-            <td><a href="editar-preguntas.php?id=<?php print $pregunta['codPregunta'] ?>">Ver o Editar</a></td>
-            <?php $alt = ($alt == "even") ? "odd" : "even"; ?>
-          </tr>
-          <?php endforeach; ?>
-          <?php else : ?>
-          <tr class="<?php print $alt ?>">
-            <th colspan="4">Todavía no existen preguntas. <a href="/preguntas.php">Crear preguntas</a>.</th>
-          </tr>
-          <?php endif; ?>
-        </tbody>
-      </table>
+      <div id="temas-results"></div>
     </fieldset>
   </div>
   <div class="clear"></div>

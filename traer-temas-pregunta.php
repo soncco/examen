@@ -1,6 +1,6 @@
 <?php
 /**
- * Trae exámenes.
+ * Trae Temas por Curso.
  */
   require_once('home.php');
   require_once('redirect.php');
