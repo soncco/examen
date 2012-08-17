@@ -70,7 +70,7 @@ $results = @$bcrs->get_navigation();
   </div>
   <div id="content" class="grid_13">
     <h1>Cursos</h1>
-    <fieldset class="<?php if(!isset($_GET['PageIndex'])): ?>collapsible<?php endif; ?>">
+    <fieldset>
       <legend>Semestre <?= get_option('semestre_actual') ?></legend>
       <table>
         <thead>

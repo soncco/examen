@@ -55,7 +55,7 @@ require_once('redirect.php');
   </div>
   <div id="content" class="grid_13">
     <h1>Notas</h1>
-    <fieldset class="<?php if(!isset($_GET['PageIndex'])): ?>collapsible<?php endif; ?>"> 	
+    <fieldset> 	
       <legend>Exámenes concluidos</legend>
       	<p class="help"><span id="referencia">Se actualiza automáticamente cada minuto.</span></p>
 	    <p id="examenes">
