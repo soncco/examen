@@ -380,13 +380,15 @@ function get_alternativas_de_pregunta($codPregunta) {
 	return $bcdb -> get_results($sql);
 }
 
-function get_countdown($codExamen) {
+function get_countdown($codExamen, $timestamp) {
   global $bcdb;
   $sql = sprintf("SELECT DISTINCT SUBTIME( SEC_TO_TIME( ep.duracion ) , TIMEDIFF( CURRENT_TIMESTAMP( ) , ep.fecha ) ) 
         AS falta
         FROM tExamenPrograma ep
         WHERE ep.rendido =  'N'
-        AND ep.codExamen =  '%s';", $codExamen);
+        AND ep.codExamen =  '%s'
+        AND ep.fecha = '%s';", $codExamen, $timestamp);
+
   $falta = $bcdb->get_var($sql);
   
   return ($falta);

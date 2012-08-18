@@ -31,7 +31,7 @@ $cursos = get_cursos_con_examenes_pendientes($_SESSION['loginuser']['codAlumno']
 		      <td class="align-center">
 		        <?
 		          if (substr($examen['comienzo'], 0, 1) == "-") {
-		          	?><a href="dar-examen.php?codExamen=<?php print $examen['codExamen']; ?>"><?= 'Dar examen' ?></a><?
+		          	?><a href="dar-examen.php?codExamen=<?php print $examen['codExamen']; ?>&ts=<?php print strtotime($examen['fecha']); ?>"><?= 'Dar examen' ?></a><?
 		          } else {
 		          	echo $examen['comienzo'];
 		          }

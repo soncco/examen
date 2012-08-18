@@ -152,10 +152,8 @@ function fecha_to_page($fecha) {
 	return ($fecha) ? $f[2] . "/" . $f[1] . "/" . $f[0] : "";
 }
 
-function deb($a) {
-	echo "<pre>";
-	print_r($a);
-	echo "</pre>";
+function ajax_error() {
+	header('HTTP/1.1 503 Service Unavailable');
 	exit();
 }
 ?>

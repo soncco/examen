@@ -4,8 +4,9 @@ require_once('home.php');
 require_once('redirect.php');
 
 $codExamen = isset($_GET['codExamen']) ? trim($_GET['codExamen']) : '';
+$timestamp = isset($_GET['ts']) ? trim($_GET['ts']) : '';
 
-if(empty($codExamen)) {
+if(empty($codExamen) || empty($timestamp)) {
   safe_redirect('mis-cursos.php');
 }
 
@@ -25,16 +26,17 @@ $preguntas = get_preguntas_de_examen($codExamen);
 <script type="text/javascript" src="<?php print SCRIPTS_URL; ?>jquery-1.3.2.min.js"></script>
 <script type="text/javascript">
   var codExamen = <?php print $codExamen; ?>;
+  var ts = <?php print $timestamp; ?>;
 	function timeLeft() {
 		$.ajax({
 			type: 'POST',
 			url: 'traer-countdown.php',
-      data: 'codExamen=' + codExamen,
+      data: 'codExamen=' + codExamen + '&ts=' + ts,
 			success: function(response){
 				$('#countdown strong').html(response);
 			},
 			error: function(){
-				$('#simg').remove();
+				console.log('timeout');
 			},
 			timeout: 5000
 		});
@@ -105,16 +107,16 @@ $preguntas = get_preguntas_de_examen($codExamen);
       $.ajax({
         type: 'POST',
         url: 'guardar-alternativa.php',
-        data: 'codExamen=' + codExamen + '&codAlternativa' + codAlternativa + '&op=' + op,
+        data: 'codExamen=' + codExamen + '&ts=' + ts + '&codAlternativa=' + codAlternativa + '&op=' + op,
         success: function(response){
+          console.log(response);
           $('#simg').remove();
         },
         error: function() {
           $('#simg').remove();
           alert('Se produjo un error al guardar la respuesta, intente otra vez.');
           myRadio.removeAttr('checked');
-        },
-        timeout: 5000
+        }
       });
     });
 	});

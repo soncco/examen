@@ -24,6 +24,7 @@ $bcdb->alumno         = $table_prefix . 'Alumno';
 $bcdb->docente        = $table_prefix . 'Docente';
 $bcdb->cargaacademica = $table_prefix . 'CargaAcademica';
 $bcdb->docentecurso   = $table_prefix . 'DocenteCurso';
+$bcdb->respuesta      = $table_prefix . 'Respuesta';
 
 # Funciones independientes
 include_once(INCLUDE_PATH . 'formatting-functions.php');
