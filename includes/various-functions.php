@@ -200,9 +200,10 @@ function get_examenes_programados_docente($codDocente) {
               $bcdb->examen, 
               $examen['codExamen']);
       $examen = $bcdb->get_row($sql);
-      $examen['curso'] = get_curso_de_examen($examen['codExamen']);
-      
-      $examenes[] = $examen;
+      if ($examen) {
+        $examen['curso'] = get_curso_de_examen($examen['codExamen']);
+        $examenes[] = $examen;
+      }
     }
   endif;
   return $examenes;

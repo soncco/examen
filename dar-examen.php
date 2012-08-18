@@ -24,11 +24,12 @@ $preguntas = get_preguntas_de_examen($codExamen);
 <link href="/favicon.ico" type="image/ico" rel="shortcut icon" />
 <script type="text/javascript" src="<?php print SCRIPTS_URL; ?>jquery-1.3.2.min.js"></script>
 <script type="text/javascript">
+  var codExamen = <?php print $codExamen; ?>;
 	function timeLeft() {
 		$.ajax({
 			type: 'POST',
 			url: 'traer-countdown.php',
-      data: 'codExamen=<?php print $codExamen; ?>',
+      data: 'codExamen=' + codExamen,
 			success: function(response){
 				$('#countdown strong').html(response);
 			},
@@ -38,6 +39,40 @@ $preguntas = get_preguntas_de_examen($codExamen);
 			timeout: 5000
 		});
 	};
+  
+  // Implementation for "Index Of".
+  if (!Array.prototype.indexOf) {
+    Array.prototype.indexOf = function (searchElement /*, fromIndex */ ) {
+        "use strict";
+        if (this == null) {
+            throw new TypeError();
+        }
+        var t = Object(this);
+        var len = t.length >>> 0;
+        if (len === 0) {
+            return -1;
+        }
+        var n = 0;
+        if (arguments.length > 0) {
+            n = Number(arguments[1]);
+            if (n != n) { // shortcut for verifying if it's NaN
+                n = 0;
+            } else if (n != 0 && n != Infinity && n != -Infinity) {
+                n = (n > 0 || -1) * Math.floor(Math.abs(n));
+            }
+        }
+        if (n >= len) {
+            return -1;
+        }
+        var k = n >= 0 ? n : Math.max(len - Math.abs(n), 0);
+        for (; k < len; k++) {
+            if (k in t && t[k] === searchElement) {
+                return k;
+            }
+        }
+        return -1;
+    }
+  }
 	
 	$(document).ready(function() {
 		timeLeft();
@@ -45,6 +80,43 @@ $preguntas = get_preguntas_de_examen($codExamen);
 		setInterval(function(){
 			timeLeft();
 		}, 1000);
+    
+    var simg = '<img src="images/loading.gif" alt="Cargando" id="simg" />';
+    var alternativas = [];
+    $('.alternativa .radio').click(function () {
+      // Opción que indica si actualizar o insertar.
+      op = 'insert';
+      // Tomamos la alternativa y su valor
+      myRadio = $(this);
+      codAlternativa = myRadio.val();
+      
+      // Verificamos si alguna alternativa de esa pregunta ha sido marcada.
+      iO = alternativas.indexOf(myRadio.attr('name'));
+      if (iO > -1) {
+        op = 'update';
+        delete alternativas[iO];
+      }
+      alternativas.push(myRadio.attr('name'));
+
+      // Ajax loader
+      $(this).next().after(simg);
+      
+      // Guardamos la respuesta
+      $.ajax({
+        type: 'POST',
+        url: 'guardar-alternativa.php',
+        data: 'codExamen=' + codExamen + '&codAlternativa' + codAlternativa + '&op=' + op,
+        success: function(response){
+          $('#simg').remove();
+        },
+        error: function() {
+          $('#simg').remove();
+          alert('Se produjo un error al guardar la respuesta, intente otra vez.');
+          myRadio.removeAttr('checked');
+        },
+        timeout: 5000
+      });
+    });
 	});
 </script>
 <title>Exámenes | Sistema de exámenes</title>
@@ -67,7 +139,7 @@ $preguntas = get_preguntas_de_examen($codExamen);
             foreach ($alternativas as $j => $alternativa):
           ?>
           <li class="alternativa">
-            <input type="radio" name="alternativa<?php print $pregunta['codPregunta']; ?>" id="alternativa<?php print $alternativa['codAlternativa']; ?>" />
+            <input type="radio" name="alternativa<?php print $pregunta['codPregunta']; ?>" class="radio" id="alternativa<?php print $alternativa['codAlternativa']; ?>" value="<?php print $alternativa['codAlternativa']; ?>" />
             <label for="alternativa<?php print $alternativa['codAlternativa']; ?>"><?php print $alternativa['detalle']; ?></label>
           </li>
           <?php endforeach; ?>

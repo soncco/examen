@@ -177,6 +177,7 @@ $examenes_programados = get_examenes_programados_docente($_SESSION['loginuser'][
             <th>Nombre</th>
             <th>Curso</th>
             <th>Fecha</th>
+            <th>Hora</th>
             <th>Duración</th>
             <th>Rendido</th>
           </tr>
@@ -188,6 +189,7 @@ $examenes_programados = get_examenes_programados_docente($_SESSION['loginuser'][
             <th><?php print $examen['nombre']; ?></th>
             <th><?php print $examen['curso'][0]['nombre']; ?></th>
             <td><?php print strftime('%d %b %Y', strtotime($examen['fecha'])); ?></td>
+            <td><?php print strftime('%H:%m', strtotime($examen['fecha'])); ?></td>
             <td><?php print $examen['duracion']/60; ?> minutos</td>
             <td><?php print ($examen['rendido'] == 'S') ? 'Si' : 'No' ; ?></td>
           </tr>
