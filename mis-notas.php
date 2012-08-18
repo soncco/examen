@@ -51,7 +51,13 @@ require_once('redirect.php');
   <?php include "header.php"; ?>
   <div class="clear"></div>
   <div id="icon" class="grid_3">
-    <p class="align-center"><img src="images/opciones.png" alt="Opciones" /></p>
+    <div id="sidebar">
+      <h3>Notas</h3>
+      <ul>
+        <li><a href="/print-mis-notas.php">Imprimir constancia</a></li>
+      </ul>
+    </div>  	
+    <p class="align-center"><img src="images/misnotas.png" alt="Opciones" /></p>
   </div>
   <div id="content" class="grid_13">
     <h1>Notas</h1>
