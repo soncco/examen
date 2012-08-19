@@ -63,19 +63,21 @@ class PDF extends FPDF {
 		$this->Ln(6);
 		
 		$this->SetFont($this->font, '' ,7.5);
-		foreach ($this->cursos as $k => $curso) {
-			$this->SetX(22);
-			$this->Cell(160,6, utf8_decode("   " . $curso['nombre'] . " (" . $curso['codCurso'] . ")"), 'LRTB');
-			$this->Ln(6);
-			
-			$this->examenes = get_examenes_rendidos_de_alumno($_SESSION['loginuser']['codAlumno'], $curso['codCurso'], get_option('semestre_actual'));
-			foreach ($this->examenes as $k => $examen) {
-				$nota = get_nota_examen($_SESSION['loginuser']['codAlumno'], $examen['codExamen'], $examen['fecha']);
+		if ($this->cursos) {
+			foreach ($this->cursos as $k => $curso) {
 				$this->SetX(22);
-				$this->Cell(100,6, utf8_decode("      " .$examen['examen']), 'LRTB');
-				$this->Cell(45,6, utf8_decode($examen['fechaF']), 'LRTB');
-				$this->Cell(15,6, utf8_decode(str_pad($nota[0]['nota'], 2, '0', STR_PAD_LEFT)), 'LRTB');
-				$this->Ln(6);				
+				$this->Cell(160,6, utf8_decode("   " . $curso['nombre'] . " (" . $curso['codCurso'] . ")"), 'LRTB');
+				$this->Ln(6);
+				
+				$this->examenes = get_examenes_rendidos_de_alumno($_SESSION['loginuser']['codAlumno'], $curso['codCurso'], get_option('semestre_actual'));
+				foreach ($this->examenes as $k => $examen) {
+					$nota = get_nota_examen($_SESSION['loginuser']['codAlumno'], $examen['codExamen'], $examen['fecha']);
+					$this->SetX(22);
+					$this->Cell(100,6, utf8_decode("      " .$examen['examen']), 'LRTB');
+					$this->Cell(45,6, utf8_decode($examen['fechaF']), 'LRTB');
+					$this->Cell(15,6, utf8_decode(str_pad($nota[0]['nota'], 2, '0', STR_PAD_LEFT)), 'LRTB');
+					$this->Ln(6);				
+				}
 			}
 		}
 	}

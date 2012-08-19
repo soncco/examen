@@ -98,8 +98,9 @@ $cursos = get_cursos_con_examen_rendido_por_docente($_SESSION['loginuser']['codD
   </div>
   <div id="content" class="grid_13">
     <h1>Reportes</h1>
-    <fieldset> 	
+    <fieldset> 
       <legend>Calificaciones por exámen</legend>
+      	<p class="help"><span id="referencia">Solo se muestran cursos con exámenes concluidos.</span></p>
         <p>
           <label for="codCurso">Curso <span class="required">*</span>:</label>
           <select name="codCurso" id="codCurso" class="required">

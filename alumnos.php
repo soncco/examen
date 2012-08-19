@@ -80,7 +80,7 @@ if ($id) {
 		$("#frmusers").validate();
 	}); 
 </script>
-<title><?php print $title; ?> | Sistema de Caja</title>
+<title><?php print $title; ?> | Sistema de Exámenes</title>
 </head>
 
 <body>
