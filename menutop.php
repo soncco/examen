@@ -14,6 +14,7 @@
       ),
       'docente' => array(
           'top' => array(
+          	'mis-datos.php' => 'Mis datos',
             'temas.php' => 'Temas',
             'preguntas.php' => 'Preguntas',
             'examenes.php' => 'Exámenes',
@@ -26,6 +27,7 @@
       ),
       'alumno' => array(
           'top' => array(
+          	'mis-datos-a.php' => 'Mis datos',
             'mis-cursos.php' => 'Cursos',
             'mis-examenes.php' => 'Exámenes',
             'mis-notas.php' => 'Notas',            

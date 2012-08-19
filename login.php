@@ -7,10 +7,10 @@ require_once('home.php');
 if ( !empty($_SESSION['loginuser']) ) {
   switch ($_SESSION['loginuser']['rol']) :
     case 'docente':
-      safe_redirect('temas.php');
+      safe_redirect('mis-datos.php');
     break;
     case 'alumno':
-      safe_redirect('mis-cursos.php');
+      safe_redirect('mis-datos-a.php');
     break;
     default:
       safe_redirect('cursos.php');
@@ -27,12 +27,12 @@ if($postback){
     case 'docente':
       $user = get_item_by_field("codDocente", $_POST['username'], $bcdb->docente);	
       $user['rol'] = 'docente';
-      $location = 'temas.php';
+      $location = 'mis-datos.php';
     break;
     case 'alumno':
       $user = get_item_by_field("codAlumno", $_POST['username'], $bcdb->alumno);	
       $user['rol'] = 'alumno';
-      $location = 'mis-cursos.php';
+      $location = 'mis-datos-a.php';
     break;
     default:
       $user = get_item_by_field("usuario", $_POST['username'], $bcdb->admin);
