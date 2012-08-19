@@ -129,9 +129,9 @@
     <div id="sidebar">
       <h3>Exámenes</h3>
       <ul>
-        <li><a href="/examenes.php">Crear exámen</a></li>
-        <li><a href="/ver-examenes.php">Lista de examenes</a></li>
-        <li><a href="/examen-programa.php">Programar Examen</a></li>
+        <li><a href="<?php print BASE_URL; ?>examenes.php">Crear exámen</a></li>
+        <li><a href="<?php print BASE_URL; ?>ver-examenes.php">Lista de examenes</a></li>
+        <li><a href="<?php print BASE_URL; ?>examen-programa.php">Programar Examen</a></li>
       </ul>
     </div>
     <p class="align-center"><img src="images/opciones.png" alt="Opciones" /></p>

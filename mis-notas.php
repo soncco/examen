@@ -57,7 +57,7 @@ require_once('redirect.php');
         <li><a href="/print-mis-notas.php">Imprimir constancia</a></li>
       </ul>
     </div>  	
-    <p class="align-center"><img src="images/misnotas.png" alt="Opciones" /></p>
+    <p class="align-center"><img src="<?php print IMAGES_URL; ?>/misnotas.png" alt="Opciones" /></p>
   </div>
   <div id="content" class="grid_13">
     <h1>Notas</h1>

@@ -62,11 +62,11 @@ $results = @$bcrs->get_navigation();
 	$(document).ready(function() {
     $('#frmcurso').validate();
     
-		$(".click").editable("/datos-curso.php", {
+		$(".click").editable("<?php print BASE_URL; ?>datos-curso.php", {
 			indicator : "Guardando...",
 			tooltip   : "Click para editar..."
 		});
-    $(".clicks").editable("/datos-curso.php", { 
+    $(".clicks").editable("<?php print BASE_URL; ?>datos-curso.php", { 
       indicator : "Guardando...",
       loadurl   : "<?php print SCRIPTS_URL; ?>operadores.php",
       type   : "select",

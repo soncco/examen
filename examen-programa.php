@@ -111,7 +111,7 @@ $examenes_programados = get_examenes_programados_docente($_SESSION['loginuser'][
 		});
 	}); 
 </script>
-<title>Preguntas | Sistema de exámenes</title>
+<title>Exámenes | Sistema de exámenes</title>
 </head>
 
 <body>
@@ -124,9 +124,9 @@ $examenes_programados = get_examenes_programados_docente($_SESSION['loginuser'][
     <div id="sidebar">
       <h3>Examen</h3>
       <ul>
-        <li><a href="/examenes.php">Crear exámen</a></li>
-        <li><a href="/ver-examenes.php">Lista de examenes</a></li>
-        <li><a href="/examen-programa.php">Programar Examen</a></li>
+        <li><a href="<?php print BASE_URL; ?>examenes.php">Crear exámen</a></li>
+        <li><a href="<?php print BASE_URL; ?>ver-examenes.php">Lista de examenes</a></li>
+        <li><a href="<?php print BASE_URL; ?>examen-programa.php">Programar Examen</a></li>
       </ul>
     </div>
     <p class="align-center"><img src="images/opciones.png" alt="Opciones" /></p>

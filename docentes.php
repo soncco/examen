@@ -100,7 +100,7 @@
   <?php include "header.php"; ?>
   <div class="clear"></div>
   <div id="icon" class="grid_3">
-    <p class="align-center"><img src="images/usuarios.png" alt="Usuarios" /></p>
+    <p class="align-center"><img src="<?php print IMAGES_URL; ?>/usuarios.png" alt="Usuarios" /></p>
   </div>
   <div id="content" class="grid_13">
     <h1><?php print $title; ?></h1>

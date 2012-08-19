@@ -20,6 +20,7 @@ error_reporting(E_ALL & ~E_NOTICE);
 
 setlocale(LC_ALL, '');
 
+session_name('magnificos');
 /**
  * Parámetros de la base de datos
  */

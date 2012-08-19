@@ -42,7 +42,7 @@ session_destroy();
   </div>
   <div class="clear"></div>
   <div id="icon" class="grid_3">
-    <p class="align-center"><img src="images/login.png" alt="Login" /></p>
+    <p class="align-center"><img src="<?php print IMAGES_URL; ?>/login.png" alt="Login" /></p>
   </div>
   <div id="content" class="grid_13">
     <h1>Hasta Pronto</h1>

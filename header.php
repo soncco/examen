@@ -1,5 +1,5 @@
 <div id="header">
-  <h1 id="logo"> <a href="/"><span>Sistema de Exámenes</span></a> </h1>
+  <h1 id="logo"> <a href="<?php print BASE_URL; ?>"><span>Sistema de Exámenes</span></a> </h1>
 	<?php
   	include "menutop.php";
   ?>

@@ -51,7 +51,7 @@ require_once('redirect.php');
   <?php include "header.php"; ?>
   <div class="clear"></div>
   <div id="icon" class="grid_3">
-    <p class="align-center"><img src="images/examen.png" alt="Opciones" /></p>
+    <p class="align-center"><img src="<?php print IMAGES_URL; ?>/examen.png" alt="Opciones" /></p>
   </div>
   <div id="content" class="grid_13">
     <h1>Exámenes</h1>

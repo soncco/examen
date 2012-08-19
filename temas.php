@@ -71,11 +71,11 @@ $cursos = get_cursos_docente($_SESSION['loginuser']['codDocente']);
     <div id="sidebar">
       <h3>Temas</h3>
       <ul>
-        <li><a href="/temas.php">Crear temas</a></li>
-        <li><a href="/lista-temas.php">Lista de temas</a></li>
+        <li><a href="<?php print BASE_URL; ?>temas.php">Crear temas</a></li>
+        <li><a href="<?php print BASE_URL; ?>lista-temas.php">Lista de temas</a></li>
       </ul>
     </div>
-    <p class="align-center"><img src="images/opciones.png" alt="Opciones" /></p>
+    <p class="align-center"><img src="<?php print IMAGES_URL; ?>/opciones.png" alt="Opciones" /></p>
   </div>
   <div id="content" class="grid_13">
     <h1>Temas</h1>

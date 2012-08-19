@@ -46,7 +46,7 @@ if (count($respuestas) > 0) {
   var now = <?php print time(); ?>;  
   
   function finish() {
-    location.href = 'mis-notas.php';
+    location.href = '<?php print BASE_URL; ?>mis-notas.php';
   }
   
   function zero(n) {

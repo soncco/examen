@@ -94,9 +94,9 @@ if($id) {
     <div id="sidebar">
       <h3>Preguntas</h3>
       <ul>
-        <li><a href="/preguntas.php">Crear preguntas</a></li>
-        <li><a href="/lista-preguntas.php">Lista de preguntas</a></li>
-        <li><a href="/preguntas-importar.php">Importar preguntas</a></li>
+        <li><a href="<?php print BASE_URL; ?>preguntas.php">Crear preguntas</a></li>
+        <li><a href="<?php print BASE_URL; ?>lista-preguntas.php">Lista de preguntas</a></li>
+        <li><a href="<?php print BASE_URL; ?>preguntas-importar.php">Importar preguntas</a></li>
       </ul>
     </div>
     <p class="align-center"><img src="images/opciones.png" alt="Opciones" /></p>
