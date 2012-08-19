@@ -66,7 +66,7 @@ $examenes = get_examenes_docente($_SESSION['loginuser']['codDocente']);
           <tr class="<?php print $alt ?>">
             <th><?php print $examen['nombre']; ?></th>
             <td><?php print get_var_from_field('nombre', 'codCurso', $examen['codCurso'], $bcdb->curso); ?></td>
-            <td><a href="ver-examen.php?id=<?php print $examen['codExamen']; ?>">Ver</a></td>
+            <td><a href="ver-examen.php?codExamen=<?php print $examen['codExamen']; ?>">Ver</a></td>
             <td><a href="print-examen.php?id=<?php print $examen['codExamen']; ?>">Imprimir</a></td>
             <?php $alt = ($alt == "even") ? "odd" : "even"; ?>
           </tr>

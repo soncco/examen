@@ -4316,16 +4316,16 @@ INSERT INTO tPregunta (codPregunta, codTema, enunciado, nivel, imagen) VALUES
 (39, 17, 'Se refiere a la posibilidad de que el mayor número posible de personas pueda entrar a una web y usarla.', 'F', NULL),
 (40, 17, 'La técnica del Card Sorting se usa en:', 'F', NULL),
 
-(41, 9, 'Atributos del Software son:', 'F', NULL),
-(42, 10, 'El modelo en cascada considera:', 'N', NULL),
-(43, 11, '¿Cuál de estas definiciones corresponde al paradigma organizacional cerrado?', 'D', NULL),
-(44, 12, 'Entre las métricas de proyectos de ingeniería web se consideran:', 'N', NULL),
-(45, 13, 'El modelo COCOMO II aborda:', 'D', NULL),
-(46, 14, '¿Cuál de estos conceptos define una red de tareas?', 'N', NULL),
-(47, 15, 'Según Charette, los riesgos se categorizan por:', 'F', NULL),
-(48, 16, 'Cuál de estas definiciones no es un atributo de la calidad de software.', 'F', NULL),
-(49, 17, 'Se refiere a la posibilidad de que el mayor número posible de personas pueda entrar a una web y usarla.', 'F', NULL),
-(50, 17, 'La técnica del Card Sorting se usa en:', 'F', NULL);
+(41, 18, 'Atributos del Software son:', 'F', NULL),
+(42, 19, 'El modelo en cascada considera:', 'N', NULL),
+(43, 20, '¿Cuál de estas definiciones corresponde al paradigma organizacional cerrado?', 'D', NULL),
+(44, 21, 'Entre las métricas de proyectos de ingeniería web se consideran:', 'N', NULL),
+(45, 22, 'El modelo COCOMO II aborda:', 'D', NULL),
+(46, 23, '¿Cuál de estos conceptos define una red de tareas?', 'N', NULL),
+(47, 24, 'Según Charette, los riesgos se categorizan por:', 'F', NULL),
+(48, 25, 'Cuál de estas definiciones no es un atributo de la calidad de software.', 'F', NULL),
+(49, 26, 'Se refiere a la posibilidad de que el mayor número posible de personas pueda entrar a una web y usarla.', 'F', NULL),
+(50, 26, 'La técnica del Card Sorting se usa en:', 'F', NULL);
 
 INSERT INTO tAlternativa (codAlternativa, codPregunta, correcta, detalle) VALUES
 (1, 1, 'N', 'LA COMPETENCIA EN MERCADOS MUNDIALES.'),
