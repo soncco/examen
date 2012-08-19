@@ -14,11 +14,11 @@
       ),
       'docente' => array(
           'top' => array(
-          	'mis-datos.php' => 'Mis datos',
             'temas.php' => 'Temas',
             'preguntas.php' => 'Preguntas',
             'examenes.php' => 'Exámenes',
             'report-notas.php' => 'Reportes',
+            'mis-datos.php' => 'Mis datos',
           ),
           'side' => array(
             'preguntas.php' => 'Crear Preguntas',
@@ -27,10 +27,10 @@
       ),
       'alumno' => array(
           'top' => array(
-          	'mis-datos-a.php' => 'Mis datos',
             'mis-cursos.php' => 'Cursos',
             'mis-examenes.php' => 'Exámenes',
-            'mis-notas.php' => 'Notas',            
+            'mis-notas.php' => 'Notas',
+            'mis-datos-a.php' => 'Mis datos',
           ),
           'side' => array(
           )
