@@ -133,7 +133,7 @@ $results = @$bcrs->get_navigation();
           <?php $alt = "even"; ?>
           <?php foreach($cursos as $k => $curso): ?>
           <tr class="<?php print $alt ?>">
-            <th><span class="click" id="codCurso-<?php print $curso['codCurso']; ?>"><?php print $curso['codCurso']; ?></span></td>
+            <th><?php print $curso['codCurso']; ?></td>
             <th><span class="click" id="nombre-<?php print $curso['codCurso']; ?>"><?php print $curso['nombre']; ?></span></td>
             <th><span class="click" id="creditos-<?php print $curso['codCurso']; ?>"><?php print $curso['creditos']; ?></td>
             <td><?php print $curso['activo']; ?></span></td>
