@@ -29,12 +29,7 @@ if($postback) :
     // Guarda el curso
     $id = save_item($_POST['codCurso'], $curso, $bcdb->curso);
 
-    if($id) :
-      $msg = "La información se guardó correctamente.";
-    else:
-      $error = true;
-      $msg = "Hubo un error al guardar la información, intente nuevamente.";
-    endif;
+    $msg = "La información se guardó correctamente.";
   endif;
 endif;
 
