@@ -2,14 +2,14 @@
 
 	require_once('home.php');
 	require_once('redirect.php');
-  
-  $codCurso = $_POST['codCurso'];
 	
-  $examenes = get_examenes_curso($codCurso);
-  
+	$codExamen = $_POST['codExamen'];
+		
+	$fechas = get_fecha_de_examen_programa($codExamen);
+
 ?>
-<? if (count($examenes) > 0) : ?>
-<? foreach($examenes as $examen) : ?>
-<option value="<?php print $examen['codExamen']?>"><?php print $examen['nombre']?></option>
+<? if (count($fechas) > 0) : ?>
+<? foreach($fechas as $fecha) : ?>
+<option value="<?= base64_encode($fecha['fecha']) ?>"><?= $fecha['fechaF']?></option>
 <? endforeach; ?>
 <? endif; ?>

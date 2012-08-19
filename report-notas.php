@@ -22,22 +22,6 @@ $cursos = get_cursos_docente($_SESSION['loginuser']['codDocente']);
 <script type="text/javascript">
 	simg = '<img src="images/loading.gif" alt="Cargando" id="simg" />';
 	
-	function notasExamen() {
-		$('#referencia').after(simg);
-		$.ajax({
-			type: 'GET',
-			url: 'traer-report-notas.php',
-			success: function(response){
-				$('#notas').html(response);
-				$('#simg').remove();
-			},
-			error: function(){
-				$('#simg').remove();
-			},
-			timeout: 5000
-		});
-	};
-	
 	function examenDeCurso() {
 		codCurso = $('#codCurso').val();
 		if (codCurso != '') {
@@ -53,14 +37,52 @@ $cursos = get_cursos_docente($_SESSION['loginuser']['codDocente']);
 			});
 		} else {
 			$('#codExamen').html($('<option value="">Escoge un curso</option>'));
-			$('#fecha').html($('<option value="">Escoge un exámen</option>'));  
+			$('#fecha').html($('<option value="">Escoge un exámen</option>'));
+			$('#notas').html($(''));
 		}
 	}
 	
+	function fechaDeExamen() {
+		codExamen = $('#codExamen').val();
+		if (codExamen != '') {
+			$('#codExamen').after(simg);
+			$.ajax({
+				type : 'POST',
+				url : 'traer-fecha-examen-programa.php',
+				data : 'codExamen=' + codExamen,
+				success : function(response) {
+					$('#fecha').html(response);
+					$('#simg').remove();
+				}
+			});
+		} else {
+			$('#fecha').html($('<option value="">Escoge un exámen</option>'));
+			$('#notas').html($(''));
+		}
+	}
+
+	function verReporte() {
+		codCurso = $('#codCurso').val();
+		codExamen = $('#codExamen').val();
+		fecha = $('#fecha').val();
+		if (codExamen != '') {
+			$('#ver').after(simg);
+			$.ajax({
+				type : 'POST',
+				url : 'traer-report-notas.php',
+				data : 'codExamen=' + codExamen + '&codCurso=' + codCurso + '&fecha=' + fecha,
+				success : function(response) {
+					$('#notas').html(response);
+					$('#simg').remove();
+				}
+			});
+		}		
+	}
+	
 	$(document).ready(function() {
-		$('#codCurso').change(function() {
-			examenDeCurso();
-		});
+		$('#codCurso').change(function() { examenDeCurso(); });
+		$('#codExamen').change(function() { fechaDeExamen(); });
+		$('#ver').click(function() { verReporte(); });
 	});
 </script>
 <title>Reportes | Sistema de exámenes</title>
@@ -99,7 +121,8 @@ $cursos = get_cursos_docente($_SESSION['loginuser']['codDocente']);
           <select name="fecha" id="fecha" class="required">
             <option value="" selected="selected">Seleccione un exámen</option>
           </select>
-        </p>	
+        </p>
+        <p class="align-center"><button class="button" type="button" id="ver">Ver reporte</button></p>
 	    <p id="notas">
 	    </p>
     </fieldset>
