@@ -42,6 +42,13 @@ $preguntas = get_preguntas_de_examen($codExamen);
   }
   
 	function timeLeft() {
+    $.ajax({
+      type: 'get',
+      url: 'traer-countdown.php',
+      success: function(response){
+        now = response;
+      }
+    });
 		// Total y restante.
     total = ts + d;
     //console.log(total);
@@ -87,7 +94,7 @@ $preguntas = get_preguntas_de_examen($codExamen);
   }
 	
 	$(document).ready(function() {
-		//$('#countdown strong').html(timeLeft());
+		$('#countdown strong').html(timeLeft());
 		
 		setInterval(function(){
 			$('#countdown strong').html(timeLeft());

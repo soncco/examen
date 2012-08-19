@@ -1,5 +1,6 @@
 <?php
 
+/*
 require_once('home.php');
 require_once('redirect.php');
 
@@ -8,4 +9,6 @@ $timestamp = strftime('%Y-%m-%d %H:%M:00', $_POST['ts']);
 
 print get_countdown($codExamen, $timestamp);
 exit();
+ */
+print time();
 ?>
