@@ -13,9 +13,21 @@ $examen_programado = get_examen_programado($codExamen, strftime('%Y-%m-%d %H:%M:
 if($examen_programado['rendido'] == 'S') {
   safe_redirect('mis-notas.php');
 }
-$respuestas = get_respuestas_alumno($examen_programado, $_SESSION['loginuser']['codAlumno']);
+
 $examen = get_examen($codExamen);
 $preguntas = get_preguntas_de_examen($codExamen);
+
+// Control de respuestas marcadas.
+$respuestas = get_respuestas_alumno($examen_programado, $_SESSION['loginuser']['codAlumno']);
+
+$enunciados = array();
+$marcadas = array(); 
+if (count($respuestas) > 0) {
+  foreach($respuestas as $k => $respuesta) {
+    $enunciados[] = "alternativa" . $respuesta['codPregunta'];
+    $marcadas[] = "alternativa" . $respuesta['codAlternativa'];
+  }
+}
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -31,7 +43,11 @@ $preguntas = get_preguntas_de_examen($codExamen);
   var codExamen = <?php print $codExamen; ?>;
   var ts = <?php print $timestamp; ?>;
   var d = <?php print $examen_programado['duracion']; ?>;
-  var now = <?php print time(); ?>;
+  var now = <?php print time(); ?>;  
+  
+  function finish() {
+    location.href = 'mis-notas.php';
+  }
   
   function zero(n) {
     if(n.toString().length < 2) {
@@ -53,10 +69,12 @@ $preguntas = get_preguntas_de_examen($codExamen);
     total = ts + d;
     //console.log(total);
     restante = total - now;
+    if(restante <= 1) finish();
     segundos = zero(restante % 60);
     minutos = zero(Math.floor(restante / 60) % 60);
     horas = zero(Math.floor(restante / 3600));
     return horas + ':' + minutos + ':' + segundos;
+    
 	};
   
   // Implementation for "Index Of".
@@ -102,6 +120,17 @@ $preguntas = get_preguntas_de_examen($codExamen);
     
     var simg = '<img src="images/loading.gif" alt="Cargando" id="simg" />';
     var alternativas = [];
+    <?php
+      // Control de alternativas marcadas.
+      if(count($marcadas) > 0) :
+        foreach($marcadas as $j => $marcada) :
+    ?>
+        alternativas.push('<?php print $enunciados[$j]; ?>');
+        $('#<?php print $marcada; ?>').attr('checked', true);
+    <?php
+        endforeach;
+      endif;
+    ?>
     $('.alternativa .radio').click(function () {
       // Opción que indica si actualizar o insertar.
       op = 'insert';
@@ -130,6 +159,7 @@ $preguntas = get_preguntas_de_examen($codExamen);
           + '&codPregunta=' + codPregunta
           + '&op=' + op,
         success: function(response){
+          //console.log(response);
           $('#simg').remove();
         },
         error: function() {
@@ -170,7 +200,7 @@ $preguntas = get_preguntas_de_examen($codExamen);
       <?php $alt = ($alt == "even") ? "odd" : "even"; ?>
       <?php endforeach; ?>
       </ol>
-      <p class="align-center"><button class="button" type="button" id="terminar">Terminar examen</button></p>
+      <p class="align-center"><button class="button" type="button" id="terminar" onclick="finish();">Terminar examen</button></p>
     </fieldset>
     <div id="countdown">
       Faltan <strong></strong>

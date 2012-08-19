@@ -404,8 +404,8 @@ function get_examen_programado($codExamen, $fecha) {
 function get_respuestas_alumno($programado, $codAlumno) {
   global $bcdb;
   $sql = sprintf("SELECT codPregunta, codAlternativa FROM %s
-          WHERE codExamen = '%s'
-          AND codAlumno = '%s'
+          WHERE codAlumno = '%s'
+          AND codExamen = '%s'
           AND fecha = '%s'", 
           $bcdb->respuesta,
           $codAlumno,

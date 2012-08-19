@@ -13,7 +13,7 @@
   switch ($op) {
     case 'insert':
       $sql = sprintf("INSERT INTO %s(codAlumno, codExamen, fecha, codAlternativa, codPregunta) 
-                VALUES ('%s', '%s', '%s', '%s')", 
+                VALUES ('%s', '%s', '%s', '%s', '%s')", 
               $bcdb->respuesta,
               $codAlumno,
               $codExamen,
@@ -21,6 +21,7 @@
               $codAlternativa,
               $codPregunta);
       if(!$bcdb->query($sql)) ajax_error();
+      //else echo "Guardado: $sql";
     break;
     case 'update':
         $sql = sprintf("UPDATE %s SET codAlternativa = '%s'
@@ -31,6 +32,7 @@
                 $bcdb->respuesta, $codAlternativa, $codAlumno, $codExamen, $timestamp, $codPregunta);
 
       if(!$bcdb->query($sql)) ajax_error();
+      //else echo "Actualizado: $sql";
     break;
   }
 ?>
