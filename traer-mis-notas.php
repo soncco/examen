@@ -29,7 +29,7 @@ $cursos = get_cursos_con_examenes_rendidos($_SESSION['loginuser']['codAlumno'], 
 		      <th style="text-indent: 0.5cm;"><?= $examen['examen'] ?></th>
 		      <td class="align-center"><?= $examen['fechaF']; ?></td>
 		      <td class="align-center"><?= str_pad($notas[0]['nota'], 2, '0', STR_PAD_LEFT) ?></td>
-		      <td class="align-center"><a href="#">Ver</a></td>
+		      <td class="align-center"><a href="ver-respuestas.php?codExamen=<?php print $examen['codExamen']; ?>&ts=<?php print strtotime($examen['fecha']); ?>">Ver examen resuelto</a></td>
 		    </tr>
 			<? endforeach; ?>
 	    <? else : ?>

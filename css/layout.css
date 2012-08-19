@@ -327,3 +327,13 @@ html ul.i-tabs li.active-tab, html ul.i-tabs li.active-tab a:hover  {
   width: 100px;
   text-align: center;
 }
+
+.correcta {
+  color: #f40c43 !important;
+  font-size: 11px;
+}
+
+.marcada {
+  color: #106aa5 !important;
+  font-size: 11px;
+}
