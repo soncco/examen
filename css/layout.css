@@ -12,13 +12,13 @@
 
 #logo a {
 	display: block;
-	width: 296px;
+	width: 348px;
 	height: 77px;
-	/*background: url(../images/logo.png) no-repeat;*/
+	background: url(../images/logo.png) no-repeat;
 }
 
 #logo span {
-	/*display: none;*/
+	display: none;
 }
 
 #menutop {
