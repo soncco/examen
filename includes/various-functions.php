@@ -346,6 +346,25 @@ WHERE r.codAlumno = '$codAlumno' AND r.codExamen = '$codExamen' AND r.fecha = '$
 	return $bcdb -> get_results($sql);
 }
 
+function get_fecha_de_examen_programa($codExamen) {
+	$sql = "SELECT *, DATE_FORMAT(fecha, '%m/%d/%Y %h:%i %p') AS fechaF FROM tExamenPrograma WHERE codExamen = '$codExamen' AND rendido = 'S';";
+	return $bcdb -> get_results($sql);	
+}
+
+function get_notas_examen($codCurso, $codSemestre, $codExamen, $fecha, $nota_min) {
+	$sql = "SELECT a.codAlumno, a.apellidoP, a.apellidoM, a.nombres, CASE WHEN ISNULL(SUM(ep.puntaje)) THEN 0 ELSE SUM(ep.puntaje) END AS nota
+FROM tAlumno a
+INNER JOIN tMatricula m ON (m.codAlumno = a.codAlumno)
+LEFT JOIN tRespuesta r ON (r.codAlumno = a.codAlumno)
+LEFT JOIN tAlternativa alt ON (alt.codAlternativa = r.codAlternativa)
+LEFT JOIN tPregunta p ON (p.codPregunta = alt.codPregunta AND alt.correcta = 'S')
+LEFT JOIN tExamenPregunta ep ON (ep.codExamen = r.codExamen AND ep.codPregunta = p.codPregunta)
+WHERE (m.codCurso = '$codCurso' AND codSemestre = '$codSemestre' AND (r.codExamen = '$codExamen' OR ISNULL(r.codExamen )) AND (r.fecha = '$fecha' OR ISNULL(r.fecha)))
+GROUP BY a.codAlumno HAVING nota >= $nota_min
+ORDER BY nota DESC, a.apellidoP, a.apellidoM, a.nombres;";
+	return $bcdb -> get_results($sql);
+}
+
 /* FUNCIONES PARA REPORTES */
 function get_curso_de_examen($codExamen) {
 	global $bcdb;
