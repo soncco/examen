@@ -346,6 +346,34 @@ WHERE r.codAlumno = '$codAlumno' AND r.codExamen = '$codExamen' AND r.fecha = '$
 	return $bcdb -> get_results($sql);
 }
 
+function get_examen_programa_rendidos($codCurso, $codSemestre) {
+	global $bcdb;
+	$sql = "SELECT DISTINCT e.codExamen, e.nombre
+FROM tExamenPrograma ep
+INNER JOIN tExamen e ON ep.codExamen = e.codExamen
+INNER JOIN tExamenPregunta epr ON e.codExamen = epr.codExamen
+INNER JOIN tPregunta p ON epr.codPregunta = p.codPregunta
+INNER JOIN tTema t ON p.codTema = t.codTema
+INNER JOIN tMatricula m ON m.codCurso = t.codCurso
+INNER JOIN tCurso c on t.codCurso = c.codCurso
+WHERE ep.rendido = 'S' AND m.codSemestre = '$codSemestre' AND c.codCurso = '$codCurso';";
+	return $bcdb -> get_results($sql);	
+}
+
+function get_cursos_con_examen_rendido_por_docente($codDocente, $codSemestre) {
+	global $bcdb;
+	$sql = "SELECT DISTINCT c.codCurso, c.nombre
+FROM tExamenPrograma ep
+INNER JOIN tExamen e ON ep.codExamen = e.codExamen
+INNER JOIN tExamenPregunta epr ON e.codExamen = epr.codExamen
+INNER JOIN tPregunta p ON epr.codPregunta = p.codPregunta
+INNER JOIN tTema t ON p.codTema = t.codTema
+INNER JOIN tMatricula m ON m.codCurso = t.codCurso
+INNER JOIN tCurso c on t.codCurso = c.codCurso
+WHERE ep.rendido = 'S' AND m.codDocente = '$codDocente' AND m.codSemestre = '$codSemestre';";
+	return $bcdb -> get_results($sql);	
+}
+
 function get_fecha_de_examen_programa($codExamen) {
 	global $bcdb;
 	$sql = "SELECT *, DATE_FORMAT(fecha, '%m/%d/%Y %h:%i %p') AS fechaF FROM tExamenPrograma WHERE codExamen = '$codExamen' AND rendido = 'S';";

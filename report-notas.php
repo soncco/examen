@@ -3,7 +3,7 @@
 require_once('home.php');
 require_once('redirect.php');
 
-$cursos = get_cursos_docente($_SESSION['loginuser']['codDocente']);
+$cursos = get_cursos_con_examen_rendido_por_docente($_SESSION['loginuser']['codDocente'], get_option('semestre_actual'));
 
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
@@ -28,17 +28,18 @@ $cursos = get_cursos_docente($_SESSION['loginuser']['codDocente']);
 			$('#codCurso').after(simg);
 			$.ajax({
 				type : 'POST',
-				url : 'traer-examenes.php',
+				url : 'traer-examenes-programa.php',
 				data : 'codCurso=' + codCurso,
 				success : function(response) {
 					$('#codExamen').html(response);
 					$('#simg').remove();
+					fechaDeExamen();
+					$('#fecha').html($('<option value="">Escoge un exámen</option>'));
 				}
 			});
 		} else {
 			$('#codExamen').html($('<option value="">Escoge un curso</option>'));
 			$('#fecha').html($('<option value="">Escoge un exámen</option>'));
-			$('#notas').html($(''));
 		}
 	}
 	
@@ -57,7 +58,6 @@ $cursos = get_cursos_docente($_SESSION['loginuser']['codDocente']);
 			});
 		} else {
 			$('#fecha').html($('<option value="">Escoge un exámen</option>'));
-			$('#notas').html($(''));
 		}
 	}
 
@@ -65,7 +65,7 @@ $cursos = get_cursos_docente($_SESSION['loginuser']['codDocente']);
 		codCurso = $('#codCurso').val();
 		codExamen = $('#codExamen').val();
 		fecha = $('#fecha').val();
-		if (codExamen != '') {
+		if (codExamen != '' && codCurso != '' && fecha != '') {
 			$('#ver').after(simg);
 			$.ajax({
 				type : 'POST',
@@ -76,6 +76,8 @@ $cursos = get_cursos_docente($_SESSION['loginuser']['codDocente']);
 					$('#simg').remove();
 				}
 			});
+		} else {
+			$('#notas').html($('Parámetros incompletos!'));
 		}		
 	}
 	
@@ -98,7 +100,6 @@ $cursos = get_cursos_docente($_SESSION['loginuser']['codDocente']);
     <h1>Reportes</h1>
     <fieldset> 	
       <legend>Calificaciones por exámen</legend>
-      	<p class="help"><span id="referencia">Tiempos en hh:mm:ss, se actualiza automáticamente cada 20 segundos.</span></p>
         <p>
           <label for="codCurso">Curso <span class="required">*</span>:</label>
           <select name="codCurso" id="codCurso" class="required">

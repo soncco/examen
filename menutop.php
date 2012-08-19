@@ -17,6 +17,7 @@
             'temas.php' => 'Temas',
             'preguntas.php' => 'Preguntas',
             'examenes.php' => 'Exámenes',
+            'report-notas.php' => 'Reportes',
           ),
           'side' => array(
             'preguntas.php' => 'Crear Preguntas',
