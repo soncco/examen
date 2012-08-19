@@ -12,21 +12,28 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') :
 	if ($_POST['pwd'] != '' && ($_POST['pwd'] == $_POST['pwd2'])) {
 		$pwd = md5($_POST['pwd']);
 	} else {
-		$pwd = 'false';
+		if($_POST['pwd'] != '') {
+			$msg = "<p class=\"error\">Contraseñas no coinciden.</p>";
+			$pwd = 'null';
+		} else {
+			$pwd = 'false';
+		}
 	}
 
 	// Guarda
-	global $bcdb;
-	$sql = "UPDATE tAlumno SET email = '$email' WHERE codAlumno = '$codAlumno';";
-	$_SESSION['loginuser']['email'] = $email;
-	$bcdb->query($sql);
-	
-	if ($pwd != 'false') {
-		$sql = "UPDATE tAlumno SET password = '$pwd' WHERE codAlumno = '$codAlumno';";
-		$bcdb->query($sql);		
+	if ($pwd != 'null') {
+		global $bcdb;
+		$sql = "UPDATE tAlumno SET email = '$email' WHERE codAlumno = '$codAlumno';";
+		$_SESSION['loginuser']['email'] = $email;
+		$bcdb->query($sql);
+		
+		if ($pwd != 'false') {
+			$sql = "UPDATE tAlumno SET password = '$pwd' WHERE codAlumno = '$codAlumno';";
+			$bcdb->query($sql);		
+		}
+		
+		$msg = "<p class=\"msg\">La información se guardó correctamente.</p>";
 	}
-	
-	$msg = "<p class=\"msg\">La información se guardó correctamente.</p>";
 endif;
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
