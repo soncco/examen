@@ -9,9 +9,12 @@ $timestamp = isset($_GET['ts']) ? trim($_GET['ts']) : '';
 if(empty($codExamen) || empty($timestamp)) {
   safe_redirect('mis-cursos.php');
 }
-
+$examen_programado = get_examen_programado($codExamen, strftime('%Y-%m-%d %H:%M:00', $timestamp));
+if($examen_programado['rendido'] == 'S') {
+  safe_redirect('mis-notas.php');
+}
+$respuestas = get_respuestas_alumno($examen_programado, $_SESSION['loginuser']['codAlumno']);
 $examen = get_examen($codExamen);
-
 $preguntas = get_preguntas_de_examen($codExamen);
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
@@ -27,19 +30,26 @@ $preguntas = get_preguntas_de_examen($codExamen);
 <script type="text/javascript">
   var codExamen = <?php print $codExamen; ?>;
   var ts = <?php print $timestamp; ?>;
+  var d = <?php print $examen_programado['duracion']; ?>;
+  var now = <?php print time(); ?>;
+  
+  function zero(n) {
+    if(n.toString().length < 2) {
+			return '0' + n;
+		} else {
+			return n;
+		}
+  }
+  
 	function timeLeft() {
-		$.ajax({
-			type: 'POST',
-			url: 'traer-countdown.php',
-      data: 'codExamen=' + codExamen + '&ts=' + ts,
-			success: function(response){
-				$('#countdown strong').html(response);
-			},
-			error: function(){
-				console.log('timeout');
-			},
-			timeout: 5000
-		});
+		// Total y restante.
+    total = ts + d;
+    //console.log(total);
+    restante = total - now;
+    segundos = zero(restante % 60);
+    minutos = zero(Math.floor(restante / 60) % 60);
+    horas = zero(Math.floor(restante / 3600));
+    return horas + ':' + minutos + ':' + segundos;
 	};
   
   // Implementation for "Index Of".
@@ -77,10 +87,10 @@ $preguntas = get_preguntas_de_examen($codExamen);
   }
 	
 	$(document).ready(function() {
-		timeLeft();
+		//$('#countdown strong').html(timeLeft());
 		
 		setInterval(function(){
-			timeLeft();
+			$('#countdown strong').html(timeLeft());
 		}, 1000);
     
     var simg = '<img src="images/loading.gif" alt="Cargando" id="simg" />';
@@ -91,7 +101,7 @@ $preguntas = get_preguntas_de_examen($codExamen);
       // Tomamos la alternativa y su valor
       myRadio = $(this);
       codAlternativa = myRadio.val();
-      
+      codPregunta = myRadio.parent().parent().parent().attr('rel');
       // Verificamos si alguna alternativa de esa pregunta ha sido marcada.
       iO = alternativas.indexOf(myRadio.attr('name'));
       if (iO > -1) {
@@ -107,9 +117,12 @@ $preguntas = get_preguntas_de_examen($codExamen);
       $.ajax({
         type: 'POST',
         url: 'guardar-alternativa.php',
-        data: 'codExamen=' + codExamen + '&ts=' + ts + '&codAlternativa=' + codAlternativa + '&op=' + op,
+        data: 'codExamen=' + codExamen 
+          + '&ts=' + ts 
+          + '&codAlternativa=' + codAlternativa 
+          + '&codPregunta=' + codPregunta
+          + '&op=' + op,
         success: function(response){
-          console.log(response);
           $('#simg').remove();
         },
         error: function() {
@@ -134,7 +147,7 @@ $preguntas = get_preguntas_de_examen($codExamen);
       <ol>
       <?php $alt = "even"; ?>
       <?php foreach($preguntas as $k => $pregunta) : ?>
-        <li class="enunciado <?php print $alt ?>"><?php print $pregunta['enunciado']; ?>
+        <li class="enunciado <?php print $alt ?>" rel="<?php print $pregunta['codPregunta']; ?>"><?php print $pregunta['enunciado']; ?>
           <ol>
           <?php
             $alternativas = get_alternativas_de_pregunta($pregunta['codPregunta']);
@@ -150,6 +163,7 @@ $preguntas = get_preguntas_de_examen($codExamen);
       <?php $alt = ($alt == "even") ? "odd" : "even"; ?>
       <?php endforeach; ?>
       </ol>
+      <p class="align-center"><button class="button" type="button" id="terminar">Terminar examen</button></p>
     </fieldset>
     <div id="countdown">
       Faltan <strong></strong>

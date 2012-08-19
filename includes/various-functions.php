@@ -393,4 +393,25 @@ function get_countdown($codExamen, $timestamp) {
   
   return ($falta);
 }
+function get_examen_programado($codExamen, $fecha) {
+  global $bcdb;
+  $sql = sprintf("SELECT * FROM %s WHERE codExamen = '%s' AND fecha = '%s'",
+          $bcdb->examenprograma, $codExamen, $fecha);
+  
+  return $bcdb->get_row($sql);
+}
+
+function get_respuestas_alumno($programado, $codAlumno) {
+  global $bcdb;
+  $sql = sprintf("SELECT codPregunta, codAlternativa FROM %s
+          WHERE codExamen = '%s'
+          AND codAlumno = '%s'
+          AND fecha = '%s'", 
+          $bcdb->respuesta,
+          $codAlumno,
+          $programado['codExamen'],
+          $programado['fecha']);
+  
+  return $bcdb->get_results($sql);
+}
 ?>
