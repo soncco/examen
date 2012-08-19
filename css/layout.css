@@ -337,3 +337,17 @@ html ul.i-tabs li.active-tab, html ul.i-tabs li.active-tab a:hover  {
   color: #106aa5 !important;
   font-size: 11px;
 }
+
+#image-panel {
+  float: right;
+  margin: 10px;
+  width: 160px !important;
+}
+
+.imagen-pregunta {
+  padding: 5px;
+  margin: 5px;
+  border: 1px solid #cdcaca;
+  background: #FFF;
+  width: 100px;
+}

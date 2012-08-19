@@ -55,6 +55,7 @@ require_once('redirect.php');
   </div>
   <div id="content" class="grid_13">
     <h1>Exámenes</h1>
+    <p class="help">En esta página verás la lista de exámenes que puedes dar.</p>
     <fieldset> 	
       <legend>Programados</legend>
       	<p class="help"><span id="referencia">Tiempos en hh:mm:ss, se actualiza automáticamente cada 20 segundos.</span></p>

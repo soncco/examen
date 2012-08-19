@@ -54,13 +54,14 @@ require_once('redirect.php');
     <div id="sidebar">
       <h3>Notas</h3>
       <ul>
-        <li><a href="/print-mis-notas.php">Imprimir constancia</a></li>
+        <li><a href="<?php print BASE_URL; ?>print-mis-notas.php">Imprimir constancia</a></li>
       </ul>
     </div>  	
     <p class="align-center"><img src="<?php print IMAGES_URL; ?>/misnotas.png" alt="Opciones" /></p>
   </div>
   <div id="content" class="grid_13">
     <h1>Notas</h1>
+    <p class="help">En esta página verás tus notas, estarán disponibles siempre y cuando un examen haya terminado.</p>
     <fieldset> 	
       <legend>Exámenes concluidos</legend>
       	<p class="help"><span id="referencia">Se actualiza automáticamente cada minuto.</span></p>

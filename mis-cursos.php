@@ -73,6 +73,7 @@ $results = @$bcrs->get_navigation();
     <fieldset>
       <legend>Semestre <?= get_option('semestre_actual') ?></legend>
       <table>
+        <caption>Estos son los cursos en los cuales estás matriculado:</caption>
         <thead>
           <tr>
           <th style="width: 15%;">Código</th>

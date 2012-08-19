@@ -189,7 +189,7 @@ $cursos = get_cursos_docente($_SESSION['loginuser']['codDocente']);
           <?php endforeach; ?>
         </p>
         <p>
-          <label for="imagenpregunta">Imagen (Opcional):</label>
+          <label for="imagen">Imagen (Opcional):</label>
           <input name="imagen" type="file" id="imagen" /> 
         </p>
       </fieldset>

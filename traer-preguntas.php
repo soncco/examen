@@ -51,6 +51,8 @@
       <th>Tema</th>
       <?php if($op != 'lista') : ?>
       <th>Puntaje</th>
+      <?php else: ?>
+      <th>Acciones</th>
       <?php endif; ?>
     </tr>
   </thead>
@@ -67,6 +69,8 @@
       <td><?php print get_var_from_field('nombre', 'codTema', $pregunta['codTema'], $bcdb->tema); ?></td>
       <?php if($op != 'lista') : ?>
       <td><input type="text" name="puntaje[]" id="puntaje<?php print $pregunta['codPregunta']; ?>" size="2" maxlength="5" disabled="disabled" class="required number" /></td>
+      <?php else : ?>
+      <td><a href="editar-preguntas.php?id=<?php print $pregunta['codPregunta']; ?>">Ver o editar</a></td>
       <?php endif; ?>
       <?php $alt = ($alt == "even") ? "odd" : "even"; ?>
     </tr>

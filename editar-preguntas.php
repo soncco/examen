@@ -25,6 +25,23 @@ if($postback) :
   else :
     $pregunta = array_map('strip_tags', $pregunta);
   
+    if(isset($_FILES['imagen']['name'])) {
+      
+        // Quitamos la imagen anterior.
+        quitar_imagen($pregunta['codPregunta']);
+        
+        // Importar imagen.
+        $nombre = $_FILES['imagen']['name'];
+        $origen = $_FILES['imagen']['tmp_name'];
+        $imagen_tipo = $_FILES['imagen']['type'];
+        $nombrenuevo = time() . $nombre;
+        $destino = "archivo/" . $nombrenuevo;
+
+        copy($origen, $destino);
+
+        $pregunta['imagen'] = $nombrenuevo;
+    }
+  
     // Guarda la pregunta
     save_item($id, $pregunta, $bcdb->pregunta);
 
@@ -80,7 +97,21 @@ if($id) {
 <script type="text/javascript">
 	$(document).ready(function() {
     $('#frmpregunta').validate();
-		$('enunciado').focus();
+		$('#enunciado').focus();
+    
+    $('#replace-image').click(function() {
+      $('#current-image').fadeOut('slow');
+      $('#image-handler').slideToggle('slow');
+      $('#nueva-imagen').attr('disabled', false);
+      return false;
+    });
+    
+    $('#no-replace').click(function() {
+      $('#current-image').slideToggle('slow');
+      $('#image-handler').fadeOut('slow');
+      $('#nueva-imagen').attr('disabled', true);
+      return false;
+    });
 	});
 </script>
 <title>Preguntas | Sistema de exámenes</title>
@@ -106,9 +137,20 @@ if($id) {
     <?php if (isset($msg)): ?>
     <p class="<?php echo ($error) ? "error" : "msg" ?>"><?php print $msg; ?></p>
     <?php endif; ?>
-    <form name="frmpregunta" id="frmpregunta" method="post" action="editar-preguntas.php">
+    <form name="frmpregunta" id="frmpregunta" method="post" action="editar-preguntas.php" enctype="multipart/form-data">
       <fieldset class="collapsible">
         <legend>Información de la pregunta</legend>
+        <?php if (!empty($pregunta['imagen'])): ?>
+        <div id="image-panel">
+          <div id="current-image">
+            <p id="imagen">
+              <label for="imagen">Imagen:</label><br />
+              <img src="archivo/<?php print $pregunta['imagen']; ?>" alt="<?php print $pregunta['enunciado']; ?>" class="imagen-pregunta" />
+            </p>
+            <p><a href="#" id="replace-image">Reemplazar imagen</a></p>
+          </div>
+        </div>
+        <?php endif; ?>
         <p>
           <label for="codCurso">Curso:</label>
           <strong><?php print $pregunta['curso']['nombre']; ?></strong>
@@ -119,7 +161,7 @@ if($id) {
         </p>
         <p>
           <label for="enunciado">Enunciado <span class="required">*</span>:</label><br/>
-          <textarea name="enunciado" id="enunciado" class="required" cols="100"><?php print $pregunta['enunciado']; ?></textarea>
+          <textarea name="enunciado" id="enunciado" class="required" cols="70" rows="5"><?php print $pregunta['enunciado']; ?></textarea>
         </p>
         <p>
           <label for="nivel">Nivel <span class="required">*</span>:</label>
@@ -128,6 +170,11 @@ if($id) {
           <label for="nivel<?php print $k; ?>"><?php print $nivel; ?></label>
           <?php endforeach; ?>
           <input type="hidden" name="id" id="id" value="<?php print $id; ?>" />
+        </p>
+        <p id="image-handler" style="display:none">
+          <label for="nueva-imagen">Imagen (Opcional):</label>
+          <input name="imagen" type="file" id="nueva-imagen" disabled="disabled" />
+          <a href="#" id="no-replace">Conservar imagen anterior</a>
         </p>
       </fieldset>
       <fieldset class="collapsible">

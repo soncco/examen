@@ -463,4 +463,14 @@ function get_respuestas_alumno($programado, $codAlumno) {
   
   return $bcdb->get_results($sql);
 }
+
+function quitar_imagen($codPregunta) {
+  global $bcdb;
+  // Seleccionamos la imagen para borrar físicamente.
+  $imagen = $bcdb->get_var("SELECT imagen FROM $bcdb->pregunta WHERE codPregunta = '$codPregunta'");
+  unlink('archivo/' . $imagen);
+  
+  // Borramos la imagen de la base de datos.
+  $bcdb->query("UPDATE $bcdb->pregunta SET imagen = '' WHERE codPregunta = '$codPregunta'");  
+}
 ?>

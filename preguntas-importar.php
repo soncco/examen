@@ -111,6 +111,7 @@ $cursos = get_cursos_docente($_SESSION['loginuser']['codDocente']);
   </div>
   <div id="content" class="grid_13">
     <h1>Preguntas</h1>
+    <p class="help">Los archivos requieren estar en formato YAML, para ver ejemplos ingrese <a href="https://github.com/soncco/examen/tree/master/sql/yaml-preguntas" target="_blank">aquí</a>.</p>
     <?php if (isset($msg)): ?>
     <p class="<?php echo ($error) ? "error" : "msg" ?>"><?php print $msg; ?></p>
     <?php endif; ?>

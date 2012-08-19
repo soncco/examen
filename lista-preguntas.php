@@ -77,7 +77,7 @@ $cursos = get_cursos_docente($_SESSION['loginuser']['codDocente']);
         </select>
       </p>
     </fieldset>
-    <fieldset class="collapsible">
+    <fieldset>
       <legend>Banco de Preguntas</legend>
       <div id="temas-results"></div>
     </fieldset>
