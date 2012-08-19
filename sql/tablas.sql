@@ -193,9 +193,11 @@ CREATE TABLE tRespuesta (
   codExamen INT UNSIGNED NOT NULL COMMENT 'El código del ' ,
   fecha DATETIME NOT NULL COMMENT 'La fecha del ' ,
   codAlternativa INT UNSIGNED NOT NULL COMMENT 'Alternativa marcada por el alumno.' ,
+  codPregunta INT UNSIGNED NOT NULL ,
   PRIMARY KEY (codAlumno, codExamen, fecha, codAlternativa) ,
   INDEX fk_tRespuesta_tExamenPrograma1 (codExamen ASC, fecha ASC) ,
   INDEX fk_tRespuesta_tAlternativa1 (codAlternativa ASC) ,
+  INDEX i_codPregunta (codPregunta ASC) ,
   CONSTRAINT fk_tRespuesta_tAlumno1
     FOREIGN KEY (codAlumno )
     REFERENCES tAlumno (codAlumno )
@@ -319,3 +321,4 @@ CREATE TABLE tOpcion (
   UNIQUE INDEX nombre_UNIQUE (nombre ASC) )
 ENGINE = InnoDB
 COMMENT = 'Opciones del Sistema.';
+
