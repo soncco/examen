@@ -4308,7 +4308,7 @@ INSERT INTO tPregunta (codPregunta, codTema, enunciado, nivel, imagen) VALUES
 (31, 9, 'Atributos del Software son:', 'F', NULL),
 (32, 10, 'El modelo en cascada considera:', 'N', NULL),
 (33, 11, '¿Cuál de estas definiciones corresponde al paradigma organizacional cerrado?', 'D', NULL),
-(34, 12, 'Entre las métricas de proyectos de ingeniería web se consideran:', 'N', NULL),
+(34, 12, 'Entre las métricas de proyectos de ingeniería web se consideran:', 'N', '1345402995gerencia.jpg'),
 (35, 13, 'El modelo COCOMO II aborda:', 'D', NULL),
 (36, 14, '¿Cuál de estos conceptos define una red de tareas?', 'N', NULL),
 (37, 15, 'Según Charette, los riesgos se categorizan por:', 'F', NULL),
@@ -4322,7 +4322,7 @@ INSERT INTO tPregunta (codPregunta, codTema, enunciado, nivel, imagen) VALUES
 (44, 21, 'Entre las métricas de proyectos de ingeniería web se consideran:', 'N', NULL),
 (45, 22, 'El modelo COCOMO II aborda:', 'D', NULL),
 (46, 23, '¿Cuál de estos conceptos define una red de tareas?', 'N', NULL),
-(47, 24, 'Según Charette, los riesgos se categorizan por:', 'F', NULL),
+(47, 24, 'Según Charette, los riesgos se categorizan por:', 'F', '1345402995gerencia.jpg'),
 (48, 25, 'Cuál de estas definiciones no es un atributo de la calidad de software.', 'F', NULL),
 (49, 26, 'Se refiere a la posibilidad de que el mayor número posible de personas pueda entrar a una web y usarla.', 'F', NULL),
 (50, 26, 'La técnica del Card Sorting se usa en:', 'F', NULL);
