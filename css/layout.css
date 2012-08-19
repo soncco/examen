@@ -344,6 +344,12 @@ html ul.i-tabs li.active-tab, html ul.i-tabs li.active-tab a:hover  {
   width: 160px !important;
 }
 
+.c-imagen-pregunta {
+  float: right;
+  width: 120px;
+  clear: both;
+}
+
 .imagen-pregunta {
   padding: 5px;
   margin: 5px;

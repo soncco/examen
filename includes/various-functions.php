@@ -156,7 +156,6 @@ function save_examen_pregunta($examen_pregunta) {
           $examen_pregunta['codExamen'],
           $examen_pregunta['codPregunta'],
           $examen_pregunta['puntaje']);
-  echo $sql;
   return ($bcdb->query($sql));
 }
 

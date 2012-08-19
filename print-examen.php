@@ -73,8 +73,13 @@ class PDF extends FPDF {
 			$this->SetX(16);
 			$this->MultiCell(0, 3.5, utf8_decode($this->preguntas[$i-1]['enunciado']));
 			$this->Ln();
-			
-			foreach ($this->alternativas[$i-1] as $alt) {
+			foreach ($this->alternativas[$i-1] as $k => $alt) {
+        if(!empty($this->preguntas[$i-1]['imagen'])) {
+          if ($k == 0) {
+            $y = $this->getY();
+            $this->Image('archivo/' . $this->preguntas[$i-1]['imagen'], 150, $y, 20);
+          }
+        }
 				$this->SetX(16);
 				$this->Cell(0, 3.5, chr($j).")");
 				$this->SetX(22);

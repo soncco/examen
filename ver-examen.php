@@ -37,6 +37,11 @@ $curso = get_curso_de_examen($codExamen);
       <?php $alt = "even"; ?>
       <?php foreach($preguntas as $k => $pregunta) : ?>
         <li class="enunciado <?php print $alt ?>" rel="<?php print $pregunta['codPregunta']; ?>"><?php print $pregunta['enunciado']; ?>
+          <?php if(!empty($pregunta['imagen'])) : ?>
+          <div class="c-imagen-pregunta">
+            <img src="archivo/<?php print $pregunta['imagen']; ?>" alt="<?php print $pregunta['enunciado']; ?>" class="imagen-pregunta" />
+          </div>
+          <?php endif; ?>
           <ol>
           <?php
             $alternativas = get_alternativas_de_pregunta($pregunta['codPregunta']);
